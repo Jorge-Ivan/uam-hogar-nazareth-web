@@ -1,0 +1,181 @@
+# Hogar Nazareth — Plataforma Web
+
+Plataforma web dinámica para la **Fundación Hogar del Anciano Nazareth**, desarrollada como proyecto de práctica social universitaria.
+
+Permite al personal de la fundación gestionar contenido institucional (actividades, galerías, eventos, documentos de transparencia) sin necesidad de conocimientos técnicos.
+
+Sitio actual: https://fundaciondelancianonazareth.com/
+
+---
+
+## Stack tecnológico
+
+| Capa | Tecnología |
+|---|---|
+| Backend | Laravel 10 / PHP 8.2 |
+| Base de datos | MySQL |
+| Frontend admin | Livewire 3 + Tailwind CSS |
+| Frontend público | Blade + Alpine.js |
+| Autenticación API | Laravel Sanctum |
+| Colas | Database queues + Laravel Scheduler |
+| Testing | Pest 2 |
+| Entorno local | Laravel Herd |
+
+---
+
+## Requisitos
+
+- PHP 8.2+
+- Composer 2+
+- MySQL 8+
+- Node.js 18+
+- [Laravel Herd](https://herd.laravel.com/) (recomendado en macOS) o cualquier servidor compatible
+
+---
+
+## Instalación local
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/<tu-usuario>/hogar-nazareth-web.git
+cd hogar-nazareth-web
+
+# 2. Instalar dependencias PHP
+composer install
+
+# 3. Instalar dependencias JS
+npm install
+
+# 4. Configurar variables de entorno
+cp .env.example .env
+php artisan key:generate
+
+# 5. Editar .env con tus credenciales de MySQL:
+#   DB_DATABASE=hogarnazareth
+#   DB_USERNAME=root
+#   DB_PASSWORD=tu_password
+#   QUEUE_CONNECTION=database
+#   APP_LOCALE=es
+
+# 6. Crear la base de datos
+mysql -u root -p -e "CREATE DATABASE hogarnazareth CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# 7. Ejecutar migraciones
+php artisan migrate
+
+# 8. Enlazar almacenamiento
+php artisan storage:link
+
+# 9. Compilar assets
+npm run build
+```
+
+---
+
+## Comandos útiles
+
+```bash
+# Servidor de desarrollo
+php artisan serve
+
+# Compilar assets en modo watch
+npm run dev
+
+# Correr tests
+php artisan test
+
+# Ver estado de migraciones
+php artisan migrate:status
+
+# Ver rutas registradas
+php artisan route:list
+
+# Procesar una tarea de la cola
+php artisan queue:work --once
+
+# Limpiar caché
+php artisan optimize:clear
+```
+
+---
+
+## Estructura del proyecto
+
+```
+app/
+├── Actions/        # Operaciones de responsabilidad única
+├── Enums/          # ContentStatus, UserRole
+├── Http/
+│   ├── Controllers/
+│   │   ├── Admin/      # Panel de administración
+│   │   └── Website/    # Sitio público
+│   ├── Requests/   # Validación de formularios
+│   └── Resources/  # API Resources (JSON)
+├── Jobs/           # Tareas en segundo plano (OptimizeImage, etc.)
+├── Livewire/       # Componentes interactivos del admin
+├── Models/         # Modelos Eloquent
+├── Policies/       # Autorización por modelo
+└── Services/       # Lógica de negocio
+
+docs/               # Documentación del proyecto
+├── architecture.md                # Arquitectura del sistema
+├── domain-model.md                # Entidades y relaciones
+├── laravel-architecture-guide.md  # Patrones y convenciones
+├── plan.md                        # Hoja de ruta (estado actual)
+└── project-context.md             # Contexto organizacional
+```
+
+---
+
+## Módulos del sistema
+
+| Módulo | Descripción |
+|---|---|
+| **Páginas** | Contenido institucional estático (Quiénes somos, Misión, etc.) |
+| **Actividades** | Publicaciones de actividades con imagen destacada |
+| **Galerías** | Colecciones de fotos con reordenamiento drag & drop |
+| **Eventos** | Eventos con fechas, ubicación e imagen |
+| **Documentos** | Transparencia institucional agrupada por año y categoría |
+| **Media** | Gestión centralizada de imágenes y archivos PDF |
+
+---
+
+## Roles de usuario
+
+| Rol | Permisos |
+|---|---|
+| `admin` | Acceso completo al sistema |
+| `editor` | Gestión de contenido, sin configuración del sistema |
+
+---
+
+## Flujo de publicación
+
+```
+Borrador → Publicado → Archivado
+```
+
+Los editores crean borradores, los revisan y los publican cuando están listos. El contenido archivado no se elimina.
+
+---
+
+## Convenciones del código
+
+- `declare(strict_types=1)` en todos los archivos PHP
+- Lógica de negocio en `Services/` y `Actions/`, nunca en Controllers
+- Toda subida de archivos pasa por `MediaService`
+- Optimización de imágenes vía job en cola (`OptimizeImage`)
+- UI del admin y mensajes de error **en español**
+- Nombres de variables, clases y comentarios **en inglés**
+
+---
+
+## Estado del proyecto
+
+Ver [docs/plan.md](docs/plan.md) para la hoja de ruta completa y el estado actual de implementación por fases.
+
+---
+
+## Contexto académico
+
+Proyecto desarrollado como **práctica social universitaria** para modernizar la presencia digital de la Fundación Hogar del Anciano Nazareth y facilitar la autogestión de contenido por parte del personal no técnico de la fundación.
