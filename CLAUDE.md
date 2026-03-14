@@ -12,6 +12,7 @@ Current site: https://fundaciondelancianonazareth.com/
 - System architecture: @docs/architecture.md
 - Domain model: @docs/domain-model.md
 - Implementation roadmap: @docs/plan.md
+- Design guide: @docs/design-guide.md — colors, typography, UI patterns, admin layout. Load before writing any Blade view.
 
 ## Stack
 - Laravel 10+ / PHP 8.2+
