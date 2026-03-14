@@ -13,7 +13,7 @@
 | Laravel app (`composer.json`, `artisan`, etc.) | ✅ Completa |
 | Migraciones (10 entidades) | ✅ Completa |
 | Modelos Eloquent | ✅ Completa |
-| Servicios y Actions | ❌ No existe |
+| Servicios y Actions | 🔄 En progreso |
 | Panel admin (Livewire) | ❌ No existe |
 | Sitio web público (Blade) | ❌ No existe |
 | API REST | ❌ No existe |
@@ -102,19 +102,19 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 
 **Objetivo:** Pipeline de subida completo. Todo contenido depende de esto.
 
-- [ ] `app/Services/MediaService.php`
+- [x] `app/Services/MediaService.php`
   - `upload(UploadedFile, string $dir): Media`
   - `delete(Media): void`
   - `getUrl(Media): string`
-- [ ] `app/Jobs/OptimizeImage.php` (ShouldQueue, `$tries = 3`)
-- [ ] `app/Actions/UploadMedia.php`
-- [ ] `app/Http/Requests/UploadMediaRequest.php` (mensajes en español)
-- [ ] `app/Http/Resources/MediaResource.php`
+- [x] `app/Jobs/OptimizeImage.php` (ShouldQueue, `$tries = 3`)
+- [x] `app/Actions/UploadMedia.php`
+- [x] `app/Http/Requests/UploadMediaRequest.php` (mensajes en español)
+- [x] `app/Http/Resources/MediaResource.php`
 
 ### Verificación Fase 1
-- [ ] Feature test: subir imagen → Media creado + job despachado
-- [ ] Feature test: subir PDF → sin job de imagen
-- [ ] Unit test: `OptimizeImage` procesa fixture sin error
+- [x] Feature test: subir imagen → Media creado + job despachado
+- [x] Feature test: subir PDF → sin job de imagen
+- [x] Unit test: `OptimizeImage` procesa fixture sin error
 
 ---
 
