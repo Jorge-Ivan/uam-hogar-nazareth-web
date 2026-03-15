@@ -35,9 +35,15 @@ final class DocumentTable extends Component
     #[Locked]
     public ?int $deleteId = null;
 
-    public function __construct(
-        private readonly DocumentService $documentService,
-    ) {}
+    private DocumentService $documentService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(DocumentService $documentService): void
+    {
+        $this->documentService = $documentService;
+    }
 
     /**
      * Reset pagination when category filter changes.

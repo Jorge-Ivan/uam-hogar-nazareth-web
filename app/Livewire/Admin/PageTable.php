@@ -33,9 +33,15 @@ final class PageTable extends Component
     #[Locked]
     public ?int $deleteId = null;
 
-    public function __construct(
-        private readonly PageService $pageService,
-    ) {}
+    private PageService $pageService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(PageService $pageService): void
+    {
+        $this->pageService = $pageService;
+    }
 
     /**
      * Reset pagination when search changes.

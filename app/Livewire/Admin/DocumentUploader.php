@@ -38,10 +38,18 @@ final class DocumentUploader extends Component
 
     public ?string $fileName = null;
 
-    public function __construct(
-        private readonly DocumentService $documentService,
-        private readonly MediaService $mediaService,
-    ) {}
+    private DocumentService $documentService;
+
+    private MediaService $mediaService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(DocumentService $documentService, MediaService $mediaService): void
+    {
+        $this->documentService = $documentService;
+        $this->mediaService    = $mediaService;
+    }
 
     /**
      * Capture the original filename when a file is selected.

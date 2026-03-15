@@ -51,10 +51,18 @@ final class EventForm extends Component
 
     public ?string $existingImageUrl = null;
 
-    public function __construct(
-        private readonly EventService $eventService,
-        private readonly MediaService $mediaService,
-    ) {}
+    private EventService $eventService;
+
+    private MediaService $mediaService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(EventService $eventService, MediaService $mediaService): void
+    {
+        $this->eventService = $eventService;
+        $this->mediaService = $mediaService;
+    }
 
     /**
      * Populate form fields when editing an existing event.

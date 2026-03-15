@@ -34,9 +34,15 @@ final class ActivityTable extends Component
     #[Locked]
     public ?int $deleteId = null;
 
-    public function __construct(
-        private readonly ActivityService $activityService,
-    ) {}
+    private ActivityService $activityService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(ActivityService $activityService): void
+    {
+        $this->activityService = $activityService;
+    }
 
     /**
      * Reset pagination when search changes.

@@ -30,9 +30,15 @@ final class GalleryTable extends Component
     #[Locked]
     public ?int $deleteId = null;
 
-    public function __construct(
-        private readonly GalleryService $galleryService,
-    ) {}
+    private GalleryService $galleryService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(GalleryService $galleryService): void
+    {
+        $this->galleryService = $galleryService;
+    }
 
     /**
      * Reset pagination when search changes.

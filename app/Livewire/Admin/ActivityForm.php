@@ -50,10 +50,18 @@ final class ActivityForm extends Component
 
     public ?string $existingImageUrl = null;
 
-    public function __construct(
-        private readonly ActivityService $activityService,
-        private readonly MediaService $mediaService,
-    ) {}
+    private ActivityService $activityService;
+
+    private MediaService $mediaService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(ActivityService $activityService, MediaService $mediaService): void
+    {
+        $this->activityService = $activityService;
+        $this->mediaService    = $mediaService;
+    }
 
     /**
      * Populate form fields when editing an existing activity.

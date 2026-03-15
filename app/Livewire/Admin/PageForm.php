@@ -35,9 +35,15 @@ final class PageForm extends Component
     #[Locked]
     public ?int $pageId = null;
 
-    public function __construct(
-        private readonly PageService $pageService,
-    ) {}
+    private PageService $pageService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(PageService $pageService): void
+    {
+        $this->pageService = $pageService;
+    }
 
     /**
      * Populate form fields when editing an existing page.

@@ -43,10 +43,18 @@ final class GalleryManager extends Component
 
     public string $newCaption = '';
 
-    public function __construct(
-        private readonly GalleryService $galleryService,
-        private readonly MediaService $mediaService,
-    ) {}
+    private GalleryService $galleryService;
+
+    private MediaService $mediaService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(GalleryService $galleryService, MediaService $mediaService): void
+    {
+        $this->galleryService = $galleryService;
+        $this->mediaService   = $mediaService;
+    }
 
     /**
      * Populate form fields from the mounted Gallery model.

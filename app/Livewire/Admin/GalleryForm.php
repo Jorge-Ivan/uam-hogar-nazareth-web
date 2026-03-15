@@ -28,9 +28,15 @@ final class GalleryForm extends Component
 
     public string $description = '';
 
-    public function __construct(
-        private readonly GalleryService $galleryService,
-    ) {}
+    private GalleryService $galleryService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(GalleryService $galleryService): void
+    {
+        $this->galleryService = $galleryService;
+    }
 
     /**
      * Auto-generate the slug from the title.

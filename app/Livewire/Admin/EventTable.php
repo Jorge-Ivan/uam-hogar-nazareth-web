@@ -30,9 +30,15 @@ final class EventTable extends Component
     #[Locked]
     public ?int $deleteId = null;
 
-    public function __construct(
-        private readonly EventService $eventService,
-    ) {}
+    private EventService $eventService;
+
+    /**
+     * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
+     */
+    public function boot(EventService $eventService): void
+    {
+        $this->eventService = $eventService;
+    }
 
     /**
      * Reset pagination when search changes.
