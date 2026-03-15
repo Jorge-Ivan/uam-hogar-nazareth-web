@@ -4,7 +4,8 @@ Plataforma web dinámica para la **Fundación Hogar del Anciano Nazareth**, desa
 
 Permite al personal de la fundación gestionar contenido institucional (actividades, galerías, eventos, documentos de transparencia) sin necesidad de conocimientos técnicos.
 
-Sitio actual: https://fundaciondelancianonazareth.com/
+- **Sitio actual de la fundación:** https://fundaciondelancianonazareth.com/
+- **Repositorio:** https://github.com/Jorge-Ivan/uam-hogar-nazareth-web
 
 ---
 
@@ -37,8 +38,8 @@ Sitio actual: https://fundaciondelancianonazareth.com/
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/<tu-usuario>/hogar-nazareth-web.git
-cd hogar-nazareth-web
+git clone https://github.com/Jorge-Ivan/uam-hogar-nazareth-web.git
+cd uam-hogar-nazareth-web
 
 # 2. Instalar dependencias PHP
 composer install
@@ -60,8 +61,9 @@ php artisan key:generate
 # 6. Crear la base de datos
 mysql -u root -p -e "CREATE DATABASE hogarnazareth CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
-# 7. Ejecutar migraciones
+# 7. Ejecutar migraciones y seeders
 php artisan migrate
+php artisan db:seed
 
 # 8. Enlazar almacenamiento
 php artisan storage:link
@@ -111,8 +113,9 @@ app/
 │   │   └── Website/    # Sitio público
 │   ├── Requests/   # Validación de formularios
 │   └── Resources/  # API Resources (JSON)
-├── Jobs/           # Tareas en segundo plano (OptimizeImage, etc.)
+├── Jobs/           # Tareas en segundo plano (OptimizeImage, SendContactEmail)
 ├── Livewire/       # Componentes interactivos del admin
+├── Mail/           # Mailables (ContactFormMail)
 ├── Models/         # Modelos Eloquent
 ├── Policies/       # Autorización por modelo
 └── Services/       # Lógica de negocio
@@ -132,12 +135,13 @@ docs/               # Documentación del proyecto
 
 | Módulo | Descripción |
 |---|---|
-| **Páginas** | Contenido institucional estático (Quiénes somos, Misión, etc.) |
-| **Actividades** | Publicaciones de actividades con imagen destacada |
+| **Páginas** | Contenido institucional con soporte de subpáginas, orden en menú y visibilidad en header/footer |
+| **Actividades** | Publicaciones de actividades con imagen destacada y estado de publicación |
 | **Galerías** | Colecciones de fotos con reordenamiento drag & drop |
 | **Eventos** | Eventos con fechas, ubicación e imagen |
 | **Documentos** | Transparencia institucional agrupada por año y categoría |
 | **Media** | Gestión centralizada de imágenes y archivos PDF |
+| **Configuración** | Datos del sitio: contacto, redes sociales, correo y donaciones (panel de admin) |
 
 ---
 
@@ -173,10 +177,22 @@ Los editores crean borradores, los revisan y los publican cuando están listos. 
 
 ## Estado del proyecto
 
-Ver [docs/plan.md](docs/plan.md) para la hoja de ruta completa y el estado actual de implementación por fases.
+| Fase | Descripción | Estado |
+|---|---|---|
+| Fase 0 | Fundación: Laravel, migraciones, modelos | ✅ Completa |
+| Fase 1 | Infraestructura de media | ✅ Completa |
+| Fase 2 | Backend: Services, Actions, Policies | ✅ Completa |
+| Fase 3 | Panel de administración (Livewire) | ✅ Completa |
+| Fase 4 | Sitio web público | 🔜 Pendiente |
+| Fase 5 | API REST | 🔜 Pendiente |
+| Fase 6 | Pulido y producción | 🔜 Pendiente |
+
+Ver [docs/plan.md](docs/plan.md) para la hoja de ruta completa con detalle por fases.
 
 ---
 
 ## Contexto académico
 
-Proyecto desarrollado como **práctica social universitaria** para modernizar la presencia digital de la Fundación Hogar del Anciano Nazareth y facilitar la autogestión de contenido por parte del personal no técnico de la fundación.
+Proyecto desarrollado por **[Jorge Carrillo](https://www.linkedin.com/in/jorgecarrillog/)** como **práctica social universitaria** en la **[Universidad Autónoma de Manizales (UAM)](https://www.autonoma.edu.co/)**.
+
+El objetivo es modernizar la presencia digital de la Fundación Hogar del Anciano Nazareth y facilitar la autogestión de contenido por parte del personal no técnico de la fundación.
