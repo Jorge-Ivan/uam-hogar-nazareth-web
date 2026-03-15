@@ -8,28 +8,27 @@
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100 font-sans antialiased" x-data="{ sidebarOpen: false }">
+<body class="bg-gray-100 font-sans antialiased" x-data="{ sidebarOpen: false }"
+      :class="sidebarOpen ? 'overflow-hidden lg:overflow-auto' : ''">
 
-    {{-- Sidebar --}}
-    <div class="flex h-screen overflow-hidden">
+    {{-- Mobile overlay --}}
+    <div
+        class="fixed inset-0 z-20 bg-black/50 lg:hidden"
+        x-show="sidebarOpen"
+        x-transition:enter="transition-opacity ease-linear duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition-opacity ease-linear duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        @click="sidebarOpen = false"
+    ></div>
 
-        {{-- Mobile overlay --}}
-        <div
-            class="fixed inset-0 z-20 bg-black/50 lg:hidden"
-            x-show="sidebarOpen"
-            x-transition:enter="transition-opacity ease-linear duration-200"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition-opacity ease-linear duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @click="sidebarOpen = false"
-        ></div>
-
-        {{-- Sidebar panel --}}
+    {{-- Sidebar: siempre fixed, no participa en el flujo del documento --}}
+    <div class="flex">
         <aside
-            class="fixed inset-y-0 left-0 z-30 flex w-64 flex-col bg-gray-900 text-white transition-transform duration-200 lg:static lg:translate-x-0"
-            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="fixed inset-y-0 left-0 z-30 flex w-64 flex-col bg-gray-900 text-white transition-transform duration-200"
+            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
         >
             {{-- Logo --}}
             <div class="flex h-16 items-center gap-3 border-b border-gray-700 px-6">
@@ -158,11 +157,11 @@
             </div>
         </aside>
 
-        {{-- Main content --}}
-        <div class="flex flex-1 flex-col overflow-hidden">
+        {{-- Main content: margen izquierdo = ancho del sidebar en desktop --}}
+        <div class="flex min-h-screen flex-1 flex-col lg:pl-64">
 
-            {{-- Top bar --}}
-            <header class="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-sm">
+            {{-- Top bar: sticky, siempre visible al hacer scroll --}}
+            <header class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-sm">
 
                 {{-- Mobile hamburger --}}
                 <button
@@ -211,8 +210,8 @@
                 </div>
             @endif
 
-            {{-- Page content --}}
-            <main class="flex-1 overflow-y-auto p-6">
+            {{-- Page content: scroll natural del body, sin contenedor artificial --}}
+            <main class="flex-1 p-6">
                 @yield('content')
             </main>
         </div>
