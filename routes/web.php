@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\Activity;
 use App\Models\Page;
 use Illuminate\Support\Facades\Route;
 
@@ -42,7 +43,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Actividades
     Route::get('/activities', fn () => view('admin.activities.index'))->name('activities.index');
     Route::get('/activities/create', fn () => view('admin.activities.create'))->name('activities.create');
-    Route::get('/activities/{activity}/edit', fn ($activity) => view('admin.activities.edit', ['activity' => $activity]))->name('activities.edit');
+    Route::get('/activities/{activity}/edit', fn (Activity $activity) => view('admin.activities.edit', ['activity' => $activity]))->name('activities.edit');
 
     // Galerías
     Route::get('/galleries', fn () => view('admin.galleries.index'))->name('galleries.index');

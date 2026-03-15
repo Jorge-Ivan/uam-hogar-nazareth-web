@@ -3,5 +3,5 @@
 @section('title', 'Editar actividad')
 
 @section('content')
-    <p class="text-gray-500">Módulo en construcción.</p>
+    <livewire:admin.activity-form :activity="$activity" />
 @endsection
