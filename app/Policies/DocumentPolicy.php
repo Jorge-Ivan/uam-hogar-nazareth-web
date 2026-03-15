@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Policies;
+
+use App\Enums\UserRole;
+use App\Models\Document;
+use App\Models\User;
+
+final class DocumentPolicy
+{
+    public function viewAny(User $user): bool
+    {
+        return true;
+    }
+
+    public function view(User $user, Document $document): bool
+    {
+        return true;
+    }
+
+    public function create(User $user): bool
+    {
+        return true;
+    }
+
+    public function update(User $user, Document $document): bool
+    {
+        return true;
+    }
+
+    public function delete(User $user, Document $document): bool
+    {
+        return $user->role === UserRole::Admin;
+    }
+}

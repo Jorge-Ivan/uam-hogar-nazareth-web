@@ -13,7 +13,7 @@
 | Laravel app (`composer.json`, `artisan`, etc.) | ✅ Completa |
 | Migraciones (10 entidades) | ✅ Completa |
 | Modelos Eloquent | ✅ Completa |
-| Servicios y Actions | 🔄 En progreso |
+| Servicios y Actions | ✅ Completa |
 | Panel admin (Livewire) | ❌ No existe |
 | Sitio web público (Blade) | ❌ No existe |
 | API REST | ❌ No existe |
@@ -123,43 +123,43 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 **Objetivo:** Services, Actions y Policies para todos los módulos. Sin UI aún.
 
 ### Pages
-- [ ] `app/Services/PageService.php` (create, update, publish, archive)
-- [ ] `app/Actions/CreatePage.php`, `UpdatePage.php`, `PublishPage.php`
-- [ ] `app/Http/Requests/StorePageRequest.php`, `UpdatePageRequest.php`
-- [ ] `app/Policies/PagePolicy.php`
+- [x] `app/Services/PageService.php` (create, update, publish, archive)
+- [x] `app/Actions/CreatePage.php`, `UpdatePage.php`, `PublishPage.php`
+- [x] `app/Http/Requests/StorePageRequest.php`, `UpdatePageRequest.php`
+- [x] `app/Policies/PagePolicy.php`
 
 ### Activities
-- [ ] `app/Services/ActivityService.php`
-- [ ] `app/Actions/CreateActivity.php`, `UpdateActivity.php`, `PublishActivity.php`, `SetActivityFeaturedImage.php`
-- [ ] `app/Http/Requests/StoreActivityRequest.php`, `UpdateActivityRequest.php`
-- [ ] `app/Policies/ActivityPolicy.php`
+- [x] `app/Services/ActivityService.php`
+- [x] `app/Actions/CreateActivity.php`, `UpdateActivity.php`, `PublishActivity.php`, `SetActivityFeaturedImage.php`
+- [x] `app/Http/Requests/StoreActivityRequest.php`, `UpdateActivityRequest.php`
+- [x] `app/Policies/ActivityPolicy.php`
 
 ### Galleries
-- [ ] `app/Services/GalleryService.php` (create, update, addImage, removeImage, reorderImages)
-- [ ] `app/Actions/CreateGallery.php`, `AddGalleryImage.php`, `ReorderGalleryImages.php`, `RemoveGalleryImage.php`
-- [ ] `app/Http/Requests/StoreGalleryRequest.php`, `AddGalleryImageRequest.php`
-- [ ] `app/Policies/GalleryPolicy.php`
+- [x] `app/Services/GalleryService.php` (create, update, addImage, removeImage, reorderImages)
+- [x] `app/Actions/CreateGallery.php`, `AddGalleryImage.php`, `ReorderGalleryImages.php`, `RemoveGalleryImage.php`
+- [x] `app/Http/Requests/StoreGalleryRequest.php`, `AddGalleryImageRequest.php`
+- [x] `app/Policies/GalleryPolicy.php`
 
 ### Events
-- [ ] `app/Services/EventService.php`
-- [ ] `app/Actions/CreateEvent.php`, `UpdateEvent.php`
-- [ ] `app/Http/Requests/StoreEventRequest.php` (validar start_date ≤ end_date)
-- [ ] `app/Policies/EventPolicy.php`
+- [x] `app/Services/EventService.php`
+- [x] `app/Actions/CreateEvent.php`, `UpdateEvent.php`
+- [x] `app/Http/Requests/StoreEventRequest.php` (validar start_date ≤ end_date)
+- [x] `app/Policies/EventPolicy.php`
 
 ### Documents
-- [ ] `app/Services/DocumentService.php`
-- [ ] `app/Actions/CreateDocument.php`, `UpdateDocument.php`
-- [ ] `app/Http/Requests/StoreDocumentRequest.php`
-- [ ] `app/Policies/DocumentPolicy.php`
+- [x] `app/Services/DocumentService.php`
+- [x] `app/Actions/CreateDocument.php`, `UpdateDocument.php`
+- [x] `app/Http/Requests/StoreDocumentRequest.php`
+- [x] `app/Policies/DocumentPolicy.php`
 
 ### Auth
-- [ ] Registrar todas las Policies en `app/Providers/AuthServiceProvider.php`
+- [x] Registrar todas las Policies en `app/Providers/AuthServiceProvider.php`
 
 ### Verificación Fase 2
-- [ ] Unit tests Services: CRUD + transiciones de estado
-- [ ] Unit test: Policy deniega a editor en operaciones de admin
-- [ ] Unit test: `ActivityService::publish()` establece `published_at`
-- [ ] Unit test: `GalleryService::reorderImages()` actualiza posiciones
+- [x] Unit tests Services: CRUD + transiciones de estado
+- [x] Unit test: Policy deniega a editor en operaciones de admin
+- [x] Unit test: `ActivityService::publish()` establece `published_at`
+- [x] Unit test: `GalleryService::reorderImages()` actualiza posiciones
 
 ---
 
