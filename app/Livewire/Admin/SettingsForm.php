@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Livewire\Admin;
 
+use App\Models\Media;
+use App\Services\MediaService;
 use App\Services\SettingService;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 /**
  * Livewire component for the admin site-settings form.
@@ -17,6 +20,8 @@ use Livewire\Component;
  */
 final class SettingsForm extends Component
 {
+    use WithFileUploads;
+
     // Organización
     public string $orgName     = '';
     public string $orgTagline  = '';
@@ -42,18 +47,28 @@ final class SettingsForm extends Component
     public string $mailFromName     = '';
     public string $mailFromAddress  = '';
 
-    // Donaciones
+    // Donaciones — datos bancarios
     public string $donationBankName       = '';
     public string $donationAccountType    = '';
     public string $donationAccount        = '';
     public string $donationAccountHolder  = '';
     public string $donationNitBank        = '';
 
-    private SettingService $settingService;
+    // Donaciones — pagos digitales
+    public string $donationNequi     = '';
+    public string $donationDaviplata = '';
 
-    public function boot(SettingService $settingService): void
+    // Donaciones — QR
+    public ?int  $donationQrMediaId = null;
+    public mixed $donationQrUpload  = null;
+
+    private SettingService $settingService;
+    private MediaService   $mediaService;
+
+    public function boot(SettingService $settingService, MediaService $mediaService): void
     {
         $this->settingService = $settingService;
+        $this->mediaService   = $mediaService;
     }
 
     public function mount(): void
@@ -86,6 +101,9 @@ final class SettingsForm extends Component
         $this->donationAccount       = $s->donation_account        ?? '';
         $this->donationAccountHolder = $s->donation_account_holder ?? '';
         $this->donationNitBank       = $s->donation_nit_bank       ?? '';
+        $this->donationNequi         = $s->donation_nequi          ?? '';
+        $this->donationDaviplata     = $s->donation_daviplata       ?? '';
+        $this->donationQrMediaId     = $s->donation_qr_media_id;
     }
 
     /** @return array<string, mixed> */
@@ -118,6 +136,9 @@ final class SettingsForm extends Component
             'donationAccount'       => ['nullable', 'string', 'max:50'],
             'donationAccountHolder' => ['nullable', 'string', 'max:255'],
             'donationNitBank'       => ['nullable', 'string', 'max:50'],
+            'donationNequi'         => ['nullable', 'regex:/^[0-9]{10}$/', 'max:10'],
+            'donationDaviplata'     => ['nullable', 'regex:/^[0-9]{10}$/', 'max:10'],
+            'donationQrUpload'      => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 
@@ -135,12 +156,37 @@ final class SettingsForm extends Component
             'socialLinkedin.url'        => 'El enlace de LinkedIn no es una URL válida.',
             'mailContactTo.email'       => 'El correo destino no tiene un formato válido.',
             'mailFromAddress.email'     => 'El correo remitente no tiene un formato válido.',
+            'donationNequi.regex'       => 'El número de Nequi debe tener exactamente 10 dígitos.',
+            'donationDaviplata.regex'   => 'El número de Daviplata debe tener exactamente 10 dígitos.',
+            'donationQrUpload.image'    => 'El código QR debe ser una imagen.',
+            'donationQrUpload.mimes'    => 'El código QR debe ser JPG, PNG o WebP.',
+            'donationQrUpload.max'      => 'El código QR no puede superar 2 MB.',
         ];
+    }
+
+    public function removeQr(): void
+    {
+        if ($this->donationQrMediaId !== null) {
+            $media = Media::find($this->donationQrMediaId);
+
+            if ($media !== null) {
+                $this->mediaService->delete($media);
+            }
+
+            $this->donationQrMediaId = null;
+            $this->settingService->update(['donation_qr_media_id' => null]);
+        }
     }
 
     public function save(): void
     {
         $this->validate($this->rules(), $this->messages());
+
+        if ($this->donationQrUpload !== null) {
+            $media = $this->mediaService->upload($this->donationQrUpload, 'donation-qr');
+            $this->donationQrMediaId = $media->id;
+            $this->donationQrUpload  = null;
+        }
 
         $this->settingService->update([
             'org_name'    => $this->orgName,
@@ -169,6 +215,9 @@ final class SettingsForm extends Component
             'donation_account'        => $this->donationAccount ?: null,
             'donation_account_holder' => $this->donationAccountHolder ?: null,
             'donation_nit_bank'       => $this->donationNitBank ?: null,
+            'donation_nequi'          => $this->donationNequi ?: null,
+            'donation_daviplata'      => $this->donationDaviplata ?: null,
+            'donation_qr_media_id'    => $this->donationQrMediaId,
         ]);
 
         $this->dispatch('notify', message: 'Configuración guardada correctamente.');
@@ -176,6 +225,10 @@ final class SettingsForm extends Component
 
     public function render(): View
     {
-        return view('livewire.admin.settings-form');
+        $qrMedia = $this->donationQrMediaId !== null
+            ? Media::find($this->donationQrMediaId)
+            : null;
+
+        return view('livewire.admin.settings-form', compact('qrMedia'));
     }
 }

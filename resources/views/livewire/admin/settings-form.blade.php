@@ -307,11 +307,13 @@
 
         {{-- ── 5. Donaciones ────────────────────────────────────────── --}}
         <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-500">Donaciones</h3>
-            <p class="mb-4 text-xs text-gray-400">
-                Información bancaria para que los visitantes puedan realizar donaciones.
+            <h3 class="mb-1 text-sm font-semibold uppercase tracking-wide text-gray-500">Donaciones</h3>
+            <p class="mb-5 text-xs text-gray-400">
+                Información para que los visitantes puedan realizar donaciones por distintos medios.
             </p>
 
+            {{-- Cuenta bancaria --}}
+            <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">Transferencia bancaria</p>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                     <label for="donationBankName" class="block text-sm font-medium text-gray-700">Banco</label>
@@ -373,6 +375,110 @@
                     >
                 </div>
             </div>
+
+            {{-- Pagos digitales --}}
+            <p class="mb-3 mt-6 text-xs font-semibold uppercase tracking-wide text-gray-400">Pagos digitales</p>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                    <label for="donationNequi" class="block text-sm font-medium text-gray-700">Número de Nequi</label>
+                    <input
+                        id="donationNequi"
+                        type="text"
+                        wire:model="donationNequi"
+                        placeholder="3001234567"
+                        maxlength="10"
+                        class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 shadow-sm
+                               focus:border-nazareth-blue focus:outline-none focus:ring-2 focus:ring-nazareth-blue/20
+                               @error('donationNequi') border-red-400 @enderror"
+                    >
+                    @error('donationNequi')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="donationDaviplata" class="block text-sm font-medium text-gray-700">Número de Daviplata</label>
+                    <input
+                        id="donationDaviplata"
+                        type="text"
+                        wire:model="donationDaviplata"
+                        placeholder="3101234567"
+                        maxlength="10"
+                        class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 shadow-sm
+                               focus:border-nazareth-blue focus:outline-none focus:ring-2 focus:ring-nazareth-blue/20
+                               @error('donationDaviplata') border-red-400 @enderror"
+                    >
+                    @error('donationDaviplata')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            {{-- Código QR --}}
+            <p class="mb-3 mt-6 text-xs font-semibold uppercase tracking-wide text-gray-400">Código QR de donación</p>
+            <p class="mb-3 text-xs text-gray-400">
+                Sube la imagen del QR de la cuenta bancaria o billetera digital. Se mostrará en la página de donaciones para que los visitantes puedan escanearla directamente desde su celular.
+            </p>
+
+            @if($donationQrMediaId && $qrMedia)
+                <div class="flex items-start gap-4">
+                    <img
+                        src="{{ Storage::url($qrMedia->file_path) }}"
+                        alt="Código QR de donación"
+                        class="h-32 w-32 rounded-lg border border-gray-200 object-contain p-1 shadow-sm"
+                    >
+                    <div class="flex flex-col gap-2">
+                        <p class="text-sm text-gray-600">QR guardado correctamente.</p>
+                        <button
+                            type="button"
+                            wire:click="removeQr"
+                            wire:confirm="¿Eliminar el código QR de donación?"
+                            class="inline-flex w-fit items-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-sm font-medium text-red-600 transition-colors hover:bg-red-100"
+                        >
+                            Eliminar QR
+                        </button>
+                    </div>
+                </div>
+            @else
+                <div
+                    class="relative rounded-lg border-2 border-dashed border-gray-300 p-6 text-center transition-colors hover:border-nazareth-blue/50
+                           @error('donationQrUpload') border-red-400 @enderror"
+                >
+                    <svg class="mx-auto mb-2 h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                              d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <label for="donationQrUpload" class="cursor-pointer text-sm font-medium text-nazareth-blue hover:underline">
+                        Seleccionar imagen del QR
+                    </label>
+                    <input
+                        id="donationQrUpload"
+                        type="file"
+                        wire:model="donationQrUpload"
+                        accept="image/jpeg,image/png,image/webp"
+                        class="sr-only"
+                    >
+                    <p class="mt-1 text-xs text-gray-400">JPG, PNG o WebP · Máx. 2 MB</p>
+
+                    <div wire:loading wire:target="donationQrUpload" class="mt-2 text-xs text-nazareth-blue">
+                        Subiendo imagen...
+                    </div>
+                </div>
+
+                @if($donationQrUpload)
+                    <div class="mt-3 flex items-center gap-3 rounded-lg bg-green-50 px-4 py-2.5">
+                        <svg class="h-4 w-4 shrink-0 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <p class="text-sm text-green-700">Imagen lista para guardar: <strong>{{ $donationQrUpload->getClientOriginalName() }}</strong></p>
+                    </div>
+                @endif
+
+                @error('donationQrUpload')
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                @enderror
+            @endif
         </div>
 
         {{-- ── Guardar ───────────────────────────────────────────────── --}}

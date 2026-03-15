@@ -219,6 +219,10 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [x] `resources/views/admin/settings/index.blade.php`
 - [x] Ruta `GET /admin/settings` → `admin.settings`
 - [x] Sidebar: ítem "Configuración" con ícono engranaje
+- [x] `database/migrations/add_donation_digital_to_site_settings_table` — `donation_nequi`, `donation_daviplata`, `donation_qr_media_id` (FK → media)
+- [x] `app/Models/SiteSetting.php` — relación `donationQr()` → Media
+- [x] `app/Livewire/Admin/SettingsForm.php` — `WithFileUploads`, upload QR vía `MediaService`, campos Nequi/Daviplata, `removeQr()`
+- [x] `resources/views/livewire/admin/settings-form.blade.php` — sección donaciones expandida: transferencia bancaria, pagos digitales (Nequi/Daviplata), zona upload QR con thumbnail y preview
 
 ### Infraestructura de correo de contacto
 - [x] `app/Mail/ContactFormMail.php` — Envelope/Content API, `From:` construido desde settings
@@ -285,8 +289,15 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [ ] `Website/DocumentController` → `/transparencia` (agrupado por año y categoría)
 - [ ] `Website/PageController` → `/paginas/{slug}` — usar `scopePublished()->firstOrFail()` (no route model binding)
 - [ ] `resources/views/website/pages/show.blade.php` — breadcrumb automático si tiene padre
-- [ ] `Website/DonationsController` → `GET /donaciones` — datos bancarios dinámicos desde `$siteSettings->donation_*`; `@if` guard en cada campo (si staff no lo ha configurado no muestra)
-- [ ] `resources/views/website/donations.blade.php` — tarjeta de datos bancarios con `@if` guards; fallback si ningún campo configurado: aviso "Contáctenos para información sobre donaciones"
+- [ ] `Website/DonationsController` → `GET /donaciones`
+  - Eager-load `$siteSettings->load('donationQr')`
+  - Pasar a vista; campos con `@if` guard
+- [ ] `resources/views/website/donations.blade.php`
+  - Sección 1: Transferencia bancaria (banco, tipo, número, NIT, titular) — tarjeta azul nazareth
+  - Sección 2: Nequi — número + imagen QR grande (`$siteSettings->donationQr`) si `donation_qr_media_id` configurado; colores rosa/morado de Nequi
+  - Sección 3: Daviplata — número de celular; colores rojo/naranja Davivienda
+  - Sección 4: Donación en especie — enlace a /contacto
+  - Fallback: aviso "Contáctenos para información sobre donaciones" si ningún campo configurado
 - [ ] `Website/ContactController` → `GET /contacto` — `$siteSettings` disponible vía composer, no necesita pasarlo a mano
 - [ ] `app/Livewire/Website/ContactForm.php`
   - Props: `name`, `email`, `phone` (opcional), `message`, `honeypot` (oculto anti-spam), `sent` (bool)
@@ -317,6 +328,8 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [ ] Feature test: `ContactForm::submit()` con honeypot relleno → no despacha `SendContactEmail`
 - [ ] Feature test: `ContactForm::submit()` válido → despacha `SendContactEmail` con datos correctos
 - [ ] Feature test: `GET /donaciones` → muestra datos bancarios si configurados; muestra fallback si todos son null
+- [ ] Feature test: `GET /donaciones` → muestra QR si `donation_qr_media_id` configurado
+- [ ] Feature test: `GET /donaciones` → muestra sección Nequi si `donation_nequi` configurado
 - [ ] Unit test: `NavigationService::headerPages()` filtra solo publicadas con `show_in_header=true`
 - [ ] Unit test: resultado de nav está en caché (segunda llamada no toca BD)
 - [ ] Unit test: `SettingsComposer` inyecta instancia de `SiteSetting` en la vista
