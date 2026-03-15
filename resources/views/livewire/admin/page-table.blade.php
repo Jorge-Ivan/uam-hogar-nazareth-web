@@ -153,7 +153,7 @@
                 <div class="flex-1">
                     <h3 class="text-base font-medium text-gray-900">Eliminar página</h3>
                     <p class="mt-1 text-sm text-gray-500">
-                        Esta accion no se puede deshacer. La pagina sera eliminada permanentemente.
+                        Esta acción no se puede deshacer. La página será eliminada permanentemente.
                     </p>
                 </div>
             </div>

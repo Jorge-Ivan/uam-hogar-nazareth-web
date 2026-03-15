@@ -49,7 +49,7 @@
                                @error('slug') border-red-400 focus:border-red-400 focus:ring-red-200 @enderror"
                     >
                 </div>
-                <p class="mt-1 text-xs text-gray-400">Solo letras minusculas, numeros y guiones. Se genera automaticamente desde el titulo.</p>
+                <p class="mt-1 text-xs text-gray-400">Solo letras minúsculas, números y guiones. Se genera automáticamente desde el título.</p>
                 @error('slug')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror

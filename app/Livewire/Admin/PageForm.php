@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Livewire\Admin;
 
+use App\Enums\ContentStatus;
 use App\Models\Page;
 use App\Services\PageService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 /**
@@ -19,6 +22,8 @@ use Livewire\Component;
  */
 final class PageForm extends Component
 {
+    use AuthorizesRequests;
+
     public string $title = '';
 
     public string $slug = '';
@@ -27,6 +32,7 @@ final class PageForm extends Component
 
     public string $status = 'draft';
 
+    #[Locked]
     public ?int $pageId = null;
 
     public function __construct(
@@ -65,21 +71,12 @@ final class PageForm extends Component
         $this->validate($this->rules());
 
         if ($this->pageId) {
-            $page = Page::findOrFail($this->pageId);
-            $this->pageService->update($page, [
-                'title'   => $this->title,
-                'slug'    => $this->slug,
-                'content' => $this->content,
-                'status'  => $this->status,
-            ]);
+            $this->authorize('update', Page::findOrFail($this->pageId));
         } else {
-            $this->pageService->create([
-                'title'   => $this->title,
-                'slug'    => $this->slug,
-                'content' => $this->content,
-                'status'  => $this->status,
-            ]);
+            $this->authorize('create', Page::class);
         }
+
+        $this->persistPage();
 
         session()->flash('success', 'Página guardada.');
 
@@ -94,21 +91,12 @@ final class PageForm extends Component
         $this->validate($this->rules());
 
         if ($this->pageId) {
-            $page = Page::findOrFail($this->pageId);
-            $this->pageService->update($page, [
-                'title'   => $this->title,
-                'slug'    => $this->slug,
-                'content' => $this->content,
-                'status'  => $this->status,
-            ]);
+            $this->authorize('update', Page::findOrFail($this->pageId));
         } else {
-            $page = $this->pageService->create([
-                'title'   => $this->title,
-                'slug'    => $this->slug,
-                'content' => $this->content,
-                'status'  => $this->status,
-            ]);
+            $this->authorize('create', Page::class);
         }
+
+        $page = $this->persistPage();
 
         $this->pageService->publish($page);
 
@@ -137,7 +125,31 @@ final class PageForm extends Component
             'title'   => ['required', 'string', 'max:255'],
             'slug'    => ['required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', $uniqueSlug],
             'content' => ['required', 'string'],
-            'status'  => ['required', 'in:draft,published,archived'],
+            'status'  => ['required', Rule::enum(ContentStatus::class)],
         ];
+    }
+
+    /**
+     * Create or update the page record via PageService.
+     */
+    private function persistPage(): Page
+    {
+        $data = [
+            'title'   => $this->title,
+            'slug'    => $this->slug,
+            'content' => $this->content,
+            'status'  => $this->status,
+        ];
+
+        if ($this->pageId) {
+            $page = Page::findOrFail($this->pageId);
+
+            return $this->pageService->update($page, $data);
+        }
+
+        $page = $this->pageService->create($data);
+        $this->pageId = $page->id;
+
+        return $page;
     }
 }

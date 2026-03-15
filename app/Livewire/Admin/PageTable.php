@@ -7,6 +7,8 @@ namespace App\Livewire\Admin;
 use App\Models\Page;
 use App\Services\PageService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -18,6 +20,7 @@ use Livewire\WithPagination;
  */
 final class PageTable extends Component
 {
+    use AuthorizesRequests;
     use WithPagination;
 
     /** @var array<string> */
@@ -27,6 +30,7 @@ final class PageTable extends Component
 
     public string $statusFilter = '';
 
+    #[Locked]
     public ?int $deleteId = null;
 
     public function __construct(
@@ -77,7 +81,8 @@ final class PageTable extends Component
         $page = Page::find($this->deleteId);
 
         if ($page) {
-            $page->delete();
+            $this->authorize('delete', $page);
+            $this->pageService->delete($page);
         }
 
         $this->deleteId = null;
