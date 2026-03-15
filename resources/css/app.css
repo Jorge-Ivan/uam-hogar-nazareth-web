@@ -10,3 +10,11 @@
     --color-nazareth-gray:  #F5F7FA;
     --color-nazareth-green: #3D7A45;
 }
+
+/* Quill editor — overrides */
+.ql-editor {
+    min-height: 16rem;
+    font-size: 0.875rem;
+    color: #1a202c;
+    line-height: 1.625;
+}

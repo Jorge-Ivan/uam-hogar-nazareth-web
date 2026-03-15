@@ -6,14 +6,17 @@ namespace App\Livewire\Admin;
 
 use App\Enums\ContentStatus;
 use App\Models\Activity;
+use App\Models\Media;
 use App\Services\ActivityService;
 use App\Services\MediaService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Locked;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -40,6 +43,11 @@ final class ActivityForm extends Component
     public string $content = '';
 
     public string $status = 'draft';
+
+    public bool $showMediaBrowser = false;
+
+    /** @var array<int, array{id: int, url: string, alt: string}> */
+    public array $mediaItems = [];
 
     public ?int $featuredImageId = null;
 
@@ -158,6 +166,60 @@ final class ActivityForm extends Component
         session()->flash('success', 'Actividad publicada.');
 
         $this->redirect(route('admin.activities.index'), navigate: false);
+    }
+
+    /**
+     * Accept a base64 image from the content editor, store via MediaService, and return its URL.
+     *
+     * @return array{url: string, alt: string}|array<never, never>
+     */
+    #[Renderless]
+    public function uploadEditorImage(string $imageDataUrl): array
+    {
+        if (! preg_match('/^data:(?P<mime>image\/\w+);base64,(?P<data>.+)$/', $imageDataUrl, $matches)) {
+            return [];
+        }
+
+        $mimeType  = $matches['mime'];
+        $extension = match ($mimeType) {
+            'image/jpeg' => 'jpg',
+            'image/png'  => 'png',
+            'image/webp' => 'webp',
+            'image/gif'  => 'gif',
+            default      => 'jpg',
+        };
+
+        $tmpPath = tempnam(sys_get_temp_dir(), 'editor_') . '.' . $extension;
+        file_put_contents($tmpPath, base64_decode($matches['data']));
+
+        $uploadedFile = new UploadedFile($tmpPath, 'editor-image.' . $extension, $mimeType, null, true);
+        $media        = $this->mediaService->upload($uploadedFile, 'activities');
+
+        @unlink($tmpPath);
+
+        return [
+            'url' => $this->mediaService->getUrl($media),
+            'alt' => $media->alt_text ?? '',
+        ];
+    }
+
+    /**
+     * Load the latest images from the media library and show the browser panel.
+     */
+    public function loadMediaLibrary(): void
+    {
+        $this->mediaItems = Media::where('mime_type', 'like', 'image/%')
+            ->latest()
+            ->limit(40)
+            ->get()
+            ->map(fn (Media $m) => [
+                'id'  => $m->id,
+                'url' => $this->mediaService->getUrl($m),
+                'alt' => $m->alt_text ?? '',
+            ])
+            ->toArray();
+
+        $this->showMediaBrowser = true;
     }
 
     public function render(): View

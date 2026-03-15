@@ -40,23 +40,71 @@
                 <p class="mt-1 text-xs text-gray-400">Se genera automáticamente desde el título.</p>
             </div>
 
-            {{-- Contenido --}}
+            {{-- Contenido (editor enriquecido) --}}
             <div>
-                <label for="content" class="block text-sm font-medium text-gray-700">
+                <label class="block text-sm font-medium text-gray-700">
                     Contenido <span class="text-red-500">*</span>
                 </label>
-                <textarea
-                    id="content"
-                    wire:model.blur="content"
-                    rows="12"
-                    placeholder="Escribe aquí el contenido de la página..."
-                    class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 shadow-sm placeholder:text-gray-400
-                           focus:border-nazareth-blue focus:outline-none focus:ring-2 focus:ring-nazareth-blue/20
-                           @error('content') border-red-400 focus:border-red-400 focus:ring-red-200 @enderror"
-                ></textarea>
+
+                {{-- wire:ignore: Quill es dueño de este DOM, Livewire no lo morfea --}}
+                <div wire:ignore class="mt-1 rounded-lg border border-gray-200 shadow-sm">
+                    <div
+                        id="quill-editor"
+                        data-content="{{ $content }}"
+                    ></div>
+                </div>
+
                 @error('content')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror
+
+                {{-- Botón para abrir galería de medios --}}
+                <div class="mt-2">
+                    <button type="button"
+                        wire:click="loadMediaLibrary"
+                        class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-3 py-1.5
+                               text-xs font-medium text-gray-600 transition-colors hover:bg-gray-50
+                               focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0
+                                   L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        Insertar imagen existente
+                    </button>
+                </div>
+
+                {{-- Panel galería de medios: FUERA de wire:ignore, Livewire lo renderiza directamente --}}
+                @if ($showMediaBrowser)
+                    <div class="mt-3 rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+                        <div class="mb-3 flex items-center justify-between">
+                            <h3 class="text-sm font-medium text-gray-900">Seleccionar imagen existente</h3>
+                            <button type="button" wire:click="$set('showMediaBrowser', false)"
+                                class="text-gray-400 hover:text-gray-600">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                        @if (count($mediaItems) === 0)
+                            <p class="py-8 text-center text-sm text-gray-400">No hay imágenes subidas aún.</p>
+                        @else
+                            <div class="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
+                                @foreach ($mediaItems as $item)
+                                    <button
+                                        type="button"
+                                        onclick="window.insertFromLibrary('{{ $item['url'] }}', '{{ addslashes($item['alt']) }}')"
+                                        class="group relative aspect-square overflow-hidden rounded-lg border-2 border-transparent
+                                               hover:border-nazareth-blue focus:outline-none focus:ring-2 focus:ring-nazareth-blue">
+                                        <img src="{{ $item['url'] }}" alt="{{ $item['alt'] }}"
+                                             class="h-full w-full object-cover transition group-hover:opacity-90">
+                                    </button>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                @endif
             </div>
 
             {{-- Estado --}}

@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace App\Livewire\Admin;
 
 use App\Enums\ContentStatus;
+use App\Models\Media;
 use App\Models\Page;
+use App\Services\MediaService;
 use App\Services\PageService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Locked;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 /**
@@ -32,17 +36,25 @@ final class PageForm extends Component
 
     public string $status = 'draft';
 
+    public bool $showMediaBrowser = false;
+
+    /** @var array<int, array{id: int, url: string, alt: string}> */
+    public array $mediaItems = [];
+
     #[Locked]
     public ?int $pageId = null;
 
     private PageService $pageService;
 
+    private MediaService $mediaService;
+
     /**
      * Resolve services via Livewire boot — constructor injection is not supported by ComponentRegistry.
      */
-    public function boot(PageService $pageService): void
+    public function boot(PageService $pageService, MediaService $mediaService): void
     {
-        $this->pageService = $pageService;
+        $this->pageService   = $pageService;
+        $this->mediaService  = $mediaService;
     }
 
     /**
@@ -109,6 +121,61 @@ final class PageForm extends Component
         session()->flash('success', 'Página publicada.');
 
         $this->redirect(route('admin.pages.index'), navigate: false);
+    }
+
+    /**
+     * Accept a base64-encoded image from the TipTap editor, upload it through
+     * MediaService, and return the public URL so the editor can embed it.
+     *
+     * @return array{url: string, alt: string}|array<never, never>
+     */
+    #[Renderless]
+    public function uploadEditorImage(string $imageDataUrl): array
+    {
+        if (! preg_match('/^data:(?P<mime>image\/\w+);base64,(?P<data>.+)$/', $imageDataUrl, $matches)) {
+            return [];
+        }
+
+        $mimeType  = $matches['mime'];
+        $extension = match ($mimeType) {
+            'image/jpeg' => 'jpg',
+            'image/png'  => 'png',
+            'image/webp' => 'webp',
+            'image/gif'  => 'gif',
+            default      => 'jpg',
+        };
+
+        $tmpPath = tempnam(sys_get_temp_dir(), 'editor_') . '.' . $extension;
+        file_put_contents($tmpPath, base64_decode($matches['data']));
+
+        $uploadedFile = new UploadedFile($tmpPath, 'editor-image.' . $extension, $mimeType, null, true);
+        $media        = $this->mediaService->upload($uploadedFile, 'pages');
+
+        @unlink($tmpPath);
+
+        return [
+            'url' => $this->mediaService->getUrl($media),
+            'alt' => $media->alt_text ?? '',
+        ];
+    }
+
+    /**
+     * Load the latest images from the media library and show the browser panel.
+     */
+    public function loadMediaLibrary(): void
+    {
+        $this->mediaItems = Media::where('mime_type', 'like', 'image/%')
+            ->latest()
+            ->limit(40)
+            ->get()
+            ->map(fn (Media $m) => [
+                'id'  => $m->id,
+                'url' => $this->mediaService->getUrl($m),
+                'alt' => $m->alt_text ?? '',
+            ])
+            ->toArray();
+
+        $this->showMediaBrowser = true;
     }
 
     public function render(): View
