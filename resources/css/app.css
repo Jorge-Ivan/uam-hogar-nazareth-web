@@ -1,3 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+@theme {
+    --color-nazareth-blue:  #1B4B8A;
+    --color-nazareth-light: #2D6CC2;
+    --color-nazareth-gold:  #E8A020;
+    --color-nazareth-gray:  #F5F7FA;
+    --color-nazareth-green: #3D7A45;
+}
