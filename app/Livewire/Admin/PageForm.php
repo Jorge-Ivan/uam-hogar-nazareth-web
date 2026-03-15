@@ -78,10 +78,17 @@ final class PageForm extends Component
             $this->slug          = $page->slug;
             $this->content       = $page->content;
             $this->status        = $page->status->value;
-            $this->parentId      = $page->parent_id;
             $this->showInHeader  = $page->show_in_header;
             $this->showInFooter  = $page->show_in_footer;
             $this->menuOrder     = $page->menu_order;
+
+            // Only keep the parent reference if it still exists and is published.
+            // A parent that was archived after this page was saved would leave the
+            // select visually at "Ninguna" while $parentId held the stale ID.
+            $parent = $page->parent_id ? Page::find($page->parent_id) : null;
+            $this->parentId = ($parent && $parent->status === ContentStatus::Published)
+                ? $parent->id
+                : null;
         }
     }
 
@@ -221,7 +228,7 @@ final class PageForm extends Component
             'slug'          => ['required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', $uniqueSlug],
             'content'       => ['required', 'string'],
             'status'        => ['required', Rule::enum(ContentStatus::class)],
-            'parentId'      => ['nullable', 'integer', 'exists:pages,id'],
+            'parentId'      => ['nullable', 'integer', Rule::exists('pages', 'id')->where('status', ContentStatus::Published->value)],
             'showInHeader'  => ['boolean'],
             'showInFooter'  => ['boolean'],
             'menuOrder'     => ['integer', 'min:0', 'max:999'],

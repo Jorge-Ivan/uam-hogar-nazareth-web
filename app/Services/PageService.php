@@ -46,6 +46,10 @@ final class PageService
 
     public function archive(Page $page): Page
     {
+        // Detach children — consistent with FK nullOnDelete behavior on hard delete.
+        // Children become top-level pages rather than orphaned under a hidden parent.
+        $page->children()->update(['parent_id' => null]);
+
         $page->update(['status' => ContentStatus::Archived]);
 
         $this->clearNavigationCache();
