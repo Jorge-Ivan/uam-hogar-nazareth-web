@@ -19,4 +19,12 @@ final class DocumentService
 
         return $document->fresh();
     }
+
+    /**
+     * Permanently delete a document record.
+     */
+    public function delete(Document $document): void
+    {
+        $document->delete();
+    }
 }
