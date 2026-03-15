@@ -264,6 +264,18 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
     - Col 3: `$siteSettings->contact_address`, `$siteSettings->contact_phone`, `$siteSettings->contact_email`, `$siteSettings->contact_schedule`; WhatsApp → `<a href="https://wa.me/{{ $siteSettings->contact_whatsapp }}">` solo si no es `null`
   - **SEO slots:** `@yield('meta_title')`, `@yield('meta_description')`, Open Graph completo (og:title, og:description, og:image, og:url), Facebook y Twitter/X metatags, canonical
   - Skip-to-content, semántica HTML (`<nav aria-label>`, `<main id="main-content">`)
+  - **Banda de atribución** al pie del footer (debajo de las 3 columnas institucionales), separada por `border-t border-white/10`:
+    ```blade
+    <div class="border-t border-white/10 py-4 text-center text-xs text-gray-400">
+        © {{ date('Y') }} Fundación Hogar del Anciano Nazareth &middot;
+        Sitio web desarrollado como práctica social por
+        <a href="https://www.linkedin.com/in/jorgecarrillog/" target="_blank" rel="noopener noreferrer"
+           class="text-gray-400 hover:text-gray-200 hover:underline underline-offset-2">Jorge Carrillo</a>
+        &middot;
+        <a href="https://www.autonoma.edu.co/" target="_blank" rel="noopener noreferrer"
+           class="text-gray-400 hover:text-gray-200 hover:underline underline-offset-2">Universidad Autónoma de Manizales</a>
+    </div>
+    ```
 
 ### Controladores y vistas
 - [ ] `Website/HomeController` → `/` (hero + últimas actividades + próximos eventos)

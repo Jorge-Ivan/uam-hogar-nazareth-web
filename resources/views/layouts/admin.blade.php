@@ -231,6 +231,26 @@
             <main class="flex-1 p-6">
                 @yield('content')
             </main>
+
+            {{-- Atribución del desarrollador --}}
+            <footer class="border-t border-gray-200 bg-white px-6 py-3">
+                <p class="text-center text-xs text-gray-400">
+                    Práctica social universitaria &middot;
+                    Desarrollado por
+                    <a href="https://www.linkedin.com/in/jorgecarrillog/"
+                       target="_blank" rel="noopener noreferrer"
+                       class="hover:text-gray-600 hover:underline underline-offset-2">
+                        Jorge Carrillo
+                    </a>
+                    &middot;
+                    <a href="https://www.autonoma.edu.co/"
+                       target="_blank" rel="noopener noreferrer"
+                       class="hover:text-gray-600 hover:underline underline-offset-2">
+                        Universidad Autónoma de Manizales
+                    </a>
+                    &middot; 2026
+                </p>
+            </footer>
         </div>
     </div>
 
