@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(DocumentCategorySeeder::class);
+        $this->call(SiteSettingSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 

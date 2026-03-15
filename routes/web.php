@@ -77,4 +77,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Documentos
     Route::get('/documents', fn () => view('admin.documents.index'))->name('documents.index');
     Route::get('/documents/create', fn () => view('admin.documents.create'))->name('documents.create');
+
+    // Configuración
+    Route::get('/settings', fn () => view('admin.settings.index'))->name('settings');
 });
