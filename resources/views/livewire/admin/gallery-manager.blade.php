@@ -134,7 +134,8 @@
                         class="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm"
                     >
                         {{-- Drag handle --}}
-                        <div class="absolute left-2 top-2 z-10 flex h-7 w-7 cursor-move items-center justify-center rounded-md bg-white/80 shadow-sm"
+                        <div data-drag-handle
+                             class="absolute left-2 top-2 z-10 flex h-7 w-7 cursor-move items-center justify-center rounded-md bg-white/80 shadow-sm"
                              title="Arrastra para reordenar">
                             <svg class="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -182,7 +183,7 @@
             </div>
 
             <p class="mt-3 text-xs text-gray-400">
-                Las imágenes están ordenadas por posición. Usa los controles de arrastre para reorganizarlas y guarda los cambios llamando a reorder() desde JavaScript si es necesario.
+                Arrastra las imágenes para cambiar su orden.
             </p>
         @endif
 
