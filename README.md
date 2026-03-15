@@ -119,6 +119,7 @@ app/
 
 docs/               # Documentación del proyecto
 ├── architecture.md                # Arquitectura del sistema
+├── design-guide.md                # Paleta de colores, tipografía y patrones UI
 ├── domain-model.md                # Entidades y relaciones
 ├── laravel-architecture-guide.md  # Patrones y convenciones
 ├── plan.md                        # Hoja de ruta (estado actual)
