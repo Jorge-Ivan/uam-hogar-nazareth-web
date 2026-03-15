@@ -6,7 +6,7 @@
         </p>
     </div>
 
-    <div class="space-y-8">
+    <div class="space-y-6">
 
         {{-- ── 1. Organización ──────────────────────────────────────── --}}
         <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -376,12 +376,12 @@
         </div>
 
         {{-- ── Guardar ───────────────────────────────────────────────── --}}
-        <div class="flex justify-end">
+        <div class="flex justify-end border-t border-gray-200 pt-6">
             <button
                 wire:click="save"
                 wire:loading.attr="disabled"
                 wire:target="save"
-                class="inline-flex items-center justify-center rounded-lg bg-nazareth-blue px-6 py-2.5 text-sm font-medium text-white shadow-sm
+                class="inline-flex items-center justify-center rounded-lg bg-nazareth-blue px-5 py-2.5 text-sm font-medium text-white shadow-sm
                        transition-colors hover:bg-nazareth-light focus:outline-none focus:ring-2 focus:ring-nazareth-blue focus:ring-offset-2 disabled:opacity-60"
             >
                 <span wire:loading.remove wire:target="save">Guardar configuración</span>

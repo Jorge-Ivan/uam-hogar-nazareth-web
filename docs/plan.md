@@ -209,6 +209,22 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [x] `app/Livewire/Admin/DocumentUploader.php` (categoría, año, subir PDF)
 - [x] Vistas blade correspondientes
 
+### Configuración del sitio
+- [x] `database/migrations/create_site_settings_table` — tabla singleton (22 columnas: org, contacto, redes, correo, donaciones)
+- [x] `app/Models/SiteSetting.php` — `static instance()` con `firstOrCreate`
+- [x] `app/Services/SettingService.php` — `get()` y `update()`
+- [x] `database/seeders/SiteSettingSeeder.php` — datos iniciales de la fundación
+- [x] `app/Livewire/Admin/SettingsForm.php` — 5 secciones, `dispatch('notify')` sin redirect
+- [x] `resources/views/livewire/admin/settings-form.blade.php`
+- [x] `resources/views/admin/settings/index.blade.php`
+- [x] Ruta `GET /admin/settings` → `admin.settings`
+- [x] Sidebar: ítem "Configuración" con ícono engranaje
+
+### Infraestructura de correo de contacto
+- [x] `app/Mail/ContactFormMail.php` — Envelope/Content API, `From:` construido desde settings
+- [x] `app/Jobs/SendContactEmail.php` — `ShouldQueue`, `$tries = 3`, valores de settings capturados al despachar
+- [x] `resources/views/emails/contact-form.blade.php` — plantilla en español
+
 ### Rutas admin
 - [x] `/admin/dashboard`
 - [x] `/admin/pages` (index, create, edit)
@@ -216,6 +232,7 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [x] `/admin/galleries` (index, create, manage)
 - [x] `/admin/events` (index, create, edit)
 - [x] `/admin/documents` (index, create)
+- [x] `/admin/settings`
 
 ### Verificación Fase 3
 - [x] Feature test: `ActivityForm` crea registro vía `ActivityService`
@@ -234,11 +251,18 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [ ] `app/Http/View/Composers/NavigationComposer.php` — inyecta `$navHeaderPages` y `$navFooterPages`
 - [ ] Registrar `NavigationComposer` en `app/Providers/AppServiceProvider.php` para `layouts.public`
 
+### Infraestructura de configuración del sitio (prerequisito)
+- [ ] `app/Http/View/Composers/SettingsComposer.php` — llama `SiteSetting::instance()` e inyecta `$siteSettings` en `layouts.public`
+- [ ] Registrar `SettingsComposer` en `AppServiceProvider` junto con `NavigationComposer` — ambos sobre `layouts.public`
+
 ### Layout
 - [ ] `resources/views/layouts/public.blade.php` (header nav español, footer, hamburger Alpine)
-  - Nav: ítems fijos hardcoded + ítems dinámicos desde `$navHeaderPages` con dropdown Alpine para subpáginas
-  - Footer: columna institucional usa `$navFooterPages`
-  - SEO slots: `@yield('meta_title')`, `@yield('meta_description')`, Open Graph (Todas las necesarias), Facebook y twitter metatags, metatags (cononical, etc)
+  - **Nav:** ítems fijos hardcoded + ítems dinámicos desde `$navHeaderPages` con dropdown Alpine para subpáginas
+  - **Footer 3 columnas:**
+    - Col 1: `$siteSettings->org_name`, `$siteSettings->org_tagline`, redes sociales desde `$siteSettings->social_*` (solo las que no sean `null`)
+    - Col 2: enlaces institucionales desde `$navFooterPages` + enlaces fijos (Transparencia, Donaciones)
+    - Col 3: `$siteSettings->contact_address`, `$siteSettings->contact_phone`, `$siteSettings->contact_email`, `$siteSettings->contact_schedule`; WhatsApp → `<a href="https://wa.me/{{ $siteSettings->contact_whatsapp }}">` solo si no es `null`
+  - **SEO slots:** `@yield('meta_title')`, `@yield('meta_description')`, Open Graph completo (og:title, og:description, og:image, og:url), Facebook y Twitter/X metatags, canonical
   - Skip-to-content, semántica HTML (`<nav aria-label>`, `<main id="main-content">`)
 
 ### Controladores y vistas
@@ -249,14 +273,26 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [ ] `Website/DocumentController` → `/transparencia` (agrupado por año y categoría)
 - [ ] `Website/PageController` → `/paginas/{slug}` — usar `scopePublished()->firstOrFail()` (no route model binding)
 - [ ] `resources/views/website/pages/show.blade.php` — breadcrumb automático si tiene padre
-- [ ] Vistas estáticas: `/donaciones`, `/contacto`
+- [ ] `Website/DonationsController` → `GET /donaciones` — datos bancarios dinámicos desde `$siteSettings->donation_*`; `@if` guard en cada campo (si staff no lo ha configurado no muestra)
+- [ ] `resources/views/website/donations.blade.php` — tarjeta de datos bancarios con `@if` guards; fallback si ningún campo configurado: aviso "Contáctenos para información sobre donaciones"
+- [ ] `Website/ContactController` → `GET /contacto` — `$siteSettings` disponible vía composer, no necesita pasarlo a mano
+- [ ] `app/Livewire/Website/ContactForm.php`
+  - Props: `name`, `email`, `phone` (opcional), `message`, `honeypot` (oculto anti-spam), `sent` (bool)
+  - `boot(SettingService)` para DI
+  - `submit()`: si `$honeypot !== ''` → reset silencioso (bot); valida; si `mail_contact_to` vacío → `$this->sent = false` + error flash; si ok → `SendContactEmail::dispatch(...)` + `$this->sent = true` + reset campos
+  - Mensajes de validación en español
+- [ ] `resources/views/website/contact.blade.php` — 2 columnas en md+:
+  - **Col izquierda** (info): `contact_address`, `contact_phone`, WhatsApp (`wa.me/`), `contact_email`, `contact_schedule`; iframe Google Maps si `contact_maps_url` no es null: `<iframe src="{{ $siteSettings->contact_maps_url }}" ...>`; cada bloque envuelto en `@if($siteSettings->campo)`
+  - **Col derecha** (formulario): `<livewire:website.contact-form />`; si `$siteSettings->mail_contact_to` es null → aviso "El formulario no está disponible en este momento"
 
 ### Rutas públicas
 - [ ] Grupo `Route::name('website.')` con constraint `where('slug', '[a-z0-9-]+')` en rutas de slug
+- [ ] `GET /donaciones` → `DonationsController` → `website.donations`
+- [ ] `GET /contacto` → `ContactController` → `website.contact`
 
 ### SEO básico
 - [ ] `@section('meta_title')`, `@section('meta_description')` por vista
-- [ ] Open Graph tags en actividades, galerías y páginas, Facebook y twitter metatags, metatags (cononical, etc)
+- [ ] Open Graph tags en actividades, galerías y páginas; Facebook y Twitter metatags; canonical
 
 ### Verificación Fase 4
 - [ ] Feature test: `GET /actividades` → solo publicadas
@@ -264,8 +300,14 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [ ] Feature test: `GET /paginas/{slug}` draft → 404
 - [ ] Feature test: página con padre muestra breadcrumb
 - [ ] Feature test: galería sin N+1
+- [ ] Feature test: `GET /contacto` → renderiza formulario cuando `mail_contact_to` configurado
+- [ ] Feature test: `GET /contacto` → muestra aviso cuando `mail_contact_to` es null
+- [ ] Feature test: `ContactForm::submit()` con honeypot relleno → no despacha `SendContactEmail`
+- [ ] Feature test: `ContactForm::submit()` válido → despacha `SendContactEmail` con datos correctos
+- [ ] Feature test: `GET /donaciones` → muestra datos bancarios si configurados; muestra fallback si todos son null
 - [ ] Unit test: `NavigationService::headerPages()` filtra solo publicadas con `show_in_header=true`
 - [ ] Unit test: resultado de nav está en caché (segunda llamada no toca BD)
+- [ ] Unit test: `SettingsComposer` inyecta instancia de `SiteSetting` en la vista
 
 ---
 
