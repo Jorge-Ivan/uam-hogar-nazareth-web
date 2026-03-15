@@ -40,7 +40,7 @@
             >
                 <option value="">Todos los años</option>
                 @foreach ($years as $year)
-                    <option value="{{ $year->id }}">{{ $year->year }}</option>
+                    <option value="{{ $year }}">{{ $year }}</option>
                 @endforeach
             </select>
         </div>
@@ -94,7 +94,7 @@
                                 {{ $document->category?->name ?? '—' }}
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-600">
-                                {{ $document->year?->year ?? '—' }}
+                                {{ $document->year ?? '—' }}
                             </td>
                             <td class="px-6 py-4">
                                 @if ($document->media)

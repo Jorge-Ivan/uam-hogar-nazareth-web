@@ -6,7 +6,6 @@ namespace App\Livewire\Admin;
 
 use App\Models\Document;
 use App\Models\DocumentCategory;
-use App\Models\DocumentYear;
 use App\Services\DocumentService;
 use App\Services\MediaService;
 use Illuminate\Contracts\View\View;
@@ -31,7 +30,7 @@ final class DocumentUploader extends Component
 
     public string $categoryId = '';
 
-    public string $yearId = '';
+    public string $year = '';
 
     /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile|null */
     public $fileUpload = null;
@@ -68,7 +67,7 @@ final class DocumentUploader extends Component
             'title'       => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:1000'],
             'categoryId'  => ['required', 'exists:document_categories,id'],
-            'yearId'      => ['required', 'exists:document_years,id'],
+            'year'        => ['required', 'digits:4', 'integer', 'min:2000', 'max:' . (date('Y') + 1)],
             'fileUpload'  => ['required', 'file', 'mimes:pdf', 'max:20480'],
         ];
     }
@@ -88,7 +87,7 @@ final class DocumentUploader extends Component
             'title'                => $this->title,
             'description'          => $this->description,
             'document_category_id' => $this->categoryId,
-            'document_year_id'     => $this->yearId,
+            'year'                 => $this->year,
             'media_id'             => $media->id,
         ]);
 
@@ -101,7 +100,6 @@ final class DocumentUploader extends Component
     {
         return view('livewire.admin.document-uploader', [
             'categories' => DocumentCategory::orderBy('name')->get(),
-            'years'      => DocumentYear::orderBy('year', 'desc')->get(),
         ]);
     }
 }

@@ -6,7 +6,6 @@ namespace App\Livewire\Admin;
 
 use App\Models\Document;
 use App\Models\DocumentCategory;
-use App\Models\DocumentYear;
 use App\Services\DocumentService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -101,16 +100,22 @@ final class DocumentTable extends Component
     public function render(): View
     {
         $documents = Document::query()
-            ->with(['category', 'year', 'media'])
+            ->with(['category', 'media'])
             ->when($this->categoryFilter, fn ($q) => $q->where('document_category_id', $this->categoryFilter))
-            ->when($this->yearFilter, fn ($q) => $q->where('document_year_id', $this->yearFilter))
+            ->when($this->yearFilter, fn ($q) => $q->where('year', $this->yearFilter))
             ->latest()
             ->paginate(15);
+
+        $years = Document::select('year')
+            ->whereNotNull('year')
+            ->distinct()
+            ->orderByDesc('year')
+            ->pluck('year');
 
         return view('livewire.admin.document-table', [
             'documents'  => $documents,
             'categories' => DocumentCategory::orderBy('name')->get(),
-            'years'      => DocumentYear::orderBy('year', 'desc')->get(),
+            'years'      => $years,
         ]);
     }
 }

@@ -77,27 +77,22 @@
 
             {{-- Año --}}
             <div>
-                <label for="yearId" class="block text-sm font-medium text-gray-700">
+                <label for="year" class="block text-sm font-medium text-gray-700">
                     Año <span class="text-red-500">*</span>
                 </label>
-                <select
-                    id="yearId"
-                    wire:model="yearId"
-                    class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 shadow-sm
+                <input
+                    id="year"
+                    type="text"
+                    wire:model.blur="year"
+                    placeholder="Ej. 2024"
+                    maxlength="4"
+                    inputmode="numeric"
+                    class="mt-1 block w-32 rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 shadow-sm placeholder:text-gray-400
                            focus:border-nazareth-blue focus:outline-none focus:ring-2 focus:ring-nazareth-blue/20
-                           @error('yearId') border-red-400 @enderror"
+                           @error('year') border-red-400 focus:border-red-400 focus:ring-red-200 @enderror"
                 >
-                    <option value="">Seleccionar año...</option>
-                    @forelse ($years as $year)
-                        <option value="{{ $year->id }}">{{ $year->year }}</option>
-                    @empty
-                        <option disabled>Sin años disponibles</option>
-                    @endforelse
-                </select>
-                @if ($years->isEmpty())
-                    <p class="mt-1 text-xs text-gray-400">Si no hay opciones, contacte al administrador para crear los años.</p>
-                @endif
-                @error('yearId')
+                <p class="mt-1 text-xs text-gray-400">4 dígitos, entre 2000 y {{ date('Y') + 1 }}.</p>
+                @error('year')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror
             </div>

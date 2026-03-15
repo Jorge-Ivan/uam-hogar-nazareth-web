@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 use App\Models\Document;
 use App\Models\DocumentCategory;
-use App\Models\DocumentYear;
 use App\Models\Media;
 use App\Services\DocumentService;
 
 it('creates a document', function (): void {
     $category = DocumentCategory::factory()->create();
-    $year     = DocumentYear::factory()->create();
     $media    = Media::factory()->pdf()->create();
     $service  = app(DocumentService::class);
 
@@ -18,14 +16,14 @@ it('creates a document', function (): void {
         'title'                => 'Registro DIAN 2024',
         'description'          => 'Documento oficial.',
         'document_category_id' => $category->id,
-        'document_year_id'     => $year->id,
+        'year'                 => '2024',
         'media_id'             => $media->id,
     ]);
 
     expect($document)->toBeInstanceOf(Document::class)
         ->and($document->title)->toBe('Registro DIAN 2024')
         ->and($document->document_category_id)->toBe($category->id)
-        ->and($document->document_year_id)->toBe($year->id)
+        ->and($document->year)->toBe('2024')
         ->and($document->media_id)->toBe($media->id);
 });
 

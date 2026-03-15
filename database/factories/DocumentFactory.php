@@ -6,7 +6,6 @@ namespace Database\Factories;
 
 use App\Models\Document;
 use App\Models\DocumentCategory;
-use App\Models\DocumentYear;
 use App\Models\Media;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,7 +23,7 @@ final class DocumentFactory extends Factory
             'title'                => $this->faker->sentence(4),
             'description'          => $this->faker->optional()->sentence(),
             'document_category_id' => DocumentCategory::factory(),
-            'document_year_id'     => DocumentYear::factory(),
+            'year'                 => (string) $this->faker->numberBetween(2020, 2025),
             'media_id'             => Media::factory()->pdf(),
         ];
     }
