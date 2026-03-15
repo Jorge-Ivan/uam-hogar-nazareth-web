@@ -82,17 +82,23 @@
                             @enderror
                         </div>
 
-                        {{-- Remember me --}}
-                        <div class="mb-6 flex items-center gap-2.5">
-                            <input
-                                type="checkbox"
-                                id="remember"
-                                name="remember"
-                                class="h-4 w-4 rounded border-gray-300 text-nazareth-blue focus:ring-nazareth-blue"
-                            >
-                            <label for="remember" class="text-sm text-gray-600">
-                                Recordarme
-                            </label>
+                        {{-- Remember me + forgot password --}}
+                        <div class="mb-6 flex items-center justify-between gap-2.5">
+                            <div class="flex items-center gap-2.5">
+                                <input
+                                    type="checkbox"
+                                    id="remember"
+                                    name="remember"
+                                    class="h-4 w-4 rounded border-gray-300 text-nazareth-blue focus:ring-nazareth-blue"
+                                >
+                                <label for="remember" class="text-sm text-gray-600">
+                                    Recordarme
+                                </label>
+                            </div>
+                            <a href="{{ route('password.request') }}"
+                               class="shrink-0 text-sm font-medium text-nazareth-blue hover:text-nazareth-light">
+                                ¿Olvidaste tu contraseña?
+                            </a>
                         </div>
 
                         {{-- Submit --}}
