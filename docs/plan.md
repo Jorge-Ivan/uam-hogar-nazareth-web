@@ -14,7 +14,7 @@
 | Migraciones (10 entidades) | ✅ Completa |
 | Modelos Eloquent | ✅ Completa |
 | Servicios y Actions | ✅ Completa |
-| Panel admin (Livewire) | ❌ No existe |
+| Panel admin (Livewire) | ✅ Completa |
 | Sitio web público (Blade) | ❌ No existe |
 | API REST | ❌ No existe |
 | Tests (Pest) | ❌ No existe |
@@ -168,48 +168,48 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 **Objetivo:** Panel Livewire completo para personal no técnico.
 
 ### Layout y auth
-- [ ] `resources/views/layouts/admin.blade.php` (sidebar Tailwind, nav en español)
-- [ ] `resources/views/auth/login.blade.php` ("Iniciar sesión")
-- [ ] `app/Http/Controllers/Admin/DashboardController.php`
-- [ ] `resources/views/admin/dashboard.blade.php` (conteos + actividades recientes)
+- [x] `resources/views/layouts/admin.blade.php` (sidebar Tailwind, nav en español)
+- [x] `resources/views/auth/login.blade.php` ("Iniciar sesión")
+- [x] `app/Http/Controllers/Admin/DashboardController.php`
+- [x] `resources/views/admin/dashboard.blade.php` (conteos + actividades recientes)
 
 ### Livewire — Pages
-- [ ] `app/Livewire/Admin/PageTable.php` (búsqueda, paginación, filtro estado, eliminar)
-- [ ] `app/Livewire/Admin/PageForm.php` (crear/editar, slug auto, estado)
-- [ ] Vistas blade correspondientes
+- [x] `app/Livewire/Admin/PageTable.php` (búsqueda, paginación, filtro estado, eliminar)
+- [x] `app/Livewire/Admin/PageForm.php` (crear/editar, slug auto, estado)
+- [x] Vistas blade correspondientes
 
 ### Livewire — Activities
-- [ ] `app/Livewire/Admin/ActivityTable.php` (búsqueda, filtro, publicar inline)
-- [ ] `app/Livewire/Admin/ActivityForm.php` (título, slug, excerpt, contenido, imagen, fecha)
-- [ ] Vistas blade correspondientes
+- [x] `app/Livewire/Admin/ActivityTable.php` (búsqueda, filtro, publicar inline)
+- [x] `app/Livewire/Admin/ActivityForm.php` (título, slug, excerpt, contenido, imagen, fecha)
+- [x] Vistas blade correspondientes
 
 ### Livewire — Galleries
-- [ ] `app/Livewire/Admin/GalleryTable.php`
-- [ ] `app/Livewire/Admin/GalleryManager.php` (subir imágenes, reordenar con Alpine Sortable, eliminar)
-- [ ] Vista blade correspondiente
+- [x] `app/Livewire/Admin/GalleryTable.php`
+- [x] `app/Livewire/Admin/GalleryManager.php` (subir imágenes, reordenar con Alpine Sortable, eliminar)
+- [x] Vista blade correspondiente
 
 ### Livewire — Events
-- [ ] `app/Livewire/Admin/EventTable.php`
-- [ ] `app/Livewire/Admin/EventForm.php` (fechas, ubicación, imagen)
-- [ ] Vistas blade correspondientes
+- [x] `app/Livewire/Admin/EventTable.php`
+- [x] `app/Livewire/Admin/EventForm.php` (fechas, ubicación, imagen)
+- [x] Vistas blade correspondientes
 
 ### Livewire — Documents
-- [ ] `app/Livewire/Admin/DocumentTable.php` (filtro categoría/año)
-- [ ] `app/Livewire/Admin/DocumentUploader.php` (categoría, año, subir PDF)
-- [ ] Vistas blade correspondientes
+- [x] `app/Livewire/Admin/DocumentTable.php` (filtro categoría/año)
+- [x] `app/Livewire/Admin/DocumentUploader.php` (categoría, año, subir PDF)
+- [x] Vistas blade correspondientes
 
 ### Rutas admin
-- [ ] `/admin/dashboard`
-- [ ] `/admin/pages` (index, create, edit)
-- [ ] `/admin/activities` (index, create, edit)
-- [ ] `/admin/galleries` (index, create, manage)
-- [ ] `/admin/events` (index, create, edit)
-- [ ] `/admin/documents` (index, create)
+- [x] `/admin/dashboard`
+- [x] `/admin/pages` (index, create, edit)
+- [x] `/admin/activities` (index, create, edit)
+- [x] `/admin/galleries` (index, create, manage)
+- [x] `/admin/events` (index, create, edit)
+- [x] `/admin/documents` (index, create)
 
 ### Verificación Fase 3
-- [ ] Feature test: `ActivityForm` crea registro vía `ActivityService`
-- [ ] Feature test: `GalleryManager` sube imagen y crea `GalleryImage`
-- [ ] Feature test: rutas admin sin auth → redirige login
+- [x] Feature test: `ActivityForm` crea registro vía `ActivityService`
+- [x] Feature test: `GalleryManager` sube imagen y crea `GalleryImage`
+- [x] Feature test: rutas admin sin auth → redirige login
 - [ ] **Manual:** staff puede crear y publicar todos los tipos de contenido
 
 ---
