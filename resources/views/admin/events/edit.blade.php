@@ -3,5 +3,5 @@
 @section('title', 'Editar evento')
 
 @section('content')
-    <p class="text-gray-500">Módulo en construcción.</p>
+    <livewire:admin.event-form :event="$event" />
 @endsection

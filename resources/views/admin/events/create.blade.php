@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Crear evento')
+@section('title', 'Nuevo evento')
 
 @section('content')
-    <p class="text-gray-500">Módulo en construcción.</p>
+    <livewire:admin.event-form />
 @endsection

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\Activity;
+use App\Models\Event;
 use App\Models\Gallery;
 use App\Models\Page;
 use Illuminate\Support\Facades\Route;
@@ -54,7 +55,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Eventos
     Route::get('/events', fn () => view('admin.events.index'))->name('events.index');
     Route::get('/events/create', fn () => view('admin.events.create'))->name('events.create');
-    Route::get('/events/{event}/edit', fn ($event) => view('admin.events.edit', ['event' => $event]))->name('events.edit');
+    Route::get('/events/{event}/edit', fn (Event $event) => view('admin.events.edit', ['event' => $event]))->name('events.edit');
 
     // Documentos
     Route::get('/documents', fn () => view('admin.documents.index'))->name('documents.index');
