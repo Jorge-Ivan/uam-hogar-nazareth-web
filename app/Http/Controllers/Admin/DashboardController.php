@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Activity;
-use App\Models\Event;
-use App\Models\Gallery;
-use App\Models\Page;
+use App\Services\DashboardService;
 use Illuminate\View\View;
 
 /**
@@ -16,17 +13,15 @@ use Illuminate\View\View;
  */
 final class DashboardController extends Controller
 {
+    public function __construct(
+        private readonly DashboardService $dashboard,
+    ) {}
+
     /**
      * Show the admin dashboard.
      */
     public function __invoke(): View
     {
-        return view('admin.dashboard', [
-            'totalPages'       => Page::count(),
-            'totalActivities'  => Activity::count(),
-            'totalGalleries'   => Gallery::count(),
-            'totalEvents'      => Event::count(),
-            'recentActivities' => Activity::with('featuredImage')->latest()->limit(5)->get(),
-        ]);
+        return view('admin.dashboard', $this->dashboard->getSummary());
     }
 }

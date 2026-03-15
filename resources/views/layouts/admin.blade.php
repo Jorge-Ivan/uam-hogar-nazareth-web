@@ -184,7 +184,7 @@
                 <div class="flex items-center gap-3">
                     <div class="text-right hidden sm:block">
                         <p class="text-sm font-medium text-gray-800">{{ auth()->user()->name }}</p>
-                        <p class="text-xs text-gray-500">Administrador</p>
+                        <p class="text-xs text-gray-500">{{ auth()->user()->role === \App\Enums\UserRole::Admin ? 'Administrador' : 'Editor' }}</p>
                     </div>
                     <div class="flex h-9 w-9 items-center justify-center rounded-full bg-nazareth-blue text-sm font-medium text-white">
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
