@@ -99,6 +99,7 @@ final class PageTable extends Component
     public function render(): View
     {
         $pages = Page::query()
+            ->with('parent:id,title')
             ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%"))
             ->when($this->statusFilter, fn ($q) => $q->where('status', $this->statusFilter))
             ->latest()

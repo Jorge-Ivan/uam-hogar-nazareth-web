@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Enums\ContentStatus;
 use App\Models\Page;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 final class PageService
@@ -26,15 +27,19 @@ final class PageService
 
         $page->update($data);
 
+        $this->clearNavigationCache();
+
         return $page->fresh();
     }
 
     public function publish(Page $page): Page
     {
         $page->update([
-            'status' => ContentStatus::Published,
+            'status'       => ContentStatus::Published,
             'published_at' => now(),
         ]);
+
+        $this->clearNavigationCache();
 
         return $page->fresh();
     }
@@ -43,11 +48,21 @@ final class PageService
     {
         $page->update(['status' => ContentStatus::Archived]);
 
+        $this->clearNavigationCache();
+
         return $page->fresh();
     }
 
     public function delete(Page $page): void
     {
         $page->delete();
+
+        $this->clearNavigationCache();
+    }
+
+    private function clearNavigationCache(): void
+    {
+        Cache::forget('nav.header');
+        Cache::forget('nav.footer');
     }
 }

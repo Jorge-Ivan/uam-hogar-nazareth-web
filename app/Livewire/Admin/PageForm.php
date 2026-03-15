@@ -10,6 +10,7 @@ use App\Models\Page;
 use App\Services\MediaService;
 use App\Services\PageService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
@@ -22,7 +23,7 @@ use Livewire\Component;
  * Livewire component for creating and editing admin Pages.
  *
  * Handles auto-slug generation, validation, draft saving,
- * and publishing via PageService.
+ * publishing via PageService, and navigation menu configuration.
  */
 final class PageForm extends Component
 {
@@ -35,6 +36,15 @@ final class PageForm extends Component
     public string $content = '';
 
     public string $status = 'draft';
+
+    // Navigation fields
+    public ?int $parentId = null;
+
+    public bool $showInHeader = false;
+
+    public bool $showInFooter = false;
+
+    public int $menuOrder = 0;
 
     public bool $showMediaBrowser = false;
 
@@ -63,11 +73,15 @@ final class PageForm extends Component
     public function mount(?Page $page = null): void
     {
         if ($page && $page->exists) {
-            $this->pageId  = $page->id;
-            $this->title   = $page->title;
-            $this->slug    = $page->slug;
-            $this->content = $page->content;
-            $this->status  = $page->status->value;
+            $this->pageId        = $page->id;
+            $this->title         = $page->title;
+            $this->slug          = $page->slug;
+            $this->content       = $page->content;
+            $this->status        = $page->status->value;
+            $this->parentId      = $page->parent_id;
+            $this->showInHeader  = $page->show_in_header;
+            $this->showInFooter  = $page->show_in_footer;
+            $this->menuOrder     = $page->menu_order;
         }
     }
 
@@ -180,7 +194,15 @@ final class PageForm extends Component
 
     public function render(): View
     {
-        return view('livewire.admin.page-form');
+        // Published top-level pages that can serve as parent (exclude self to avoid circular)
+        $parentPageOptions = Page::query()
+            ->whereNull('parent_id')
+            ->where('status', ContentStatus::Published)
+            ->when($this->pageId, fn ($q) => $q->where('id', '!=', $this->pageId))
+            ->orderBy('menu_order')
+            ->get(['id', 'title']);
+
+        return view('livewire.admin.page-form', compact('parentPageOptions'));
     }
 
     /**
@@ -195,10 +217,14 @@ final class PageForm extends Component
         }
 
         return [
-            'title'   => ['required', 'string', 'max:255'],
-            'slug'    => ['required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', $uniqueSlug],
-            'content' => ['required', 'string'],
-            'status'  => ['required', Rule::enum(ContentStatus::class)],
+            'title'         => ['required', 'string', 'max:255'],
+            'slug'          => ['required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', $uniqueSlug],
+            'content'       => ['required', 'string'],
+            'status'        => ['required', Rule::enum(ContentStatus::class)],
+            'parentId'      => ['nullable', 'integer', 'exists:pages,id'],
+            'showInHeader'  => ['boolean'],
+            'showInFooter'  => ['boolean'],
+            'menuOrder'     => ['integer', 'min:0', 'max:999'],
         ];
     }
 
@@ -208,10 +234,14 @@ final class PageForm extends Component
     private function persistPage(): Page
     {
         $data = [
-            'title'   => $this->title,
-            'slug'    => $this->slug,
-            'content' => $this->content,
-            'status'  => $this->status,
+            'title'          => $this->title,
+            'slug'           => $this->slug,
+            'content'        => $this->content,
+            'status'         => $this->status,
+            'parent_id'      => $this->parentId ?: null,
+            'show_in_header' => $this->showInHeader,
+            'show_in_footer' => $this->showInFooter,
+            'menu_order'     => $this->menuOrder,
         ];
 
         if ($this->pageId) {

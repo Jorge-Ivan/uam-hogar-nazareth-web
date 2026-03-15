@@ -22,11 +22,15 @@ final class PageFactory extends Factory
         $title = $this->faker->sentence(4);
 
         return [
-            'title'        => $title,
-            'slug'         => Str::slug($title),
-            'content'      => $this->faker->paragraphs(3, true),
-            'status'       => ContentStatus::Draft,
-            'published_at' => null,
+            'title'          => $title,
+            'slug'           => Str::slug($title),
+            'content'        => $this->faker->paragraphs(3, true),
+            'status'         => ContentStatus::Draft,
+            'published_at'   => null,
+            'parent_id'      => null,
+            'show_in_header' => false,
+            'show_in_footer' => false,
+            'menu_order'     => 0,
         ];
     }
 
@@ -42,6 +46,24 @@ final class PageFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => ContentStatus::Archived,
+        ]);
+    }
+
+    public function inHeader(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'show_in_header' => true,
+            'status'         => ContentStatus::Published,
+            'published_at'   => now(),
+        ]);
+    }
+
+    public function inFooter(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'show_in_footer' => true,
+            'status'         => ContentStatus::Published,
+            'published_at'   => now(),
         ]);
     }
 }

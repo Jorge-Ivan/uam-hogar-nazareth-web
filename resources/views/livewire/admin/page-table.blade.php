@@ -61,6 +61,9 @@
                             Estado
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                            Menú
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                             Publicado
                         </th>
                         <th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">
@@ -73,7 +76,12 @@
                         <tr wire:key="{{ $page->id }}" class="hover:bg-gray-50">
                             <td class="px-6 py-4">
                                 <div class="text-sm font-medium text-gray-900">{{ $page->title }}</div>
-                                <div class="text-xs text-gray-400">{{ $page->slug }}</div>
+                                <div class="text-xs text-gray-400">
+                                    @if ($page->parent)
+                                        <span>↳ {{ $page->parent->title }}</span> ·
+                                    @endif
+                                    {{ $page->slug }}
+                                </div>
                             </td>
                             <td class="px-6 py-4">
                                 @if ($page->status->value === 'published')
@@ -89,6 +97,23 @@
                                         Borrador
                                     </span>
                                 @endif
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-wrap gap-1">
+                                    @if ($page->show_in_header)
+                                        <span class="inline-flex items-center rounded-full bg-nazareth-blue/10 px-2 py-0.5 text-xs font-medium text-nazareth-blue">
+                                            Encabezado
+                                        </span>
+                                    @endif
+                                    @if ($page->show_in_footer)
+                                        <span class="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+                                            Pie de página
+                                        </span>
+                                    @endif
+                                    @if (! $page->show_in_header && ! $page->show_in_footer)
+                                        <span class="text-sm text-gray-400">—</span>
+                                    @endif
+                                </div>
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-500">
                                 {{ $page->published_at?->format('d/m/Y') ?? '—' }}

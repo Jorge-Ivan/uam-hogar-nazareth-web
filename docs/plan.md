@@ -1,7 +1,7 @@
 # Plan: Hogar Nazareth — Hoja de Ruta de Implementación
 
 > **Documento vivo.** Marcar cada ítem con `[x]` al completarlo.
-> Última revisión: 2026-03-14
+> Última revisión: 2026-03-15
 
 ---
 
@@ -178,6 +178,17 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [x] `app/Livewire/Admin/PageForm.php` (crear/editar, slug auto, estado)
 - [x] Vistas blade correspondientes
 
+### Navegación de páginas
+- [x] `database/migrations/add_navigation_fields_to_pages_table` — columnas `parent_id`, `show_in_header`, `show_in_footer`, `menu_order`
+- [x] `app/Models/Page.php` — relaciones `parent()`/`children()`, scopes `inHeader()`/`inFooter()`, fillable y casts
+- [x] `app/Services/PageService.php` — `Cache::forget('nav.header/footer')` en publish/update/archive/delete
+- [x] `app/Http/Requests/StorePageRequest.php` — reglas + mensajes ES para 4 nuevos campos
+- [x] `app/Http/Requests/UpdatePageRequest.php` — idem
+- [x] `app/Livewire/Admin/PageForm.php` — sección "Navegación": página padre, orden, checkboxes encabezado/pie
+- [x] `app/Livewire/Admin/PageTable.php` — eager-load `parent:id,title`
+- [x] `resources/views/livewire/admin/page-table.blade.php` — columna "Menú" + indicador padre↳ en título
+- [x] `database/factories/PageFactory.php` — estados `inHeader()` e `inFooter()`
+
 ### Livewire — Activities
 - [x] `app/Livewire/Admin/ActivityTable.php` (búsqueda, filtro, publicar inline)
 - [x] `app/Livewire/Admin/ActivityForm.php` (título, slug, excerpt, contenido, imagen, fecha)
@@ -218,8 +229,17 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 
 **Objetivo:** Exposición pública del contenido gestionado.
 
+### Infraestructura de navegación (prerequisito)
+- [ ] `app/Services/NavigationService.php` — `headerPages()` y `footerPages()` con caché 5 min
+- [ ] `app/Http/View/Composers/NavigationComposer.php` — inyecta `$navHeaderPages` y `$navFooterPages`
+- [ ] Registrar `NavigationComposer` en `app/Providers/AppServiceProvider.php` para `layouts.public`
+
 ### Layout
 - [ ] `resources/views/layouts/public.blade.php` (header nav español, footer, hamburger Alpine)
+  - Nav: ítems fijos hardcoded + ítems dinámicos desde `$navHeaderPages` con dropdown Alpine para subpáginas
+  - Footer: columna institucional usa `$navFooterPages`
+  - SEO slots: `@yield('meta_title')`, `@yield('meta_description')`, Open Graph (Todas las necesarias), Facebook y twitter metatags, metatags (cononical, etc)
+  - Skip-to-content, semántica HTML (`<nav aria-label>`, `<main id="main-content">`)
 
 ### Controladores y vistas
 - [ ] `Website/HomeController` → `/` (hero + últimas actividades + próximos eventos)
@@ -227,17 +247,25 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [ ] `Website/GalleryController` → `/galerias`, `/galerias/{slug}` (lightbox Alpine)
 - [ ] `Website/EventController` → `/eventos`, `/eventos/{slug}`
 - [ ] `Website/DocumentController` → `/transparencia` (agrupado por año y categoría)
-- [ ] `Website/PageController` → `/paginas/{slug}`
+- [ ] `Website/PageController` → `/paginas/{slug}` — usar `scopePublished()->firstOrFail()` (no route model binding)
+- [ ] `resources/views/website/pages/show.blade.php` — breadcrumb automático si tiene padre
 - [ ] Vistas estáticas: `/donaciones`, `/contacto`
 
+### Rutas públicas
+- [ ] Grupo `Route::name('website.')` con constraint `where('slug', '[a-z0-9-]+')` en rutas de slug
+
 ### SEO básico
-- [ ] `@section('title')` y `@section('description')` por vista
-- [ ] Open Graph tags en actividades y galerías
+- [ ] `@section('meta_title')`, `@section('meta_description')` por vista
+- [ ] Open Graph tags en actividades, galerías y páginas, Facebook y twitter metatags, metatags (cononical, etc)
 
 ### Verificación Fase 4
 - [ ] Feature test: `GET /actividades` → solo publicadas
 - [ ] Feature test: `GET /actividades/{slug}` draft → 404
+- [ ] Feature test: `GET /paginas/{slug}` draft → 404
+- [ ] Feature test: página con padre muestra breadcrumb
 - [ ] Feature test: galería sin N+1
+- [ ] Unit test: `NavigationService::headerPages()` filtra solo publicadas con `show_in_header=true`
+- [ ] Unit test: resultado de nav está en caché (segunda llamada no toca BD)
 
 ---
 

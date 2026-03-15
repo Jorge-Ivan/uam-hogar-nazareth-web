@@ -130,6 +130,83 @@
 
         </div>
 
+        {{-- ── Navegación ─────────────────────────────────────────────── --}}
+        <div class="mt-6 border-t border-gray-200 pt-6">
+            <h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-500">
+                Navegación
+            </h3>
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {{-- Página superior (parent) --}}
+                <div>
+                    <label for="parentId" class="block text-sm font-medium text-gray-700">
+                        Página superior
+                    </label>
+                    <select
+                        id="parentId"
+                        wire:model="parentId"
+                        class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 shadow-sm
+                               focus:border-nazareth-blue focus:outline-none focus:ring-2 focus:ring-nazareth-blue/20"
+                    >
+                        <option value="">Ninguna (página principal)</option>
+                        @foreach ($parentPageOptions as $option)
+                            <option value="{{ $option->id }}">{{ $option->title }}</option>
+                        @endforeach
+                    </select>
+                    <p class="mt-1 text-xs text-gray-400">
+                        Si selecciona una página, esta aparecerá como submenú de ella.
+                    </p>
+                    @error('parentId')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Orden en menú --}}
+                <div>
+                    <label for="menuOrder" class="block text-sm font-medium text-gray-700">
+                        Orden en menú
+                    </label>
+                    <input
+                        id="menuOrder"
+                        type="number"
+                        min="0"
+                        max="999"
+                        wire:model="menuOrder"
+                        class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 shadow-sm
+                               focus:border-nazareth-blue focus:outline-none focus:ring-2 focus:ring-nazareth-blue/20
+                               @error('menuOrder') border-red-400 @enderror"
+                    >
+                    <p class="mt-1 text-xs text-gray-400">
+                        Número menor aparece primero. Use 0, 10, 20… para facilitar reordenar.
+                    </p>
+                    @error('menuOrder')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            {{-- Visibilidad en menús --}}
+            <div class="mt-4 flex flex-wrap gap-6">
+                <label class="flex cursor-pointer items-center gap-2">
+                    <input
+                        type="checkbox"
+                        wire:model="showInHeader"
+                        class="h-4 w-4 rounded border-gray-300 text-nazareth-blue focus:ring-nazareth-blue"
+                    >
+                    <span class="text-sm text-gray-700">Mostrar en menú principal</span>
+                </label>
+
+                <label class="flex cursor-pointer items-center gap-2">
+                    <input
+                        type="checkbox"
+                        wire:model="showInFooter"
+                        class="h-4 w-4 rounded border-gray-300 text-nazareth-blue focus:ring-nazareth-blue"
+                    >
+                    <span class="text-sm text-gray-700">Mostrar en pie de página</span>
+                </label>
+            </div>
+        </div>
+
         {{-- Actions --}}
         <div class="mt-8 flex flex-col-reverse gap-3 border-t border-gray-100 pt-6 sm:flex-row sm:justify-end">
             <a
