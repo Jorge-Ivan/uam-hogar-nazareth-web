@@ -45,4 +45,9 @@ final class PageService
 
         return $page->fresh();
     }
+
+    public function delete(Page $page): void
+    {
+        $page->delete();
+    }
 }

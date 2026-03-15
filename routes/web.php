@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\Activity;
+use App\Models\Gallery;
 use App\Models\Page;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +49,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Galerías
     Route::get('/galleries', fn () => view('admin.galleries.index'))->name('galleries.index');
     Route::get('/galleries/create', fn () => view('admin.galleries.create'))->name('galleries.create');
-    Route::get('/galleries/{gallery}/manage', fn ($gallery) => view('admin.galleries.manage', ['gallery' => $gallery]))->name('galleries.manage');
+    Route::get('/galleries/{gallery}/manage', fn (Gallery $gallery) => view('admin.galleries.manage', ['gallery' => $gallery]))->name('galleries.manage');
 
     // Eventos
     Route::get('/events', fn () => view('admin.events.index'))->name('events.index');

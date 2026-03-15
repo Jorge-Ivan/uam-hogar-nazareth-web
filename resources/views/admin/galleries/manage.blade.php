@@ -3,5 +3,5 @@
 @section('title', 'Gestionar galería')
 
 @section('content')
-    <p class="text-gray-500">Módulo en construcción.</p>
+    <livewire:admin.gallery-manager :gallery="$gallery" />
 @endsection
