@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Crear página')
+@section('title', 'Nueva página')
 
 @section('content')
-    <p class="text-gray-500">Módulo en construcción.</p>
+    <livewire:admin.page-form />
 @endsection
