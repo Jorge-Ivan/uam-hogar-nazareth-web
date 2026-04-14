@@ -26,4 +26,12 @@ final class EventService
 
         return $event->fresh();
     }
+
+    /**
+     * Permanently delete an event record.
+     */
+    public function delete(Event $event): void
+    {
+        $event->delete();
+    }
 }

@@ -19,7 +19,8 @@ final class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user() || $request->user()->role !== UserRole::Admin) {
+        $user = $request->user();
+        if ($user === null || $user->role !== UserRole::Admin) {
             abort(403, 'Acceso no autorizado.');
         }
 

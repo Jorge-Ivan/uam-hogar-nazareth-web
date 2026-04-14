@@ -1,3 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+@theme {
+    --color-nazareth-blue:  #1B4B8A;
+    --color-nazareth-light: #2D6CC2;
+    --color-nazareth-gold:  #E8A020;
+    --color-nazareth-gray:  #F5F7FA;
+    --color-nazareth-green: #3D7A45;
+}
+
+/* Quill editor — overrides */
+.ql-editor {
+    min-height: 16rem;
+    font-size: 0.875rem;
+    color: #1a202c;
+    line-height: 1.625;
+}

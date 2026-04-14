@@ -53,4 +53,9 @@ final class ActivityService
 
         return $activity->fresh();
     }
+
+    public function delete(Activity $activity): void
+    {
+        $activity->delete();
+    }
 }

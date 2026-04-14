@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Enums\UserRole;
 use App\Models\Page;
 use App\Models\User;
 
@@ -32,16 +31,16 @@ final class PagePolicy
 
     public function publish(User $user, Page $page): bool
     {
-        return $user->role === UserRole::Admin;
+        return true;
     }
 
     public function archive(User $user, Page $page): bool
     {
-        return $user->role === UserRole::Admin;
+        return true;
     }
 
     public function delete(User $user, Page $page): bool
     {
-        return $user->role === UserRole::Admin;
+        return true;
     }
 }

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+// DocumentYear is no longer used — year is stored as plain text on this model.
+
 /**
  * Represents an institutional transparency document.
  *
@@ -15,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $title
  * @property string|null $description
  * @property int $document_category_id
- * @property int $document_year_id
+ * @property string|null $year
  * @property int $media_id
  */
 final class Document extends Model
@@ -27,7 +29,7 @@ final class Document extends Model
         'title',
         'description',
         'document_category_id',
-        'document_year_id',
+        'year',
         'media_id',
     ];
 
@@ -37,14 +39,6 @@ final class Document extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(DocumentCategory::class, 'document_category_id');
-    }
-
-    /**
-     * Get the year this document belongs to.
-     */
-    public function year(): BelongsTo
-    {
-        return $this->belongsTo(DocumentYear::class, 'document_year_id');
     }
 
     /**

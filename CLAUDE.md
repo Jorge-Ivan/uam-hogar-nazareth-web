@@ -90,6 +90,7 @@ Always consult @docs/domain-model.md before creating models or migrations.
 - Media (images, documents) is central — always go through MediaService
 - Image optimization must be queued via OptimizeImage job
 - API routes follow /api/v1/ prefix with API Resources
+- **`docs/superpowers/` must never be committed** — delete it before the final commit of any plan or task. It contains session artifacts (implementation plans, subagent prompts) that must not appear in the repository history.
 
 ## Current Status
 Check @docs/plan.md for the full implementation roadmap and current progress.

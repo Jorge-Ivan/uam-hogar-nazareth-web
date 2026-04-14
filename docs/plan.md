@@ -1,7 +1,7 @@
 # Plan: Hogar Nazareth — Hoja de Ruta de Implementación
 
 > **Documento vivo.** Marcar cada ítem con `[x]` al completarlo.
-> Última revisión: 2026-03-14
+> Última revisión: 2026-04-13
 
 ---
 
@@ -14,7 +14,7 @@
 | Migraciones (10 entidades) | ✅ Completa |
 | Modelos Eloquent | ✅ Completa |
 | Servicios y Actions | ✅ Completa |
-| Panel admin (Livewire) | ❌ No existe |
+| Panel admin (Livewire) + Gestión de usuarios | ✅ Completa |
 | Sitio web público (Blade) | ❌ No existe |
 | API REST | ❌ No existe |
 | Tests (Pest) | ❌ No existe |
@@ -168,48 +168,109 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 **Objetivo:** Panel Livewire completo para personal no técnico.
 
 ### Layout y auth
-- [ ] `resources/views/layouts/admin.blade.php` (sidebar Tailwind, nav en español)
-- [ ] `resources/views/auth/login.blade.php` ("Iniciar sesión")
-- [ ] `app/Http/Controllers/Admin/DashboardController.php`
-- [ ] `resources/views/admin/dashboard.blade.php` (conteos + actividades recientes)
+- [x] `resources/views/layouts/admin.blade.php` (sidebar Tailwind, nav en español)
+- [x] `resources/views/auth/login.blade.php` ("Iniciar sesión")
+- [x] `app/Http/Controllers/Admin/DashboardController.php`
+- [x] `resources/views/admin/dashboard.blade.php` (conteos + actividades recientes)
 
 ### Livewire — Pages
-- [ ] `app/Livewire/Admin/PageTable.php` (búsqueda, paginación, filtro estado, eliminar)
-- [ ] `app/Livewire/Admin/PageForm.php` (crear/editar, slug auto, estado)
-- [ ] Vistas blade correspondientes
+- [x] `app/Livewire/Admin/PageTable.php` (búsqueda, paginación, filtro estado, eliminar)
+- [x] `app/Livewire/Admin/PageForm.php` (crear/editar, slug auto, estado)
+- [x] Vistas blade correspondientes
+
+### Navegación de páginas
+- [x] `database/migrations/add_navigation_fields_to_pages_table` — columnas `parent_id`, `show_in_header`, `show_in_footer`, `menu_order`
+- [x] `app/Models/Page.php` — relaciones `parent()`/`children()`, scopes `inHeader()`/`inFooter()`, fillable y casts
+- [x] `app/Services/PageService.php` — `Cache::forget('nav.header/footer')` en publish/update/archive/delete
+- [x] `app/Http/Requests/StorePageRequest.php` — reglas + mensajes ES para 4 nuevos campos
+- [x] `app/Http/Requests/UpdatePageRequest.php` — idem
+- [x] `app/Livewire/Admin/PageForm.php` — sección "Navegación": página padre, orden, checkboxes encabezado/pie
+- [x] `app/Livewire/Admin/PageTable.php` — eager-load `parent:id,title`
+- [x] `resources/views/livewire/admin/page-table.blade.php` — columna "Menú" + indicador padre↳ en título
+- [x] `database/factories/PageFactory.php` — estados `inHeader()` e `inFooter()`
 
 ### Livewire — Activities
-- [ ] `app/Livewire/Admin/ActivityTable.php` (búsqueda, filtro, publicar inline)
-- [ ] `app/Livewire/Admin/ActivityForm.php` (título, slug, excerpt, contenido, imagen, fecha)
-- [ ] Vistas blade correspondientes
+- [x] `app/Livewire/Admin/ActivityTable.php` (búsqueda, filtro, publicar inline)
+- [x] `app/Livewire/Admin/ActivityForm.php` (título, slug, excerpt, contenido, imagen, fecha)
+- [x] Vistas blade correspondientes
 
 ### Livewire — Galleries
-- [ ] `app/Livewire/Admin/GalleryTable.php`
-- [ ] `app/Livewire/Admin/GalleryManager.php` (subir imágenes, reordenar con Alpine Sortable, eliminar)
-- [ ] Vista blade correspondiente
+- [x] `app/Livewire/Admin/GalleryTable.php`
+- [x] `app/Livewire/Admin/GalleryManager.php` (subir imágenes, reordenar con Alpine Sortable, eliminar)
+- [x] Vista blade correspondiente
 
 ### Livewire — Events
-- [ ] `app/Livewire/Admin/EventTable.php`
-- [ ] `app/Livewire/Admin/EventForm.php` (fechas, ubicación, imagen)
-- [ ] Vistas blade correspondientes
+- [x] `app/Livewire/Admin/EventTable.php`
+- [x] `app/Livewire/Admin/EventForm.php` (fechas, ubicación, imagen)
+- [x] Vistas blade correspondientes
 
 ### Livewire — Documents
-- [ ] `app/Livewire/Admin/DocumentTable.php` (filtro categoría/año)
-- [ ] `app/Livewire/Admin/DocumentUploader.php` (categoría, año, subir PDF)
-- [ ] Vistas blade correspondientes
+- [x] `app/Livewire/Admin/DocumentTable.php` (filtro categoría/año)
+- [x] `app/Livewire/Admin/DocumentUploader.php` (categoría, año, subir PDF)
+- [x] Vistas blade correspondientes
+
+### Configuración del sitio
+- [x] `database/migrations/create_site_settings_table` — tabla singleton (22 columnas: org, contacto, redes, correo, donaciones)
+- [x] `app/Models/SiteSetting.php` — `static instance()` con `firstOrCreate`
+- [x] `app/Services/SettingService.php` — `get()` y `update()`
+- [x] `database/seeders/SiteSettingSeeder.php` — datos iniciales de la fundación
+- [x] `app/Livewire/Admin/SettingsForm.php` — 5 secciones, `dispatch('notify')` sin redirect
+- [x] `resources/views/livewire/admin/settings-form.blade.php`
+- [x] `resources/views/admin/settings/index.blade.php`
+- [x] Ruta `GET /admin/settings` → `admin.settings`
+- [x] Sidebar: ítem "Configuración" con ícono engranaje
+- [x] `database/migrations/add_donation_digital_to_site_settings_table` — `donation_nequi`, `donation_daviplata`, `donation_qr_media_id` (FK → media)
+- [x] `app/Models/SiteSetting.php` — relación `donationQr()` → Media
+- [x] `app/Livewire/Admin/SettingsForm.php` — `WithFileUploads`, upload QR vía `MediaService`, campos Nequi/Daviplata, `removeQr()`
+- [x] `resources/views/livewire/admin/settings-form.blade.php` — sección donaciones expandida: transferencia bancaria, pagos digitales (Nequi/Daviplata), zona upload QR con thumbnail y preview
+
+### Infraestructura de correo de contacto
+- [x] `app/Mail/ContactFormMail.php` — Envelope/Content API, `From:` construido desde settings
+- [x] `app/Jobs/SendContactEmail.php` — `ShouldQueue`, `$tries = 3`, valores de settings capturados al despachar
+- [x] `resources/views/emails/contact-form.blade.php` — plantilla en español
+
+### Control de acceso por roles (Admin / Editor)
+- [x] `app/Http/Middleware/PanelMiddleware.php` — admite Admin **o** Editor; permite acceso al panel de contenido
+- [x] `app/Http/Kernel.php` — alias `'panel'` registrado junto a `'admin'` (solo Admin)
+- [x] `routes/web.php` — rutas de contenido bajo `panel`, rutas admin-exclusivas bajo `admin`
+- [x] Todas las políticas de contenido (`PagePolicy`, `ActivityPolicy`, `GalleryPolicy`, `EventPolicy`, `DocumentPolicy`) — publish/archive/delete abiertos a ambos roles (`return true`)
+- [x] `app/Livewire/Admin/SettingsForm.php` — guard `abort_if` en `save()` y `removeQr()` (defensa en profundidad)
+- [x] `resources/views/layouts/admin.blade.php` — "Usuarios" y "Configuración" visibles solo para Admin (`@if role === Admin`)
+- [x] `app/Enums/UserRole.php` — método `label(): string` añadido (`'Administrador'` / `'Editor'`)
+
+### Gestión de usuarios
+- [x] `app/Policies/UserPolicy.php` — solo Admin; `delete()` impide auto-eliminación
+- [x] Registrar `UserPolicy` en `app/Providers/AuthServiceProvider.php`
+- [x] `app/Http/Requests/StoreUserRequest.php` — nombre, correo (único), rol (enum), contraseña (min 8, confirmada); mensajes en español
+- [x] `app/Http/Requests/UpdateUserRequest.php` — igual pero contraseña nullable; unique ignora usuario actual
+- [x] `app/Actions/CreateUser.php` — crea usuario con `Hash::make()` explícito
+- [x] `app/Actions/UpdateUser.php` — actualiza; omite contraseña si vacía
+- [x] `app/Services/UserService.php` — `create()`, `update()`, `delete()`
+- [x] `app/Livewire/Admin/UserTable.php` — lista con búsqueda, paginación, eliminar (con guard de auto-eliminación)
+- [x] `app/Livewire/Admin/UserForm.php` — crear/editar; `authorize()` en `mount()` y `save()`; contraseña opcional en edición
+- [x] `resources/views/livewire/admin/user-table.blade.php` — tabla con badge de rol, indicador "(tú)", acciones
+- [x] `resources/views/livewire/admin/user-form.blade.php` — formulario con validación en español
+- [x] `resources/views/admin/users/{index,create,edit}.blade.php`
+- [x] `database/seeders/UserSeeder.php` — `admin@hogarnazareth.org` (Admin) y `editor@hogarnazareth.org` (Editor) vía `firstOrCreate`
 
 ### Rutas admin
-- [ ] `/admin/dashboard`
-- [ ] `/admin/pages` (index, create, edit)
-- [ ] `/admin/activities` (index, create, edit)
-- [ ] `/admin/galleries` (index, create, manage)
-- [ ] `/admin/events` (index, create, edit)
-- [ ] `/admin/documents` (index, create)
+- [x] `/admin/dashboard`
+- [x] `/admin/pages` (index, create, edit)
+- [x] `/admin/activities` (index, create, edit)
+- [x] `/admin/galleries` (index, create, manage)
+- [x] `/admin/events` (index, create, edit)
+- [x] `/admin/documents` (index, create)
+- [x] `/admin/settings` (solo Admin)
+- [x] `/admin/users` (index, create, edit) — solo Admin
 
 ### Verificación Fase 3
-- [ ] Feature test: `ActivityForm` crea registro vía `ActivityService`
-- [ ] Feature test: `GalleryManager` sube imagen y crea `GalleryImage`
-- [ ] Feature test: rutas admin sin auth → redirige login
+- [x] Feature test: `ActivityForm` crea registro vía `ActivityService`
+- [x] Feature test: `GalleryManager` sube imagen y crea `GalleryImage`
+- [x] Feature test: rutas admin sin auth → redirige login
+- [x] Feature test: editor puede acceder a rutas de contenido, bloqueado en `/admin/settings` y `/admin/users`
+- [x] Feature test: `UserForm` crea usuario (admin) y rechaza a editor (403)
+- [x] Feature test: `UserTable` elimina usuario; impide auto-eliminación
+- [x] Feature test: validaciones de usuario — correo único, contraseñas no coinciden, contraseña opcional en edición
 - [ ] **Manual:** staff puede crear y publicar todos los tipos de contenido
 
 ---
@@ -218,8 +279,36 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 
 **Objetivo:** Exposición pública del contenido gestionado.
 
+### Infraestructura de navegación (prerequisito)
+- [ ] `app/Services/NavigationService.php` — `headerPages()` y `footerPages()` con caché 5 min
+- [ ] `app/Http/View/Composers/NavigationComposer.php` — inyecta `$navHeaderPages` y `$navFooterPages`
+- [ ] Registrar `NavigationComposer` en `app/Providers/AppServiceProvider.php` para `layouts.public`
+
+### Infraestructura de configuración del sitio (prerequisito)
+- [ ] `app/Http/View/Composers/SettingsComposer.php` — llama `SiteSetting::instance()` e inyecta `$siteSettings` en `layouts.public`
+- [ ] Registrar `SettingsComposer` en `AppServiceProvider` junto con `NavigationComposer` — ambos sobre `layouts.public`
+
 ### Layout
 - [ ] `resources/views/layouts/public.blade.php` (header nav español, footer, hamburger Alpine)
+  - **Nav:** ítems fijos hardcoded + ítems dinámicos desde `$navHeaderPages` con dropdown Alpine para subpáginas
+  - **Footer 3 columnas:**
+    - Col 1: `$siteSettings->org_name`, `$siteSettings->org_tagline`, redes sociales desde `$siteSettings->social_*` (solo las que no sean `null`)
+    - Col 2: enlaces institucionales desde `$navFooterPages` + enlaces fijos (Transparencia, Donaciones)
+    - Col 3: `$siteSettings->contact_address`, `$siteSettings->contact_phone`, `$siteSettings->contact_email`, `$siteSettings->contact_schedule`; WhatsApp → `<a href="https://wa.me/{{ $siteSettings->contact_whatsapp }}">` solo si no es `null`
+  - **SEO slots:** `@yield('meta_title')`, `@yield('meta_description')`, Open Graph completo (og:title, og:description, og:image, og:url), Facebook y Twitter/X metatags, canonical
+  - Skip-to-content, semántica HTML (`<nav aria-label>`, `<main id="main-content">`)
+  - **Banda de atribución** al pie del footer (debajo de las 3 columnas institucionales), separada por `border-t border-white/10`:
+    ```blade
+    <div class="border-t border-white/10 py-4 text-center text-xs text-gray-400">
+        © {{ date('Y') }} Fundación Hogar del Anciano Nazareth &middot;
+        Sitio web desarrollado como práctica social por
+        <a href="https://www.linkedin.com/in/jorgecarrillog/" target="_blank" rel="noopener noreferrer"
+           class="text-gray-400 hover:text-gray-200 hover:underline underline-offset-2">Jorge Carrillo</a>
+        &middot;
+        <a href="https://www.autonoma.edu.co/" target="_blank" rel="noopener noreferrer"
+           class="text-gray-400 hover:text-gray-200 hover:underline underline-offset-2">Universidad Autónoma de Manizales</a>
+    </div>
+    ```
 
 ### Controladores y vistas
 - [ ] `Website/HomeController` → `/` (hero + últimas actividades + próximos eventos)
@@ -227,17 +316,52 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [ ] `Website/GalleryController` → `/galerias`, `/galerias/{slug}` (lightbox Alpine)
 - [ ] `Website/EventController` → `/eventos`, `/eventos/{slug}`
 - [ ] `Website/DocumentController` → `/transparencia` (agrupado por año y categoría)
-- [ ] `Website/PageController` → `/paginas/{slug}`
-- [ ] Vistas estáticas: `/donaciones`, `/contacto`
+- [ ] `Website/PageController` → `/paginas/{slug}` — usar `scopePublished()->firstOrFail()` (no route model binding)
+- [ ] `resources/views/website/pages/show.blade.php` — breadcrumb automático si tiene padre
+- [ ] `Website/DonationsController` → `GET /donaciones`
+  - Eager-load `$siteSettings->load('donationQr')`
+  - Pasar a vista; campos con `@if` guard
+- [ ] `resources/views/website/donations.blade.php`
+  - Sección 1: Transferencia bancaria (banco, tipo, número, NIT, titular) — tarjeta azul nazareth
+  - Sección 2: Nequi — número + imagen QR grande (`$siteSettings->donationQr`) si `donation_qr_media_id` configurado; colores rosa/morado de Nequi
+  - Sección 3: Daviplata — número de celular; colores rojo/naranja Davivienda
+  - Sección 4: Donación en especie — enlace a /contacto
+  - Fallback: aviso "Contáctenos para información sobre donaciones" si ningún campo configurado
+- [ ] `Website/ContactController` → `GET /contacto` — `$siteSettings` disponible vía composer, no necesita pasarlo a mano
+- [ ] `app/Livewire/Website/ContactForm.php`
+  - Props: `name`, `email`, `phone` (opcional), `message`, `honeypot` (oculto anti-spam), `sent` (bool)
+  - `boot(SettingService)` para DI
+  - `submit()`: si `$honeypot !== ''` → reset silencioso (bot); valida; si `mail_contact_to` vacío → `$this->sent = false` + error flash; si ok → `SendContactEmail::dispatch(...)` + `$this->sent = true` + reset campos
+  - Mensajes de validación en español
+- [ ] `resources/views/website/contact.blade.php` — 2 columnas en md+:
+  - **Col izquierda** (info): `contact_address`, `contact_phone`, WhatsApp (`wa.me/`), `contact_email`, `contact_schedule`; iframe Google Maps si `contact_maps_url` no es null: `<iframe src="{{ $siteSettings->contact_maps_url }}" ...>`; cada bloque envuelto en `@if($siteSettings->campo)`
+  - **Col derecha** (formulario): `<livewire:website.contact-form />`; si `$siteSettings->mail_contact_to` es null → aviso "El formulario no está disponible en este momento"
+
+### Rutas públicas
+- [ ] Grupo `Route::name('website.')` con constraint `where('slug', '[a-z0-9-]+')` en rutas de slug
+- [ ] `GET /donaciones` → `DonationsController` → `website.donations`
+- [ ] `GET /contacto` → `ContactController` → `website.contact`
 
 ### SEO básico
-- [ ] `@section('title')` y `@section('description')` por vista
-- [ ] Open Graph tags en actividades y galerías
+- [ ] `@section('meta_title')`, `@section('meta_description')` por vista
+- [ ] Open Graph tags en actividades, galerías y páginas; Facebook y Twitter metatags; canonical
 
 ### Verificación Fase 4
 - [ ] Feature test: `GET /actividades` → solo publicadas
 - [ ] Feature test: `GET /actividades/{slug}` draft → 404
+- [ ] Feature test: `GET /paginas/{slug}` draft → 404
+- [ ] Feature test: página con padre muestra breadcrumb
 - [ ] Feature test: galería sin N+1
+- [ ] Feature test: `GET /contacto` → renderiza formulario cuando `mail_contact_to` configurado
+- [ ] Feature test: `GET /contacto` → muestra aviso cuando `mail_contact_to` es null
+- [ ] Feature test: `ContactForm::submit()` con honeypot relleno → no despacha `SendContactEmail`
+- [ ] Feature test: `ContactForm::submit()` válido → despacha `SendContactEmail` con datos correctos
+- [ ] Feature test: `GET /donaciones` → muestra datos bancarios si configurados; muestra fallback si todos son null
+- [ ] Feature test: `GET /donaciones` → muestra QR si `donation_qr_media_id` configurado
+- [ ] Feature test: `GET /donaciones` → muestra sección Nequi si `donation_nequi` configurado
+- [ ] Unit test: `NavigationService::headerPages()` filtra solo publicadas con `show_in_header=true`
+- [ ] Unit test: resultado de nav está en caché (segunda llamada no toca BD)
+- [ ] Unit test: `SettingsComposer` inyecta instancia de `SiteSetting` en la vista
 
 ---
 

@@ -59,4 +59,13 @@ final class GalleryService
                 ->update(['position' => $position + 1]);
         }
     }
+
+    /**
+     * Delete a gallery and all its related images.
+     */
+    public function delete(Gallery $gallery): void
+    {
+        $gallery->images()->delete();
+        $gallery->delete();
+    }
 }

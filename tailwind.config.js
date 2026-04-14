@@ -15,6 +15,15 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                nazareth: {
+                    blue:  '#1B4B8A',
+                    light: '#2D6CC2',
+                    gold:  '#E8A020',
+                    gray:  '#F5F7FA',
+                    green: '#3D7A45',
+                },
+            },
         },
     },
     plugins: [forms, typography],
