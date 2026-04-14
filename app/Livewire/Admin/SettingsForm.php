@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Admin;
 
+use App\Enums\UserRole;
 use App\Models\Media;
 use App\Services\MediaService;
 use App\Services\SettingService;
@@ -166,7 +167,7 @@ final class SettingsForm extends Component
 
     public function removeQr(): void
     {
-        abort_if(auth()->user()?->role !== \App\Enums\UserRole::Admin, 403);
+        abort_if(auth()->user()?->role !== UserRole::Admin, 403);
 
         if ($this->donationQrMediaId !== null) {
             $media = Media::find($this->donationQrMediaId);
@@ -182,7 +183,7 @@ final class SettingsForm extends Component
 
     public function save(): void
     {
-        abort_if(auth()->user()?->role !== \App\Enums\UserRole::Admin, 403);
+        abort_if(auth()->user()?->role !== UserRole::Admin, 403);
 
         $this->validate($this->rules(), $this->messages());
 

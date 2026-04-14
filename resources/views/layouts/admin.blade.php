@@ -138,7 +138,7 @@
                         </a>
                     </li>
 
-                    @if(auth()->user()->role === \App\Enums\UserRole::Admin)
+                    @if(auth()->user()?->role === \App\Enums\UserRole::Admin)
                     {{-- Usuarios --}}
                     <li>
                         <a href="{{ route('admin.users.index') }}"
