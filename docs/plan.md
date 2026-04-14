@@ -1,7 +1,7 @@
 # Plan: Hogar Nazareth — Hoja de Ruta de Implementación
 
 > **Documento vivo.** Marcar cada ítem con `[x]` al completarlo.
-> Última revisión: 2026-03-15
+> Última revisión: 2026-04-13
 
 ---
 
@@ -14,7 +14,7 @@
 | Migraciones (10 entidades) | ✅ Completa |
 | Modelos Eloquent | ✅ Completa |
 | Servicios y Actions | ✅ Completa |
-| Panel admin (Livewire) | ✅ Completa |
+| Panel admin (Livewire) + Gestión de usuarios | ✅ Completa |
 | Sitio web público (Blade) | ❌ No existe |
 | API REST | ❌ No existe |
 | Tests (Pest) | ❌ No existe |
@@ -229,6 +229,30 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [x] `app/Jobs/SendContactEmail.php` — `ShouldQueue`, `$tries = 3`, valores de settings capturados al despachar
 - [x] `resources/views/emails/contact-form.blade.php` — plantilla en español
 
+### Control de acceso por roles (Admin / Editor)
+- [x] `app/Http/Middleware/PanelMiddleware.php` — admite Admin **o** Editor; permite acceso al panel de contenido
+- [x] `app/Http/Kernel.php` — alias `'panel'` registrado junto a `'admin'` (solo Admin)
+- [x] `routes/web.php` — rutas de contenido bajo `panel`, rutas admin-exclusivas bajo `admin`
+- [x] Todas las políticas de contenido (`PagePolicy`, `ActivityPolicy`, `GalleryPolicy`, `EventPolicy`, `DocumentPolicy`) — publish/archive/delete abiertos a ambos roles (`return true`)
+- [x] `app/Livewire/Admin/SettingsForm.php` — guard `abort_if` en `save()` y `removeQr()` (defensa en profundidad)
+- [x] `resources/views/layouts/admin.blade.php` — "Usuarios" y "Configuración" visibles solo para Admin (`@if role === Admin`)
+- [x] `app/Enums/UserRole.php` — método `label(): string` añadido (`'Administrador'` / `'Editor'`)
+
+### Gestión de usuarios
+- [x] `app/Policies/UserPolicy.php` — solo Admin; `delete()` impide auto-eliminación
+- [x] Registrar `UserPolicy` en `app/Providers/AuthServiceProvider.php`
+- [x] `app/Http/Requests/StoreUserRequest.php` — nombre, correo (único), rol (enum), contraseña (min 8, confirmada); mensajes en español
+- [x] `app/Http/Requests/UpdateUserRequest.php` — igual pero contraseña nullable; unique ignora usuario actual
+- [x] `app/Actions/CreateUser.php` — crea usuario con `Hash::make()` explícito
+- [x] `app/Actions/UpdateUser.php` — actualiza; omite contraseña si vacía
+- [x] `app/Services/UserService.php` — `create()`, `update()`, `delete()`
+- [x] `app/Livewire/Admin/UserTable.php` — lista con búsqueda, paginación, eliminar (con guard de auto-eliminación)
+- [x] `app/Livewire/Admin/UserForm.php` — crear/editar; `authorize()` en `mount()` y `save()`; contraseña opcional en edición
+- [x] `resources/views/livewire/admin/user-table.blade.php` — tabla con badge de rol, indicador "(tú)", acciones
+- [x] `resources/views/livewire/admin/user-form.blade.php` — formulario con validación en español
+- [x] `resources/views/admin/users/{index,create,edit}.blade.php`
+- [x] `database/seeders/UserSeeder.php` — `admin@hogarnazareth.org` (Admin) y `editor@hogarnazareth.org` (Editor) vía `firstOrCreate`
+
 ### Rutas admin
 - [x] `/admin/dashboard`
 - [x] `/admin/pages` (index, create, edit)
@@ -236,12 +260,17 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [x] `/admin/galleries` (index, create, manage)
 - [x] `/admin/events` (index, create, edit)
 - [x] `/admin/documents` (index, create)
-- [x] `/admin/settings`
+- [x] `/admin/settings` (solo Admin)
+- [x] `/admin/users` (index, create, edit) — solo Admin
 
 ### Verificación Fase 3
 - [x] Feature test: `ActivityForm` crea registro vía `ActivityService`
 - [x] Feature test: `GalleryManager` sube imagen y crea `GalleryImage`
 - [x] Feature test: rutas admin sin auth → redirige login
+- [x] Feature test: editor puede acceder a rutas de contenido, bloqueado en `/admin/settings` y `/admin/users`
+- [x] Feature test: `UserForm` crea usuario (admin) y rechaza a editor (403)
+- [x] Feature test: `UserTable` elimina usuario; impide auto-eliminación
+- [x] Feature test: validaciones de usuario — correo único, contraseñas no coinciden, contraseña opcional en edición
 - [ ] **Manual:** staff puede crear y publicar todos los tipos de contenido
 
 ---
