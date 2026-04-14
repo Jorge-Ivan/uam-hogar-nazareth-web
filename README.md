@@ -191,6 +191,19 @@ Ver [docs/plan.md](docs/plan.md) para la hoja de ruta completa con detalle por f
 
 ---
 
+## Licencia
+
+Este proyecto está distribuido bajo la [Licencia MIT](LICENSE).
+
+```
+Copyright (c) 2026 Jorge Ivan Carrillo Gonzalez
+Universidad Autónoma de Manizales — Práctica Social
+```
+
+Se permite el uso, copia, modificación y distribución del software con la condición de conservar el aviso de copyright en todas las copias.
+
+---
+
 ## Contexto académico
 
 Proyecto desarrollado por **[Jorge Carrillo](https://www.linkedin.com/in/jorgecarrillog/)** como **práctica social universitaria** en la **[Universidad Autónoma de Manizales (UAM)](https://www.autonoma.edu.co/)**.

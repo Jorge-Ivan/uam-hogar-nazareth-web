@@ -1,8 +1,8 @@
 {
-    "name": "laravel/laravel",
+    "name": "jorge-ivan/hogar-nazareth-web",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Dynamic web platform for Fundación Hogar del Anciano Nazareth — built as a university social practice project at Universidad Autónoma de Manizales.",
+    "keywords": ["laravel", "livewire", "non-profit", "cms", "social-practice"],
     "license": "MIT",
     "require": {
         "php": "^8.1",
