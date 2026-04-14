@@ -32,6 +32,6 @@ final class DocumentPolicy
 
     public function delete(User $user, Document $document): bool
     {
-        return $user->role === UserRole::Admin;
+        return true;
     }
 }

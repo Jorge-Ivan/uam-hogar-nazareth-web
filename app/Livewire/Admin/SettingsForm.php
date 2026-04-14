@@ -166,6 +166,8 @@ final class SettingsForm extends Component
 
     public function removeQr(): void
     {
+        abort_if(auth()->user()?->role !== \App\Enums\UserRole::Admin, 403);
+
         if ($this->donationQrMediaId !== null) {
             $media = Media::find($this->donationQrMediaId);
 
@@ -180,6 +182,8 @@ final class SettingsForm extends Component
 
     public function save(): void
     {
+        abort_if(auth()->user()?->role !== \App\Enums\UserRole::Admin, 403);
+
         $this->validate($this->rules(), $this->messages());
 
         if ($this->donationQrUpload !== null) {

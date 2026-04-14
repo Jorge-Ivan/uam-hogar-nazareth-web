@@ -32,6 +32,6 @@ final class EventPolicy
 
     public function delete(User $user, Event $event): bool
     {
-        return $user->role === UserRole::Admin;
+        return true;
     }
 }

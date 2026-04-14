@@ -32,16 +32,16 @@ final class ActivityPolicy
 
     public function publish(User $user, Activity $activity): bool
     {
-        return $user->role === UserRole::Admin;
+        return true;
     }
 
     public function archive(User $user, Activity $activity): bool
     {
-        return $user->role === UserRole::Admin;
+        return true;
     }
 
     public function delete(User $user, Activity $activity): bool
     {
-        return $user->role === UserRole::Admin;
+        return true;
     }
 }

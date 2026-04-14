@@ -47,6 +47,6 @@ final class GalleryPolicy
 
     public function delete(User $user, Gallery $gallery): bool
     {
-        return $user->role === UserRole::Admin;
+        return true;
     }
 }
