@@ -9,11 +9,13 @@ use App\Models\Document;
 use App\Models\Event;
 use App\Models\Gallery;
 use App\Models\Page;
+use App\Models\User;
 use App\Policies\ActivityPolicy;
 use App\Policies\DocumentPolicy;
 use App\Policies\EventPolicy;
 use App\Policies\GalleryPolicy;
 use App\Policies\PagePolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -29,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         Gallery::class  => GalleryPolicy::class,
         Event::class    => EventPolicy::class,
         Document::class => DocumentPolicy::class,
+        User::class     => UserPolicy::class,
     ];
 
     /**
