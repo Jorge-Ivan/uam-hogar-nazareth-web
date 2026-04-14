@@ -49,3 +49,15 @@ it('editor cannot delete users', function (): void {
 
     expect((new UserPolicy)->delete($editor, $target))->toBeFalse();
 });
+
+it('admin can view a user', function (): void {
+    $admin  = User::factory()->create(['role' => UserRole::Admin]);
+    $target = User::factory()->create(['role' => UserRole::Editor]);
+    expect((new UserPolicy)->view($admin, $target))->toBeTrue();
+});
+
+it('editor cannot view a user', function (): void {
+    $editor = User::factory()->create(['role' => UserRole::Editor]);
+    $target = User::factory()->create(['role' => UserRole::Admin]);
+    expect((new UserPolicy)->view($editor, $target))->toBeFalse();
+});

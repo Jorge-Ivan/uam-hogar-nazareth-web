@@ -56,7 +56,7 @@ it('deletes a user when not self', function (): void {
 
     $service->delete($target, $admin);
 
-    $this->assertDatabaseMissing('users', ['id' => $target->id]);
+    expect(User::find($target->id))->toBeNull();
 });
 
 it('throws when trying to delete self', function (): void {
