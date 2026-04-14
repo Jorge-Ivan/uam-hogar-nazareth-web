@@ -133,3 +133,15 @@ it('password is optional on update when not provided', function (): void {
 
     expect($target->fresh()->password)->toBe($oldHash);
 });
+
+it('search filters users by name', function (): void {
+    $admin  = User::factory()->create(['role' => UserRole::Admin]);
+    $alice  = User::factory()->create(['name' => 'Alice García', 'role' => UserRole::Editor]);
+    $bob    = User::factory()->create(['name' => 'Bob López',   'role' => UserRole::Editor]);
+
+    Livewire::actingAs($admin)
+        ->test(\App\Livewire\Admin\UserTable::class)
+        ->set('search', 'Alice')
+        ->assertSee('Alice García')
+        ->assertDontSee('Bob López');
+});

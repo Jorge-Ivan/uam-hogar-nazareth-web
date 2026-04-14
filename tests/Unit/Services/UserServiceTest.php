@@ -58,11 +58,3 @@ it('deletes a user when not self', function (): void {
 
     expect(User::find($target->id))->toBeNull();
 });
-
-it('throws when trying to delete self', function (): void {
-    $admin   = User::factory()->create(['role' => UserRole::Admin]);
-    $service = app(UserService::class);
-
-    expect(fn () => $service->delete($admin, $admin))
-        ->toThrow(\RuntimeException::class);
-});

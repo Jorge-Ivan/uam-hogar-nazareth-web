@@ -34,9 +34,7 @@
                 <select id="role" wire:model="role"
                     class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-nazareth-blue focus:outline-none focus:ring-1 focus:ring-nazareth-blue @error('role') border-red-500 @enderror">
                     @foreach($roles as $roleOption)
-                        <option value="{{ $roleOption->value }}">
-                            {{ $roleOption === \App\Enums\UserRole::Admin ? 'Administrador' : 'Editor' }}
-                        </option>
+                        <option value="{{ $roleOption->value }}">{{ $roleOption->label() }}</option>
                     @endforeach
                 </select>
                 @error('role')

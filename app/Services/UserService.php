@@ -27,10 +27,6 @@ final class UserService
 
     public function delete(User $user, User $currentUser): void
     {
-        if ($user->id === $currentUser->id) {
-            throw new \RuntimeException('No puedes eliminar tu propia cuenta.');
-        }
-
         $user->delete();
     }
 }

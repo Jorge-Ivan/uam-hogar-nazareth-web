@@ -36,11 +36,11 @@
                         <td class="px-6 py-3">
                             @if($user->role === \App\Enums\UserRole::Admin)
                                 <span class="inline-flex items-center rounded-full bg-nazareth-blue/10 px-2.5 py-0.5 text-xs font-medium text-nazareth-blue">
-                                    Administrador
+                                    {{ $user->role->label() }}
                                 </span>
                             @else
                                 <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">
-                                    Editor
+                                    {{ $user->role->label() }}
                                 </span>
                             @endif
                         </td>
