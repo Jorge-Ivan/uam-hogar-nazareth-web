@@ -11,6 +11,9 @@
     --color-nazareth-green: #3D7A45;
 }
 
+/* Alpine.js x-cloak — hide until Alpine initializes */
+[x-cloak] { display: none !important; }
+
 /* Quill editor — overrides */
 .ql-editor {
     min-height: 16rem;

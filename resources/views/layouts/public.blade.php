@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- SEO --}}
-    <title>@yield('meta_title', $siteSettings->org_name ?? 'Hogar Nazareth') | Hogar Nazareth</title>
+    <title>@yield('meta_title', 'Inicio') | Hogar Nazareth</title>
     <meta name="description" content="@yield('meta_description', 'Fundación Hogar del Anciano Nazareth')">
 
     {{-- Open Graph --}}
@@ -23,8 +23,7 @@
     <meta name="twitter:description" content="@yield('meta_description', '')">
     <meta name="twitter:image" content="@yield('og_image', asset('images/og-default.jpg'))">
 
-    {{-- Facebook --}}
-    <meta property="fb:app_id" content="">
+    {{-- Facebook app_id omitted (not configured) --}}
 
     {{-- Canonical --}}
     <link rel="canonical" href="{{ url()->current() }}">
@@ -75,7 +74,7 @@
                                     @click="dropdownOpen = !dropdownOpen"
                                     @click.outside="dropdownOpen = false"
                                     class="flex items-center gap-1 px-3 py-2 text-sm rounded transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue
-                                        {{ request()->routeIs('website.pages.show') && request()->slug === $page->slug ? 'text-white font-medium border-b-2 border-white' : 'text-white/80 hover:text-white' }}"
+                                        {{ request()->routeIs('website.pages.show') && request()->route('slug') === $page->slug ? 'text-white font-medium border-b-2 border-white' : 'text-white/80 hover:text-white' }}"
                                     :aria-expanded="dropdownOpen"
                                     aria-haspopup="true"
                                 >
@@ -129,6 +128,12 @@
                         Galerías
                     </a>
 
+                    <a href="{{ route('website.events.index') }}"
+                       class="px-3 py-2 text-sm rounded transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue
+                           {{ request()->routeIs('website.events*') ? 'text-white font-medium border-b-2 border-white' : 'text-white/80 hover:text-white' }}">
+                        Eventos
+                    </a>
+
                     <a href="{{ route('website.documents.index') }}"
                        class="px-3 py-2 text-sm rounded transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue
                            {{ request()->routeIs('website.documents*') ? 'text-white font-medium border-b-2 border-white' : 'text-white/80 hover:text-white' }}">
@@ -178,25 +183,21 @@
                 x-transition:leave-start="opacity-100 translate-y-0"
                 x-transition:leave-end="opacity-0 -translate-y-2"
                 class="lg:hidden border-t border-white/20 py-3 space-y-1"
-                role="menu"
             >
                 <a href="{{ route('website.home') }}"
                    class="block px-4 py-2.5 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold
-                       {{ request()->routeIs('website.home') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}"
-                   role="menuitem">
+                       {{ request()->routeIs('website.home') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Inicio
                 </a>
 
                 @foreach($navHeaderPages as $page)
                     <a href="{{ route('website.pages.show', $page->slug) }}"
-                       class="block px-4 py-2.5 text-sm rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold"
-                       role="menuitem">
+                       class="block px-4 py-2.5 text-sm rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold">
                         {{ $page->title }}
                     </a>
                     @foreach($page->children as $child)
                         <a href="{{ route('website.pages.show', $child->slug) }}"
-                           class="block px-8 py-2 text-sm rounded-lg text-white/60 hover:bg-white/10 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold"
-                           role="menuitem">
+                           class="block px-8 py-2 text-sm rounded-lg text-white/60 hover:bg-white/10 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold">
                             {{ $child->title }}
                         </a>
                     @endforeach
@@ -204,29 +205,31 @@
 
                 <a href="{{ route('website.activities.index') }}"
                    class="block px-4 py-2.5 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold
-                       {{ request()->routeIs('website.activities*') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}"
-                   role="menuitem">
+                       {{ request()->routeIs('website.activities*') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Actividades
                 </a>
 
                 <a href="{{ route('website.galleries.index') }}"
                    class="block px-4 py-2.5 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold
-                       {{ request()->routeIs('website.galleries*') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}"
-                   role="menuitem">
+                       {{ request()->routeIs('website.galleries*') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Galerías
+                </a>
+
+                <a href="{{ route('website.events.index') }}"
+                   class="block px-4 py-2.5 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold
+                       {{ request()->routeIs('website.events*') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                    Eventos
                 </a>
 
                 <a href="{{ route('website.documents.index') }}"
                    class="block px-4 py-2.5 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold
-                       {{ request()->routeIs('website.documents*') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}"
-                   role="menuitem">
+                       {{ request()->routeIs('website.documents*') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Transparencia
                 </a>
 
                 <a href="{{ route('website.contact') }}"
                    class="block px-4 py-2.5 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold
-                       {{ request()->routeIs('website.contact') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}"
-                   role="menuitem">
+                       {{ request()->routeIs('website.contact') ? 'bg-white/10 text-white font-medium' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Contacto
                 </a>
             </div>
