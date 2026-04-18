@@ -6,14 +6,39 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Website\ActivityController;
+use App\Http\Controllers\Website\ContactController;
+use App\Http\Controllers\Website\DocumentController;
+use App\Http\Controllers\Website\DonationsController;
+use App\Http\Controllers\Website\EventController;
+use App\Http\Controllers\Website\GalleryController;
+use App\Http\Controllers\Website\HomeController;
+use App\Http\Controllers\Website\PageController;
 use App\Models\Activity;
 use App\Models\Event;
 use App\Models\Gallery;
 use App\Models\Page;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+// ─────────────────────────────────────────────
+// Sitio web público
+// ─────────────────────────────────────────────
+Route::name('website.')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/actividades', [ActivityController::class, 'index'])->name('activities.index');
+    Route::get('/actividades/{slug}', [ActivityController::class, 'show'])
+        ->where('slug', '[a-z0-9-]+')->name('activities.show');
+    Route::get('/galerias', [GalleryController::class, 'index'])->name('galleries.index');
+    Route::get('/galerias/{slug}', [GalleryController::class, 'show'])
+        ->where('slug', '[a-z0-9-]+')->name('galleries.show');
+    Route::get('/eventos', [EventController::class, 'index'])->name('events.index');
+    Route::get('/eventos/{slug}', [EventController::class, 'show'])
+        ->where('slug', '[a-z0-9-]+')->name('events.show');
+    Route::get('/transparencia', [DocumentController::class, 'index'])->name('documents.index');
+    Route::get('/paginas/{slug}', [PageController::class, 'show'])
+        ->where('slug', '[a-z0-9-]+')->name('pages.show');
+    Route::get('/donaciones', [DonationsController::class, 'index'])->name('donations');
+    Route::get('/contacto', [ContactController::class, 'index'])->name('contact');
 });
 
 // ─────────────────────────────────────────────
