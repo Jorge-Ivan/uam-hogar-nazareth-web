@@ -20,6 +20,7 @@ final class NavigationService
         return Cache::remember('nav.header', 300, function (): Collection {
             return Page::published()
                 ->inHeader()
+                ->select('id', 'title', 'slug', 'menu_order')
                 ->with(['children' => function ($query): void {
                     $query->published()->select('id', 'title', 'slug', 'parent_id', 'menu_order')
                           ->orderBy('menu_order');
@@ -39,6 +40,7 @@ final class NavigationService
         return Cache::remember('nav.footer', 300, function (): Collection {
             return Page::published()
                 ->inFooter()
+                ->select('id', 'title', 'slug', 'menu_order')
                 ->orderBy('menu_order')
                 ->get();
         });
