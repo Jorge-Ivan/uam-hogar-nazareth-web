@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Http\View\Composers\NavigationComposer;
 use App\Http\View\Composers\SettingsComposer;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,6 +25,8 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Carbon::setLocale('es');
+
         View::composer('layouts.public', NavigationComposer::class);
         View::composer('layouts.public', SettingsComposer::class);
     }

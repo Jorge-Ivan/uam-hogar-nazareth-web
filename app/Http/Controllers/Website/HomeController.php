@@ -20,6 +20,7 @@ final class HomeController extends Controller
             ->get();
 
         $events = Event::where('start_date', '>=', now())
+            ->with('featuredImage')
             ->orderBy('start_date')
             ->limit(3)
             ->get();
