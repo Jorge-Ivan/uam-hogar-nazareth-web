@@ -7,29 +7,48 @@
 
 ## 1. Color Palette
 
+Palette extracted from the actual foundation logo (teal scale).
+
 ```
-Primary blue    #1B4B8A   — nav, headers, hero background, primary buttons
-Blue light      #2D6CC2   — hover states, links, gradient complement
-Golden amber    #E8A020   — CTA buttons (donate, action), accent badges
-Section gray    #F5F7FA   — alternate section backgrounds
-Green success   #3D7A45   — published status badges, success states
+Teal 900        #0A6B73   — nav, headers, hero background  → nazareth-blue
+Teal 500        #19B0B8   — primary accent, buttons, links → nazareth-light
+Teal 700        #10939C   — titles, subheadings            → nazareth-700
+Teal 400        #3EC1C8   — hover complements, graphics    → nazareth-400
+Teal 200        #9ED7DC   — borders, separators            → nazareth-200
+Teal 100        #C9E3E6   — card backgrounds, selected     → nazareth-100
+Teal 50         #EAF4F5   — section wash, never as accent  → nazareth-50 / nazareth-gray
+Golden amber    #E8A020   — CTA buttons (donate, actions)  → nazareth-gold
+Green success   #3D7A45   — published badges, success      → nazareth-green
+Ink             #1F2A2E   — body text (not pure black)     → nazareth-ink
+Paper           #FBFBF9   — warm page background
 White           #FFFFFF   — card surfaces, content areas
-Text primary    #1A202C   — body text
-Text secondary  #4A5568   — secondary labels, captions
 ```
 
 ### Tailwind config mapping
 ```js
 colors: {
   nazareth: {
-    blue:   '#1B4B8A',
-    light:  '#2D6CC2',
-    gold:   '#E8A020',
-    gray:   '#F5F7FA',
-    green:  '#3D7A45',
+    blue:  '#0A6B73',   // Teal 900 — nav, headers
+    light: '#19B0B8',   // Teal 500 — primary accent
+    700:   '#10939C',   // titles
+    400:   '#3EC1C8',   // hover
+    200:   '#9ED7DC',   // borders
+    100:   '#C9E3E6',   // card backgrounds
+    50:    '#EAF4F5',   // section wash
+    ink:   '#1F2A2E',   // body text
+    paper: '#FBFBF9',   // page background
+    gold:  '#E8A020',   // CTA buttons
+    gray:  '#EAF4F5',   // section backgrounds (= teal-50)
+    green: '#3D7A45',   // success states
   }
 }
 ```
+
+### Logo assets
+- `public/images/logo.png` — principal, transparent background
+- `public/images/logo-2x.png` — retina (@2x)
+- `public/images/logo-mark.svg` — isotipo without text for favicons and avatars
+- Use on: white, teal-50 (`#EAF4F5`), teal-100 (`#C9E3E6`) — never on dark backgrounds without testing contrast
 
 ---
 
@@ -38,7 +57,8 @@ colors: {
 - Body minimum: `text-base` (16px) — elderly visitors and families read on mobile
 - Headings: `font-medium` (500 weight) — never bold/700 in body copy
 - Line height: `leading-relaxed` on body paragraphs
-- High contrast always: blue #1B4B8A on white passes WCAG AA
+- High contrast always: teal-900 `#0A6B73` on white passes WCAG AA
+- Font: Figtree (already configured) — humanist sans for body and UI. Script from logo stays within the brand mark only, never replicated in text.
 
 ---
 
@@ -57,7 +77,7 @@ Inspired by: Fundación Juan Pablo II, Fundación Jeymar
 - Mobile: hamburger menu (Alpine.js `x-data` toggle)
 
 ### 3.2 Hero section
-- Full-width, blue gradient background (`from-nazareth-blue to-nazareth-light`)
+- Full-width, teal gradient background (`from-nazareth-blue to-nazareth-light` = teal-900 → teal-500)
 - Real photo of residents as background (overlay `bg-nazareth-blue/70`)
 - Tag line: foundation category in small amber badge
 - H1: mission statement, max 12 words, large and clear

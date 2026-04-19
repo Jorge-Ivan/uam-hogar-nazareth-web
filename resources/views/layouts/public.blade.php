@@ -48,13 +48,12 @@
 
                 {{-- Logo --}}
                 <a href="{{ route('website.home') }}"
-                   class="flex items-center gap-2 shrink-0 focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue rounded">
-                    {{-- Heart SVG icon --}}
-                    <svg class="h-8 w-8 text-nazareth-gold" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
-                    </svg>
-                    <span class="text-white font-medium text-lg leading-tight hidden sm:block">Hogar Nazareth</span>
-                    <span class="text-white font-medium text-base leading-tight sm:hidden">Hogar Nazareth</span>
+                   class="flex items-center shrink-0 focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue rounded">
+                    <img src="{{ asset('images/logo.png') }}"
+                         srcset="{{ asset('images/logo.png') }} 1x, {{ asset('images/logo-2x.png') }} 2x"
+                         alt="Fundación Hogar del Anciano Nazareth"
+                         class="h-10 w-auto"
+                         loading="eager">
                 </a>
 
                 {{-- Desktop nav links --}}
@@ -251,11 +250,12 @@
                 {{-- Col 1: Organization + Social --}}
                 <div>
                     {{-- Logo mark --}}
-                    <div class="flex items-center gap-2 mb-3">
-                        <svg class="h-7 w-7 text-nazareth-gold shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
-                        </svg>
-                        <span class="font-medium text-white text-lg">{{ $siteSettings->org_name }}</span>
+                    <div class="mb-3">
+                        <img src="{{ asset('images/logo.png') }}"
+                             srcset="{{ asset('images/logo.png') }} 1x, {{ asset('images/logo-2x.png') }} 2x"
+                             alt="{{ $siteSettings->org_name }}"
+                             class="h-12 w-auto"
+                             loading="lazy">
                     </div>
 
                     @if($siteSettings->org_tagline)

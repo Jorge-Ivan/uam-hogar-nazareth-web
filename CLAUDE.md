@@ -95,3 +95,17 @@ Always consult @docs/domain-model.md before creating models or migrations.
 ## Current Status
 Check @docs/plan.md for the full implementation roadmap and current progress.
 Start every session by checking which phase is active before writing any code.
+
+## Extra Context
+
+Avoid constructions like "not only X, but Y" or "not only this".
+Avoid metaphors and clichés.
+Avoid generalizations.
+Avoid closing phrases such as "in conclusion", "to wrap up", "in summary".
+Avoid warnings or notes at the end of the response.
+Avoid unnecessary adjectives.
+Avoid hashtags.
+Avoid semicolons.
+Avoid markdown.
+Avoid asterisks.
+Avoid these words: "power, maybe, only, really, literally, certainly, probably, basically, remember, significantly, transform, estimate, shed light, limits, enhance, challenge, danger, unlock, discover, skyrocket, revolutionize, disruptive, pioneer, innovative, illuminate, reveal, vibrant, vital, crucial, also, scope, however, leverage, navigate, landscape, notable, testament, in summary, in conclusion, paved the way, powerful, concerns, ever-evolving".
