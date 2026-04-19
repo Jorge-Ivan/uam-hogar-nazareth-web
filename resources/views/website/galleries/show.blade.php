@@ -139,16 +139,23 @@
 @endsection
 
 @push('scripts')
+@php
+    $lightboxImages = $gallery->images
+        ->filter(fn ($i) => $i->media)
+        ->map(fn ($i) => [
+            'src'     => \Illuminate\Support\Facades\Storage::url($i->media->file_path),
+            'alt'     => $i->media->alt_text ?? $i->caption ?? '',
+            'caption' => $i->caption,
+        ])
+        ->values()
+        ->toArray();
+@endphp
 <script>
 function galleryLightbox() {
     return {
         active: false,
         currentIndex: 0,
-        images: @json($gallery->images->filter(fn($i) => $i->media)->map(fn($i) => [
-            'src' => Storage::url($i->media->file_path),
-            'alt' => $i->media->alt_text ?? $i->caption ?? '',
-            'caption' => $i->caption,
-        ])->values()),
+        images: @json($lightboxImages),
         open(index) { this.active = true; this.currentIndex = index; document.body.style.overflow = 'hidden'; },
         close() { this.active = false; document.body.style.overflow = ''; },
         next() { this.currentIndex = (this.currentIndex + 1) % this.images.length; },

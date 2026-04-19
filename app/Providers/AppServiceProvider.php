@@ -28,6 +28,6 @@ final class AppServiceProvider extends ServiceProvider
         Carbon::setLocale('es');
 
         View::composer('layouts.public', NavigationComposer::class);
-        View::composer('layouts.public', SettingsComposer::class);
+        View::composer(['layouts.public', 'website.*'], SettingsComposer::class);
     }
 }
