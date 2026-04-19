@@ -1,7 +1,7 @@
 # Plan: Hogar Nazareth — Hoja de Ruta de Implementación
 
 > **Documento vivo.** Marcar cada ítem con `[x]` al completarlo.
-> Última revisión: 2026-04-13
+> Última revisión: 2026-04-19
 
 ---
 
@@ -15,9 +15,9 @@
 | Modelos Eloquent | ✅ Completa |
 | Servicios y Actions | ✅ Completa |
 | Panel admin (Livewire) + Gestión de usuarios | ✅ Completa |
-| Sitio web público (Blade) | ❌ No existe |
+| Sitio web público (Blade) | ✅ Completa |
+| Tests (Pest) — Fase 4 | ✅ Completa (121 tests) |
 | API REST | ❌ No existe |
-| Tests (Pest) | ❌ No existe |
 
 ---
 
@@ -280,88 +280,56 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 **Objetivo:** Exposición pública del contenido gestionado.
 
 ### Infraestructura de navegación (prerequisito)
-- [ ] `app/Services/NavigationService.php` — `headerPages()` y `footerPages()` con caché 5 min
-- [ ] `app/Http/View/Composers/NavigationComposer.php` — inyecta `$navHeaderPages` y `$navFooterPages`
-- [ ] Registrar `NavigationComposer` en `app/Providers/AppServiceProvider.php` para `layouts.public`
+- [x] `app/Services/NavigationService.php` — `headerPages()` y `footerPages()` con caché 5 min
+- [x] `app/Http/View/Composers/NavigationComposer.php` — inyecta `$navHeaderPages` y `$navFooterPages`
+- [x] Registrar `NavigationComposer` en `app/Providers/AppServiceProvider.php` para `layouts.public`
 
 ### Infraestructura de configuración del sitio (prerequisito)
-- [ ] `app/Http/View/Composers/SettingsComposer.php` — llama `SiteSetting::instance()` e inyecta `$siteSettings` en `layouts.public`
-- [ ] Registrar `SettingsComposer` en `AppServiceProvider` junto con `NavigationComposer` — ambos sobre `layouts.public`
+- [x] `app/Http/View/Composers/SettingsComposer.php` — llama `SiteSetting::instance()` e inyecta `$siteSettings` en `layouts.public`
+- [x] Registrar `SettingsComposer` en `AppServiceProvider` junto con `NavigationComposer` — ambos sobre `layouts.public`
 
 ### Layout
-- [ ] `resources/views/layouts/public.blade.php` (header nav español, footer, hamburger Alpine)
-  - **Nav:** ítems fijos hardcoded + ítems dinámicos desde `$navHeaderPages` con dropdown Alpine para subpáginas
-  - **Footer 3 columnas:**
-    - Col 1: `$siteSettings->org_name`, `$siteSettings->org_tagline`, redes sociales desde `$siteSettings->social_*` (solo las que no sean `null`)
-    - Col 2: enlaces institucionales desde `$navFooterPages` + enlaces fijos (Transparencia, Donaciones)
-    - Col 3: `$siteSettings->contact_address`, `$siteSettings->contact_phone`, `$siteSettings->contact_email`, `$siteSettings->contact_schedule`; WhatsApp → `<a href="https://wa.me/{{ $siteSettings->contact_whatsapp }}">` solo si no es `null`
-  - **SEO slots:** `@yield('meta_title')`, `@yield('meta_description')`, Open Graph completo (og:title, og:description, og:image, og:url), Facebook y Twitter/X metatags, canonical
-  - Skip-to-content, semántica HTML (`<nav aria-label>`, `<main id="main-content">`)
-  - **Banda de atribución** al pie del footer (debajo de las 3 columnas institucionales), separada por `border-t border-white/10`:
-    ```blade
-    <div class="border-t border-white/10 py-4 text-center text-xs text-gray-400">
-        © {{ date('Y') }} Fundación Hogar del Anciano Nazareth &middot;
-        Sitio web desarrollado como práctica social por
-        <a href="https://www.linkedin.com/in/jorgecarrillog/" target="_blank" rel="noopener noreferrer"
-           class="text-gray-400 hover:text-gray-200 hover:underline underline-offset-2">Jorge Carrillo</a>
-        &middot;
-        <a href="https://www.autonoma.edu.co/" target="_blank" rel="noopener noreferrer"
-           class="text-gray-400 hover:text-gray-200 hover:underline underline-offset-2">Universidad Autónoma de Manizales</a>
-    </div>
-    ```
+- [x] `resources/views/layouts/public.blade.php` (header nav español, footer, hamburger Alpine)
 
 ### Controladores y vistas
-- [ ] `Website/HomeController` → `/` (hero + últimas actividades + próximos eventos)
-- [ ] `Website/ActivityController` → `/actividades`, `/actividades/{slug}`
-- [ ] `Website/GalleryController` → `/galerias`, `/galerias/{slug}` (lightbox Alpine)
-- [ ] `Website/EventController` → `/eventos`, `/eventos/{slug}`
-- [ ] `Website/DocumentController` → `/transparencia` (agrupado por año y categoría)
-- [ ] `Website/PageController` → `/paginas/{slug}` — usar `scopePublished()->firstOrFail()` (no route model binding)
-- [ ] `resources/views/website/pages/show.blade.php` — breadcrumb automático si tiene padre
-- [ ] `Website/DonationsController` → `GET /donaciones`
-  - Eager-load `$siteSettings->load('donationQr')`
-  - Pasar a vista; campos con `@if` guard
-- [ ] `resources/views/website/donations.blade.php`
-  - Sección 1: Transferencia bancaria (banco, tipo, número, NIT, titular) — tarjeta azul nazareth
-  - Sección 2: Nequi — número + imagen QR grande (`$siteSettings->donationQr`) si `donation_qr_media_id` configurado; colores rosa/morado de Nequi
-  - Sección 3: Daviplata — número de celular; colores rojo/naranja Davivienda
-  - Sección 4: Donación en especie — enlace a /contacto
-  - Fallback: aviso "Contáctenos para información sobre donaciones" si ningún campo configurado
-- [ ] `Website/ContactController` → `GET /contacto` — `$siteSettings` disponible vía composer, no necesita pasarlo a mano
-- [ ] `app/Livewire/Website/ContactForm.php`
-  - Props: `name`, `email`, `phone` (opcional), `message`, `honeypot` (oculto anti-spam), `sent` (bool)
-  - `boot(SettingService)` para DI
-  - `submit()`: si `$honeypot !== ''` → reset silencioso (bot); valida; si `mail_contact_to` vacío → `$this->sent = false` + error flash; si ok → `SendContactEmail::dispatch(...)` + `$this->sent = true` + reset campos
-  - Mensajes de validación en español
-- [ ] `resources/views/website/contact.blade.php` — 2 columnas en md+:
-  - **Col izquierda** (info): `contact_address`, `contact_phone`, WhatsApp (`wa.me/`), `contact_email`, `contact_schedule`; iframe Google Maps si `contact_maps_url` no es null: `<iframe src="{{ $siteSettings->contact_maps_url }}" ...>`; cada bloque envuelto en `@if($siteSettings->campo)`
-  - **Col derecha** (formulario): `<livewire:website.contact-form />`; si `$siteSettings->mail_contact_to` es null → aviso "El formulario no está disponible en este momento"
+- [x] `Website/HomeController` → `/` (hero + últimas actividades + próximos eventos)
+- [x] `Website/ActivityController` → `/actividades`, `/actividades/{slug}`
+- [x] `Website/GalleryController` → `/galerias`, `/galerias/{slug}` (lightbox Alpine)
+- [x] `Website/EventController` → `/eventos`, `/eventos/{slug}`
+- [x] `Website/DocumentController` → `/transparencia` (agrupado por año y categoría)
+- [x] `Website/PageController` → `/paginas/{slug}` — usar `scopePublished()->firstOrFail()` (no route model binding)
+- [x] `resources/views/website/pages/show.blade.php` — breadcrumb automático si tiene padre
+- [x] `Website/DonationsController` → `GET /donaciones`
+- [x] `resources/views/website/donations.blade.php`
+- [x] `Website/ContactController` → `GET /contacto`
+- [x] `app/Livewire/Website/ContactForm.php`
+- [x] `resources/views/website/contact.blade.php`
 
 ### Rutas públicas
-- [ ] Grupo `Route::name('website.')` con constraint `where('slug', '[a-z0-9-]+')` en rutas de slug
-- [ ] `GET /donaciones` → `DonationsController` → `website.donations`
-- [ ] `GET /contacto` → `ContactController` → `website.contact`
+- [x] Grupo `Route::name('website.')` con constraint `where('slug', '[a-z0-9-]+')` en rutas de slug
+- [x] `GET /donaciones` → `DonationsController` → `website.donations`
+- [x] `GET /contacto` → `ContactController` → `website.contact`
 
 ### SEO básico
-- [ ] `@section('meta_title')`, `@section('meta_description')` por vista
-- [ ] Open Graph tags en actividades, galerías y páginas; Facebook y Twitter metatags; canonical
+- [x] `@section('meta_title')`, `@section('meta_description')` por vista
+- [x] Open Graph tags en actividades, galerías y páginas; Facebook y Twitter metatags; canonical
 
 ### Verificación Fase 4
-- [ ] Feature test: `GET /actividades` → solo publicadas
-- [ ] Feature test: `GET /actividades/{slug}` draft → 404
-- [ ] Feature test: `GET /paginas/{slug}` draft → 404
-- [ ] Feature test: página con padre muestra breadcrumb
-- [ ] Feature test: galería sin N+1
-- [ ] Feature test: `GET /contacto` → renderiza formulario cuando `mail_contact_to` configurado
-- [ ] Feature test: `GET /contacto` → muestra aviso cuando `mail_contact_to` es null
-- [ ] Feature test: `ContactForm::submit()` con honeypot relleno → no despacha `SendContactEmail`
-- [ ] Feature test: `ContactForm::submit()` válido → despacha `SendContactEmail` con datos correctos
-- [ ] Feature test: `GET /donaciones` → muestra datos bancarios si configurados; muestra fallback si todos son null
-- [ ] Feature test: `GET /donaciones` → muestra QR si `donation_qr_media_id` configurado
-- [ ] Feature test: `GET /donaciones` → muestra sección Nequi si `donation_nequi` configurado
-- [ ] Unit test: `NavigationService::headerPages()` filtra solo publicadas con `show_in_header=true`
-- [ ] Unit test: resultado de nav está en caché (segunda llamada no toca BD)
-- [ ] Unit test: `SettingsComposer` inyecta instancia de `SiteSetting` en la vista
+- [x] Feature test: `GET /actividades` → solo publicadas
+- [x] Feature test: `GET /actividades/{slug}` draft → 404
+- [x] Feature test: `GET /paginas/{slug}` draft → 404
+- [x] Feature test: página con padre muestra breadcrumb
+- [x] Feature test: galería sin N+1
+- [x] Feature test: `GET /contacto` → renderiza formulario cuando `mail_contact_to` configurado
+- [x] Feature test: `GET /contacto` → muestra aviso cuando `mail_contact_to` es null
+- [x] Feature test: `ContactForm::submit()` con honeypot relleno → no despacha `SendContactEmail`
+- [x] Feature test: `ContactForm::submit()` válido → despacha `SendContactEmail` con datos correctos
+- [x] Feature test: `GET /donaciones` → muestra datos bancarios si configurados; muestra fallback si todos son null
+- [x] Feature test: `GET /donaciones` → muestra QR si `donation_qr_media_id` configurado
+- [x] Feature test: `GET /donaciones` → muestra sección Nequi si `donation_nequi` configurado
+- [x] Unit test: `NavigationService::headerPages()` filtra solo publicadas con `show_in_header=true`
+- [x] Unit test: resultado de nav está en caché (segunda llamada no toca BD)
+- [x] Unit test: `SettingsComposer` inyecta instancia de `SiteSetting` en la vista
 
 ---
 
