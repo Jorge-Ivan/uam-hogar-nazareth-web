@@ -6,6 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Iniciar sesión — Hogar Nazareth</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if(config('services.recaptcha.site_key'))
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}" defer></script>
+    @endif
 </head>
 <body class="min-h-screen bg-nazareth-gray font-sans antialiased">
 
@@ -17,14 +20,11 @@
 
                 {{-- Header --}}
                 <div class="bg-nazareth-blue px-8 py-8 text-center">
-                    <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-white/20">
-                        <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </div>
+                    <img src="/images/logo.png"
+                         alt="Fundación Hogar del Anciano Nazareth"
+                         class="mx-auto mb-4 h-20 w-auto">
                     <h1 class="text-xl font-medium text-white">Iniciar sesión</h1>
-                    <p class="mt-1 text-sm text-white/70">Hogar Nazareth — Panel de administración</p>
+                    <p class="mt-1 text-sm text-white/70">Panel de administración</p>
                 </div>
 
                 {{-- Form --}}
@@ -37,8 +37,25 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('login') }}" novalidate>
+                    <form
+                        method="POST"
+                        action="{{ route('login') }}"
+                        x-data
+                        x-on:submit.prevent="
+                            if (!document.querySelector('[name=recaptcha_token]').value) {
+                                grecaptcha.ready(function() {
+                                    grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'login'}).then(function(token) {
+                                        document.querySelector('[name=recaptcha_token]').value = token;
+                                        $el.submit();
+                                    });
+                                });
+                            } else {
+                                $el.submit();
+                            }
+                        "
+                        novalidate>
                         @csrf
+                        <input type="hidden" name="recaptcha_token" value="">
 
                         {{-- Email --}}
                         <div class="mb-5">

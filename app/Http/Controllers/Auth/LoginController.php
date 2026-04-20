@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\ReCaptchaService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,8 +30,14 @@ final class LoginController extends Controller
      *
      * @throws ValidationException
      */
-    public function login(Request $request): RedirectResponse
+    public function login(Request $request, ReCaptchaService $recaptcha): RedirectResponse
     {
+        if (! $recaptcha->verify((string) $request->input('recaptcha_token', ''))) {
+            throw ValidationException::withMessages([
+                'email' => 'No se pudo verificar que eres humano. Intenta de nuevo.',
+            ]);
+        }
+
         $credentials = $request->validate([
             'email'    => ['required', 'email'],
             'password' => ['required', 'string'],
