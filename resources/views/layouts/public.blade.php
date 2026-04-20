@@ -28,6 +28,10 @@
     {{-- Canonical --}}
     <link rel="canonical" href="{{ url()->current() }}">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -254,7 +258,7 @@
                         <img src="{{ asset('images/logo.png') }}"
                              srcset="{{ asset('images/logo.png') }} 1x, {{ asset('images/logo-2x.png') }} 2x"
                              alt="{{ $siteSettings->org_name }}"
-                             class="h-12 w-auto"
+                             class="w-auto" style="height:95px"
                              loading="lazy">
                     </div>
 
@@ -418,6 +422,20 @@
                 </div>
 
             </div>{{-- end 3-col grid --}}
+
+            {{-- Banda de transparencia --}}
+            <div class="border-t border-white/[.12] py-6 flex items-center justify-between flex-wrap gap-4 text-[13px]">
+                <span class="inline-flex items-center gap-2 text-white/80">
+                    <svg class="w-4 h-4 text-nazareth-gold shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    Administración transparente · Reportes anuales disponibles
+                </span>
+                <a href="{{ route('website.documents.index') }}"
+                   class="text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold rounded">
+                    Ver documentos DIAN →
+                </a>
+            </div>
 
             {{-- Attribution band --}}
             <div class="border-t border-white/10 py-4 mt-2 text-center text-xs text-gray-400">

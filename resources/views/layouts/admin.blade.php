@@ -31,17 +31,11 @@
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
         >
             {{-- Logo --}}
-            <div class="flex h-16 items-center gap-3 border-b border-gray-700 px-6">
-                <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-nazareth-blue">
-                    <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-sm font-medium leading-tight text-white">Hogar Nazareth</p>
-                    <p class="text-xs text-gray-400">Panel de administración</p>
-                </div>
+            <div class="flex h-16 items-center gap-3 border-b border-gray-700 px-4">
+                <img src="/images/logo.png"
+                     alt="Hogar Nazareth"
+                     class="h-10 w-auto shrink-0">
+                <p class="text-xs text-gray-400 leading-tight">Panel de<br>administración</p>
             </div>
 
             {{-- Navigation --}}

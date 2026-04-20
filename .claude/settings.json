@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Read(//Users/jorge.carrillo/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/subagent-driven-development/**)",
-      "Read(//Users/jorge.carrillo/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/requesting-code-review/**)"
+      "Read(//Users/jorge.carrillo/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/requesting-code-review/**)",
+      "Read(//private/tmp/design_extract/hogar-nazareth/project/public/mockup/**)"
     ]
   }
 }

@@ -13,21 +13,12 @@ final class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::firstOrCreate(
-            ['email' => 'admin@hogarnazareth.org'],
+        User::updateOrCreate(
+            ['email' => 'admin@hogarnazareth.com'],
             [
                 'name'     => 'Administrador',
-                'password' => Hash::make('admin1234'),
+                'password' => Hash::make('Nazareth2025!'),
                 'role'     => UserRole::Admin,
-            ]
-        );
-
-        User::firstOrCreate(
-            ['email' => 'editor@hogarnazareth.org'],
-            [
-                'name'     => 'Editor',
-                'password' => Hash::make('editor1234'),
-                'role'     => UserRole::Editor,
             ]
         );
     }

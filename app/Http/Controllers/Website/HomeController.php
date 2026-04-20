@@ -19,7 +19,15 @@ final class HomeController extends Controller
             ->limit(6)
             ->get();
 
-        $events = Event::where('start_date', '>=', now())
+        $events = Event::where(function ($q) {
+                // En curso: ya empezó y aún no ha terminado
+                $q->where('start_date', '<=', now())
+                  ->where(function ($q2) {
+                      $q2->whereNull('end_date')
+                         ->orWhere('end_date', '>=', now());
+                  });
+            })
+            ->orWhere('start_date', '>', now())   // próximos
             ->with('featuredImage')
             ->orderBy('start_date')
             ->limit(3)

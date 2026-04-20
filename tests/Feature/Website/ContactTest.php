@@ -13,7 +13,7 @@ it('renders contact form when mail_contact_to is configured', function (): void 
 
     $this->get(route('website.contact'))
         ->assertOk()
-        ->assertSeeLivewire('website.contact-form');
+        ->assertSee('Envíanos un mensaje');
 });
 
 it('shows unavailable notice when mail_contact_to is null', function (): void {

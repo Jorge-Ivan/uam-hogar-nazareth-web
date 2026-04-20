@@ -10,108 +10,104 @@
 @section('content')
 
 {{-- ══════════════════════════════════════════
-     ENCABEZADO / BREADCRUMB
+     HERO
      ══════════════════════════════════════════ --}}
-<section class="bg-gradient-to-r from-nazareth-blue to-nazareth-light py-10">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {{-- Breadcrumb --}}
+<section class="bg-gradient-to-b from-nazareth-50 to-white pt-[72px] pb-10 border-b border-nazareth-100">
+    <div class="max-w-[1200px] mx-auto px-6">
         <nav aria-label="Ruta de navegación" class="mb-4">
-            <ol class="flex flex-wrap items-center gap-2 text-sm text-white/70">
-                <li>
-                    <a href="{{ route('website.home') }}"
-                       class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold rounded">
-                        Inicio
-                    </a>
-                </li>
-                <li aria-hidden="true">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </li>
-                <li>
-                    <a href="{{ route('website.events.index') }}"
-                       class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold rounded">
-                        Eventos
-                    </a>
-                </li>
-                <li aria-hidden="true">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </li>
-                <li>
-                    <span class="text-white font-medium truncate max-w-xs block" aria-current="page">
-                        {{ $event->title }}
-                    </span>
-                </li>
+            <ol class="flex flex-wrap items-center gap-1.5 text-sm text-[#5A6A6E]">
+                <li><a href="{{ route('website.home') }}" class="hover:text-nazareth-blue transition-colors">Inicio</a></li>
+                <li aria-hidden="true"><svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></li>
+                <li><a href="{{ route('website.events.index') }}" class="hover:text-nazareth-blue transition-colors">Eventos</a></li>
+                <li aria-hidden="true"><svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></li>
+                <li class="text-nazareth-ink font-medium truncate max-w-[28ch]" aria-current="page">{{ $event->title }}</li>
             </ol>
         </nav>
-
-        {{-- Fecha --}}
-        <p class="text-white/70 text-sm mb-3">
-            {{ $event->start_date->translatedFormat('d \d\e F \d\e Y') }}
-            @if($event->end_date && $event->end_date->ne($event->start_date))
-                &ndash; {{ $event->end_date->translatedFormat('d \d\e F \d\e Y') }}
-            @endif
-        </p>
-
-        {{-- Título --}}
-        <h1 class="text-2xl md:text-3xl font-medium text-white leading-snug">
-            {{ $event->title }}
-        </h1>
-
-        {{-- Ubicación --}}
-        @if($event->location)
-            <p class="flex items-center gap-2 text-white/80 mt-3 text-sm">
-                <svg class="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                </svg>
-                {{ $event->location }}
-            </p>
-        @endif
     </div>
 </section>
 
 {{-- ══════════════════════════════════════════
-     IMAGEN DESTACADA
+     TARJETA PRINCIPAL
      ══════════════════════════════════════════ --}}
-@if($event->featuredImage)
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
-        <img src="{{ Storage::url($event->featuredImage->file_path) }}"
-             alt="{{ $event->featuredImage->alt_text }}"
-             class="w-full max-h-96 object-cover rounded-xl shadow-lg"
-             loading="lazy">
-    </div>
-@endif
+<section class="py-14 bg-nazareth-paper">
+    <div class="max-w-[1200px] mx-auto px-6">
 
-{{-- ══════════════════════════════════════════
-     DESCRIPCIÓN DEL EVENTO
-     ══════════════════════════════════════════ --}}
-<section class="bg-white py-12">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <article class="bg-white border border-[#E3EAEB] rounded-[20px] overflow-hidden shadow-md grid grid-cols-1 md:grid-cols-[1.1fr_1fr]">
 
-        @if($event->description)
-            <article class="prose prose-lg max-w-none
-                            prose-headings:font-medium prose-headings:text-nazareth-blue
-                            prose-a:text-nazareth-blue prose-a:no-underline hover:prose-a:underline
-                            prose-img:rounded-xl">
-                {!! nl2br(e($event->description)) !!}
-            </article>
-        @endif
+            {{-- Imagen --}}
+            <div class="relative overflow-hidden bg-nazareth-200" style="aspect-ratio:5/4; min-height:280px">
+                @if($event->featuredImage)
+                    <img src="{{ Storage::url($event->featuredImage->file_path) }}"
+                         alt="{{ $event->featuredImage->alt_text }}"
+                         class="w-full h-full object-cover">
+                @else
+                    <div class="w-full h-full flex items-center justify-center bg-nazareth-100">
+                        <svg class="w-16 h-16 text-nazareth-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                @endif
 
-        {{-- Enlace de regreso --}}
-        <div class="mt-10 pt-6 border-t border-gray-100">
-            <a href="{{ route('website.events.index') }}"
-               class="inline-flex items-center text-nazareth-blue hover:text-nazareth-light font-medium transition-colors focus:outline-none focus:underline">
-                <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
-                </svg>
-                Volver a eventos
-            </a>
-        </div>
+                @php $isOngoing = $event->start_date->lte(now()) && ($event->end_date === null || $event->end_date->gte(now())); @endphp
+                @if($isOngoing)
+                    <span class="absolute top-5 left-5 bg-nazareth-green text-white text-[12px] font-semibold tracking-[.06em] uppercase px-3 py-1.5 rounded-full">En curso</span>
+                @elseif($event->start_date->isFuture())
+                    <span class="absolute top-5 left-5 bg-nazareth-gold text-white text-[12px] font-semibold tracking-[.06em] uppercase px-3 py-1.5 rounded-full">Próximo</span>
+                @endif
+            </div>
+
+            {{-- Info --}}
+            <div class="flex flex-col justify-center px-10 py-12">
+                <span class="inline-flex items-center gap-2 text-nazareth-700 font-semibold text-[14px] mb-4">
+                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    {{ $event->start_date->translatedFormat('l d \d\e F \d\e Y') }}
+                    @if($event->end_date && $event->end_date->ne($event->start_date))
+                        – {{ $event->end_date->translatedFormat('d \d\e F \d\e Y') }}
+                    @endif
+                </span>
+
+                <h1 class="font-display text-[clamp(24px,3vw,32px)] text-nazareth-ink leading-tight mb-4 tracking-tight">
+                    {{ $event->title }}
+                </h1>
+
+                @if($event->description)
+                    <p class="text-[16px] text-[#4B5A5E] leading-relaxed mb-6">{{ $event->description }}</p>
+                @endif
+
+                {{-- Meta --}}
+                <div class="grid grid-cols-2 gap-5 p-5 bg-nazareth-50 rounded-[12px] mb-7">
+                    <div>
+                        <strong class="block text-[11px] font-semibold uppercase tracking-[.08em] text-nazareth-700 mb-1">Fecha</strong>
+                        <span class="text-[15px] font-medium text-nazareth-ink">{{ $event->start_date->translatedFormat('d M Y') }}</span>
+                    </div>
+                    @if($event->end_date && $event->end_date->ne($event->start_date))
+                    <div>
+                        <strong class="block text-[11px] font-semibold uppercase tracking-[.08em] text-nazareth-700 mb-1">Hasta</strong>
+                        <span class="text-[15px] font-medium text-nazareth-ink">{{ $event->end_date->translatedFormat('d M Y') }}</span>
+                    </div>
+                    @endif
+                    @if($event->location)
+                    <div class="{{ $event->end_date && $event->end_date->ne($event->start_date) ? '' : 'col-span-2' }}">
+                        <strong class="block text-[11px] font-semibold uppercase tracking-[.08em] text-nazareth-700 mb-1">Lugar</strong>
+                        <span class="text-[15px] font-medium text-nazareth-ink">{{ $event->location }}</span>
+                    </div>
+                    @endif
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <a href="{{ route('website.contact') }}"
+                       class="inline-flex items-center px-5 py-2.5 bg-nazareth-blue text-white text-[14px] font-semibold rounded-[10px] hover:bg-nazareth-light transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-blue focus:ring-offset-2">
+                        Más información
+                    </a>
+                    <a href="{{ route('website.events.index') }}"
+                       class="inline-flex items-center px-5 py-2.5 border border-nazareth-blue text-nazareth-blue text-[14px] font-semibold rounded-[10px] hover:bg-nazareth-50 transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-blue focus:ring-offset-2">
+                        ← Todos los eventos
+                    </a>
+                </div>
+            </div>
+        </article>
 
     </div>
 </section>

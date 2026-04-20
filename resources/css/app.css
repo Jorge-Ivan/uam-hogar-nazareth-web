@@ -4,11 +4,25 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-    --color-nazareth-blue:  #1B4B8A;
-    --color-nazareth-light: #2D6CC2;
-    --color-nazareth-gold:  #E8A020;
-    --color-nazareth-gray:  #F5F7FA;
-    --color-nazareth-green: #3D7A45;
+    /* Brand teal scale — extracted from foundation logo */
+    --color-nazareth-blue:   #0A6B73;
+    --color-nazareth-light:  #19B0B8;
+    --color-nazareth-700:    #10939C;
+    --color-nazareth-400:    #3EC1C8;
+    --color-nazareth-200:    #9ED7DC;
+    --color-nazareth-100:    #C9E3E6;
+    --color-nazareth-50:     #EAF4F5;
+    /* Neutral */
+    --color-nazareth-ink:    #1F2A2E;
+    --color-nazareth-paper:  #FBFBF9;
+    /* Functional */
+    --color-nazareth-gold:   #E8A020;
+    --color-nazareth-gray:   #EAF4F5;
+    --color-nazareth-green:  #3D7A45;
+
+    /* Typography */
+    --font-sans:    'Figtree', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Fraunces', Georgia, serif;
 }
 
 /* Alpine.js x-cloak — hide until Alpine initializes */

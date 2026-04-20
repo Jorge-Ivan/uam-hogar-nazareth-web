@@ -1,185 +1,219 @@
 @extends('layouts.public')
 
 @section('meta_title', 'Eventos')
-@section('meta_description', 'Conoce los eventos y celebraciones organizados por la Fundación Hogar del Anciano Nazareth.')
+@section('meta_description', 'Celebraciones, jornadas de recaudación y actividades abiertas a la comunidad. Están todas cordialmente invitadas.')
 
 @section('content')
 
 {{-- ══════════════════════════════════════════
-     ENCABEZADO DE SECCIÓN
+     HERO
      ══════════════════════════════════════════ --}}
-<section class="bg-gradient-to-r from-nazareth-blue to-nazareth-light py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {{-- Breadcrumb --}}
-        <nav aria-label="Ruta de navegación" class="mb-4">
-            <ol class="flex items-center gap-2 text-sm text-white/70">
-                <li>
-                    <a href="{{ route('website.home') }}"
-                       class="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold rounded">
-                        Inicio
-                    </a>
-                </li>
-                <li aria-hidden="true">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </li>
-                <li>
-                    <span class="text-white font-medium" aria-current="page">Eventos</span>
-                </li>
-            </ol>
-        </nav>
-
-        <h1 class="text-3xl md:text-4xl font-medium text-white">
-            Eventos y celebraciones
-        </h1>
-        <p class="text-white/80 mt-3 text-lg leading-relaxed max-w-2xl">
-            Acompáñanos en nuestros eventos y celebraciones especiales junto a la familia Nazareth.
+<section class="bg-gradient-to-b from-nazareth-50 to-white pt-[72px] pb-10 border-b border-nazareth-100">
+    <div class="max-w-[1200px] mx-auto px-6">
+        <span class="inline-block text-xs font-semibold tracking-[.14em] uppercase text-nazareth-700 mb-3.5">Agenda del hogar</span>
+        <h1 class="font-display text-[clamp(36px,4.5vw,48px)] text-nazareth-blue leading-tight mb-4 tracking-tight">Eventos</h1>
+        <p class="text-[18px] text-[#4B5A5E] max-w-[58ch] leading-relaxed">
+            Celebraciones, jornadas de recaudación y actividades abiertas a la comunidad. Están todas cordialmente invitadas.
         </p>
     </div>
 </section>
 
+@php
+    $featured  = $upcoming->first();
+    $remaining = $upcoming->slice(1);
+@endphp
+
+{{-- ══════════════════════════════════════════
+     EVENTO DESTACADO
+     ══════════════════════════════════════════ --}}
+@if($featured)
+<section class="py-14">
+    <div class="max-w-[1200px] mx-auto px-6">
+        <div class="flex items-baseline justify-between mb-6 flex-wrap gap-3">
+            <h2 class="font-display text-[26px] text-nazareth-blue tracking-tight">Próximo gran evento</h2>
+        </div>
+
+        <article class="grid grid-cols-1 md:grid-cols-[1.1fr_1fr] overflow-hidden bg-white border border-[#E3EAEB] rounded-[20px] shadow-md mb-9">
+            {{-- Imagen --}}
+            <div class="relative overflow-hidden bg-nazareth-200" style="aspect-ratio:5/4; min-height:260px">
+                @if($featured->featuredImage)
+                    <img src="{{ Storage::url($featured->featuredImage->file_path) }}"
+                         alt="{{ $featured->featuredImage->alt_text }}"
+                         class="w-full h-full object-cover">
+                @else
+                    <div class="w-full h-full flex items-center justify-center bg-nazareth-100">
+                        <svg class="w-16 h-16 text-nazareth-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                @endif
+                <span class="absolute top-5 left-5 bg-nazareth-gold text-white text-[12px] font-semibold tracking-[.06em] uppercase px-3 py-1.5 rounded-full">
+                    Destacado
+                </span>
+            </div>
+
+            {{-- Info --}}
+            <div class="flex flex-col justify-center px-10 py-12">
+                <span class="inline-flex items-center gap-2 text-nazareth-700 font-semibold text-[14px] mb-3">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    {{ $featured->start_date->translatedFormat('l d \d\e F, Y') }}
+                    @if($featured->end_date && $featured->end_date->ne($featured->start_date))
+                        – {{ $featured->end_date->translatedFormat('d \d\e F') }}
+                    @endif
+                </span>
+
+                <h3 class="font-display text-[28px] text-nazareth-ink leading-tight mb-3 tracking-tight">{{ $featured->title }}</h3>
+
+                @if($featured->description)
+                    <p class="text-[16px] text-[#4B5A5E] leading-relaxed mb-5">{{ Str::limit($featured->description, 200) }}</p>
+                @endif
+
+                <div class="flex flex-wrap gap-6 py-4 border-t border-b border-[#E3EAEB] mb-6 text-[14px] text-[#5A6A6E]">
+                    @if($featured->location)
+                        <span class="inline-flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-nazareth-700 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M17.66 16.66L13.41 20.9a1.99 1.99 0 01-2.82 0l-4.24-4.25a8 8 0 1111.31 0z"/><circle cx="12" cy="11" r="3"/>
+                            </svg>
+                            {{ $featured->location }}
+                        </span>
+                    @endif
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <a href="{{ route('website.events.show', $featured->slug) }}"
+                       class="inline-flex items-center px-5 py-2.5 bg-nazareth-blue text-white text-[14px] font-semibold rounded-[10px] hover:bg-nazareth-light transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-blue focus:ring-offset-2">
+                        Ver detalles
+                    </a>
+                    <a href="{{ route('website.contact') }}"
+                       class="inline-flex items-center px-5 py-2.5 border border-nazareth-blue text-nazareth-blue text-[14px] font-semibold rounded-[10px] hover:bg-nazareth-50 transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-blue focus:ring-offset-2">
+                        Contactar
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+@endif
+
 {{-- ══════════════════════════════════════════
      PRÓXIMOS EVENTOS
      ══════════════════════════════════════════ --}}
-<section class="bg-white py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+@if($remaining->isNotEmpty())
+<section class="pb-10">
+    <div class="max-w-[1200px] mx-auto px-6">
+        <div class="flex items-baseline justify-between mb-6 flex-wrap gap-3">
+            <h2 class="font-display text-[26px] text-nazareth-blue tracking-tight">Próximos eventos</h2>
+            <span class="text-[13px] font-semibold text-nazareth-700 bg-nazareth-50 px-3 py-1 rounded-full">
+                {{ $remaining->count() }} {{ $remaining->count() === 1 ? 'evento programado' : 'eventos programados' }}
+            </span>
+        </div>
 
-        <h2 class="text-2xl font-medium text-nazareth-blue mb-6">Próximos eventos</h2>
+        <div class="space-y-3.5">
+            @foreach($remaining as $event)
+            <article class="grid items-center gap-7 bg-white border border-[#E3EAEB] rounded-[16px] px-7 py-6 hover:shadow-md transition-shadow"
+                     style="grid-template-columns: 120px 1fr auto">
+                {{-- Fecha badge --}}
+                <div class="flex flex-col items-center bg-nazareth-50 border border-nazareth-100 rounded-[10px] px-2 py-3.5 text-center">
+                    <span class="text-[11px] font-bold text-nazareth-700 uppercase tracking-[.12em]">{{ $event->start_date->translatedFormat('M') }}</span>
+                    <span class="font-display text-[32px] font-semibold text-nazareth-blue leading-none my-1">{{ $event->start_date->format('d') }}</span>
+                    <span class="text-[11px] text-[#9CA3AF]">{{ $event->start_date->format('Y') }}</span>
+                </div>
 
-        @if($upcoming->isEmpty())
-            <div class="text-center py-10 bg-nazareth-gray rounded-xl">
-                <svg class="w-14 h-14 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
-                <p class="text-gray-500 text-lg">No hay eventos próximos en este momento.</p>
-                <p class="text-gray-400 text-sm mt-1">Vuelve pronto para conocer nuestras próximas actividades.</p>
-            </div>
-        @else
-            <div class="space-y-4">
-                @foreach($upcoming as $event)
-                    <a href="{{ route('website.events.show', $event->slug) }}"
-                       class="group flex flex-col sm:flex-row gap-4 bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md hover:border-nazareth-blue/30 transition-all focus:outline-none focus:ring-2 focus:ring-nazareth-blue">
+                {{-- Cuerpo --}}
+                <div>
+                    <h3 class="text-[18px] font-semibold text-nazareth-ink mb-1.5 leading-snug">{{ $event->title }}</h3>
+                    @if($event->description)
+                        <p class="text-[14px] text-[#4B5A5E] leading-relaxed line-clamp-2">{{ $event->description }}</p>
+                    @endif
+                    <div class="flex flex-wrap gap-4 mt-2 text-[13px] text-[#9CA3AF]">
+                        @if($event->location)
+                            <span class="inline-flex items-center gap-1">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M17.66 16.66L13.41 20.9a1.99 1.99 0 01-2.82 0l-4.24-4.25a8 8 0 1111.31 0z"/><circle cx="12" cy="11" r="3"/>
+                                </svg>
+                                {{ $event->location }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
 
-                        {{-- Insignia de fecha --}}
-                        <div class="flex-shrink-0 flex flex-col items-center justify-center bg-nazareth-blue text-white rounded-xl w-16 h-16 text-center">
-                            <span class="text-xl font-medium leading-none">{{ $event->start_date->format('d') }}</span>
-                            <span class="text-xs uppercase leading-none mt-1">{{ $event->start_date->translatedFormat('M') }}</span>
-                        </div>
-
-                        {{-- Información del evento --}}
-                        <div class="flex-1 min-w-0">
-                            <h3 class="font-medium text-gray-900 group-hover:text-nazareth-blue transition-colors text-lg leading-snug">
-                                {{ $event->title }}
-                            </h3>
-
-                            @if($event->location)
-                                <p class="flex items-center gap-1.5 text-sm text-gray-500 mt-1">
-                                    <svg class="h-4 w-4 flex-shrink-0 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    </svg>
-                                    {{ $event->location }}
-                                </p>
-                            @endif
-
-                            @if($event->description)
-                                <p class="text-sm text-gray-500 mt-2 line-clamp-2 leading-relaxed">
-                                    {{ $event->description }}
-                                </p>
-                            @endif
-                        </div>
-
-                        {{-- Flecha --}}
-                        <div class="flex items-center text-gray-300 group-hover:text-nazareth-blue transition-colors flex-shrink-0">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </div>
-                    </a>
-                @endforeach
-            </div>
-        @endif
-
+                {{-- CTA --}}
+                <a href="{{ route('website.events.show', $event->slug) }}"
+                   class="shrink-0 px-4 py-2 border border-nazareth-blue text-nazareth-blue text-[13px] font-semibold rounded-[8px] hover:bg-nazareth-50 transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-blue whitespace-nowrap">
+                    Detalles
+                </a>
+            </article>
+            @endforeach
+        </div>
     </div>
 </section>
+@endif
+
+{{-- Sin eventos próximos --}}
+@if($upcoming->isEmpty())
+<section class="py-14">
+    <div class="max-w-[1200px] mx-auto px-6">
+        <div class="text-center py-16 bg-nazareth-50 rounded-[16px]">
+            <svg class="w-14 h-14 text-nazareth-200 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <p class="text-[#4B5A5E] text-lg">No hay eventos próximos en este momento.</p>
+            <p class="text-[14px] text-[#9CA3AF] mt-1">Vuelve pronto para conocer nuestra agenda.</p>
+        </div>
+    </div>
+</section>
+@endif
 
 {{-- ══════════════════════════════════════════
      EVENTOS PASADOS
      ══════════════════════════════════════════ --}}
 @if($past->isNotEmpty())
-<section class="bg-nazareth-gray py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-14 bg-nazareth-paper border-t border-[#E3EAEB] mt-4">
+    <div class="max-w-[1200px] mx-auto px-6">
+        <div class="flex items-baseline justify-between mb-8 flex-wrap gap-3">
+            <h2 class="font-display text-[26px] text-nazareth-blue tracking-tight">Eventos pasados</h2>
+        </div>
 
-        <h2 class="text-2xl font-medium text-nazareth-blue mb-6">Eventos pasados</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[22px]">
             @foreach($past as $event)
-                <a href="{{ route('website.events.show', $event->slug) }}"
-                   class="group block rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow bg-white focus:outline-none focus:ring-2 focus:ring-nazareth-blue">
-
-                    {{-- Imagen destacada --}}
+            <article class="bg-white border border-[#E3EAEB] rounded-[16px] overflow-hidden flex flex-col hover:shadow-sm transition-shadow">
+                {{-- Imagen --}}
+                <div class="relative overflow-hidden bg-nazareth-100" style="aspect-ratio:16/10">
                     @if($event->featuredImage)
-                        <div class="overflow-hidden">
-                            <img src="{{ Storage::url($event->featuredImage->file_path) }}"
-                                 alt="{{ $event->featuredImage->alt_text }}"
-                                 class="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-200"
-                                 loading="lazy">
-                        </div>
+                        <img src="{{ Storage::url($event->featuredImage->file_path) }}"
+                             alt="{{ $event->featuredImage->alt_text }}"
+                             class="w-full h-full object-cover"
+                             loading="lazy">
                     @else
-                        <div class="w-full aspect-video bg-nazareth-gray flex items-center justify-center border-b border-gray-100">
-                            <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                        </div>
+                        <div class="w-full h-full bg-nazareth-100"></div>
                     @endif
+                    <span class="absolute bottom-3 left-3 bg-white/95 text-nazareth-blue text-[12px] font-semibold px-2.5 py-1 rounded-[6px]">
+                        {{ $event->start_date->translatedFormat('M Y') }}
+                    </span>
+                </div>
 
-                    {{-- Contenido de la tarjeta --}}
-                    <div class="p-4">
-                        <p class="text-sm text-gray-400">{{ $event->start_date->translatedFormat('d \d\e F \d\e Y') }}</p>
-                        <h3 class="font-medium text-gray-900 mt-1 group-hover:text-nazareth-blue transition-colors">
-                            {{ $event->title }}
-                        </h3>
-                        @if($event->location)
-                            <p class="flex items-center gap-1 text-xs text-gray-400 mt-1.5">
-                                <svg class="h-3.5 w-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                                {{ $event->location }}
-                            </p>
-                        @endif
-                    </div>
-                </a>
+                {{-- Cuerpo --}}
+                <div class="flex-1 flex flex-col px-5 py-[18px]">
+                    <h3 class="text-[17px] font-semibold text-nazareth-ink mb-1.5 leading-snug">{{ $event->title }}</h3>
+                    @if($event->description)
+                        <p class="text-[13px] text-[#4B5A5E] leading-relaxed flex-1 mb-3">{{ Str::limit($event->description, 100) }}</p>
+                    @else
+                        <div class="flex-1"></div>
+                    @endif
+                    <a href="{{ route('website.events.show', $event->slug) }}"
+                       class="text-[13px] font-semibold text-nazareth-700 hover:text-nazareth-blue transition-colors focus:outline-none focus:underline">
+                        Ver detalles →
+                    </a>
+                </div>
+            </article>
             @endforeach
         </div>
 
-        {{-- Paginación --}}
         @if($past->hasPages())
-            <div class="mt-10">
-                {{ $past->links() }}
-            </div>
+            <div class="mt-10">{{ $past->links() }}</div>
         @endif
-
-    </div>
-</section>
-@endif
-
-{{-- Estado vacío total --}}
-@if($upcoming->isEmpty() && $past->isEmpty())
-<section class="bg-nazareth-gray py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-        </svg>
-        <p class="text-gray-500 text-lg">Próximamente compartiremos nuestros eventos y celebraciones.</p>
     </div>
 </section>
 @endif
