@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Jobs\SendContactEmail;
 use App\Livewire\Website\ContactForm;
 use App\Models\SiteSetting;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 
@@ -32,6 +33,7 @@ it('dispatches SendContactEmail with valid form data', function (): void {
     Livewire::test(ContactForm::class)
         ->set('name', 'Jorge Carrillo')
         ->set('email', 'jorge@example.com')
+        ->set('subject', 'Información sobre donaciones')
         ->set('message', 'Hola, me gustaría obtener más información.')
         ->call('submit');
 
@@ -45,6 +47,7 @@ it('sets sent to true after successful submission', function (): void {
     Livewire::test(ContactForm::class)
         ->set('name', 'Jorge Carrillo')
         ->set('email', 'jorge@example.com')
+        ->set('subject', 'Quiero ser voluntario')
         ->set('message', 'Hola, me gustaría obtener más información sobre la fundación.')
         ->call('submit')
         ->assertSet('sent', true);
@@ -57,7 +60,30 @@ it('does not dispatch when mail_contact_to is not configured', function (): void
     Livewire::test(ContactForm::class)
         ->set('name', 'Jorge Carrillo')
         ->set('email', 'jorge@example.com')
+        ->set('subject', 'Otro')
         ->set('message', 'Hola, me gustaría obtener más información.')
+        ->call('submit');
+
+    Queue::assertNothingPushed();
+});
+
+it('does not dispatch SendContactEmail when recaptcha fails', function (): void {
+    Queue::fake();
+    Http::fake([
+        'www.google.com/recaptcha/api/siteverify' => Http::response([
+            'success' => false,
+            'score'   => 0.1,
+        ]),
+    ]);
+    SiteSetting::instance()->update(['mail_contact_to' => 'admin@hogarnazareth.org']);
+    config(['services.recaptcha.secret_key' => 'fake-secret']);
+
+    Livewire::test(ContactForm::class)
+        ->set('name', 'Jorge Carrillo')
+        ->set('email', 'jorge@example.com')
+        ->set('subject', 'Información sobre donaciones')
+        ->set('message', 'Hola, me gustaría obtener más información.')
+        ->set('recaptchaToken', 'invalid-token')
         ->call('submit');
 
     Queue::assertNothingPushed();
