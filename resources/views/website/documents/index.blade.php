@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('meta_title', 'Transparencia y documentos')
-@section('meta_description', 'Accede a los documentos de transparencia institucional, registros DIAN e informes anuales de la Fundación Hogar del Anciano Nazareth.')
+@section('meta_description', 'Accede a los documentos de transparencia institucional, registros DIAN e informes anuales de la Fundación Centro de Bienestar del Anciano Nazareth.')
 
 @push('schema')
 <script type="application/ld+json">
@@ -10,7 +10,7 @@
   "@type": "WebPage",
   "@id": "{{ url()->current() }}#webpage",
   "url": "{{ url()->current() }}",
-  "name": "Transparencia y documentos · Hogar Nazareth",
+  "name": "Transparencia y documentos · Fundación Centro de Bienestar del Anciano Nazareth",
   "description": "Documentos de transparencia institucional, registros DIAN e informes anuales.",
   "isPartOf": { "@id": "{{ url('/') }}/#website" },
   "about": { "@id": "{{ url('/') }}/#organization" },

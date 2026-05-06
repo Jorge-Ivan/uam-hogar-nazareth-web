@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\SiteSetting;
+use Illuminate\Support\Facades\Cache;
 
 final class SettingService
 {
@@ -17,6 +18,8 @@ final class SettingService
     {
         $settings = SiteSetting::instance();
         $settings->update($data);
+
+        Cache::forget('site_settings');
 
         return $settings->fresh();
     }

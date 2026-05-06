@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 final class SiteSetting extends Model
 {
@@ -21,9 +22,9 @@ final class SiteSetting extends Model
      */
     public static function instance(): self
     {
-        return static::firstOrCreate(
+        return Cache::remember('site_settings', 3600, fn () => static::firstOrCreate(
             ['id' => 1],
-            ['org_name' => 'Fundación Hogar del Anciano Nazareth'],
-        );
+            ['org_name' => 'Fundación Centro de Bienestar del Anciano Nazareth'],
+        ));
     }
 }

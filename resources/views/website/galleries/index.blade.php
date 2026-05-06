@@ -10,7 +10,7 @@
   "@type": "CollectionPage",
   "@id": "{{ url()->current() }}#webpage",
   "url": "{{ url()->current() }}",
-  "name": "Galerías de fotos · Hogar Nazareth",
+  "name": "Galerías de fotos · Fundación Centro de Bienestar del Anciano Nazareth",
   "description": "Momentos de celebraciones, salidas y días corrientes del hogar.",
   "isPartOf": { "@id": "{{ url('/') }}/#website" },
   "inLanguage": "es-CO"

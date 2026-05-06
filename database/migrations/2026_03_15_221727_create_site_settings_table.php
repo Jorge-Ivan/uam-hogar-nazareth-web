@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
 
             // Organización
-            $table->string('org_name')->default('Fundación Hogar del Anciano Nazareth');
+            $table->string('org_name')->default('Fundación Centro de Bienestar del Anciano Nazareth');
             $table->string('org_tagline')->nullable();
             $table->string('org_nit')->nullable();
 

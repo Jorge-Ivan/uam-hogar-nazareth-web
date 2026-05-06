@@ -10,7 +10,7 @@
   "@type": "WebPage",
   "@id": "{{ url()->current() }}#webpage",
   "url": "{{ url()->current() }}",
-  "name": "Un hogar cálido para nuestros mayores · Hogar Nazareth",
+  "name": "Un hogar cálido para nuestros mayores · Fundación Centro de Bienestar del Anciano Nazareth",
   "description": "Acompañamos a adultos mayores de La Virginia y el occidente de Risaralda con cuidados integrales, actividades y el afecto de un verdadero hogar.",
   "isPartOf": { "@id": "{{ url('/') }}/#website" },
   "about": { "@id": "{{ url('/') }}/#organization" },

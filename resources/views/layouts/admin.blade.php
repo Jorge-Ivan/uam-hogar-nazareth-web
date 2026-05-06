@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Panel') — Hogar Nazareth</title>
+    <title>@yield('title', 'Panel') — Fundación Centro de Bienestar del Anciano Nazareth</title>
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -33,7 +33,7 @@
             {{-- Logo --}}
             <div class="flex h-16 items-center gap-3 border-b border-gray-700 px-4">
                 <img src="/images/logo_fundacion_isotipo-2.png"
-                     alt="Hogar Nazareth"
+                     alt="Fundación Centro de Bienestar del Anciano Nazareth"
                      class="h-10 w-auto shrink-0 rounded">
                 <p class="text-xs text-gray-400 leading-tight">Panel de<br>administración</p>
             </div>

@@ -10,7 +10,7 @@
   "@type": "CollectionPage",
   "@id": "{{ url()->current() }}#webpage",
   "url": "{{ url()->current() }}",
-  "name": "Actividades · Hogar Nazareth",
+  "name": "Actividades · Fundación Centro de Bienestar del Anciano Nazareth",
   "description": "Nuestra agenda semanal combina terapias, celebraciones y momentos de fe.",
   "isPartOf": { "@id": "{{ url('/') }}/#website" },
   "inLanguage": "es-CO"

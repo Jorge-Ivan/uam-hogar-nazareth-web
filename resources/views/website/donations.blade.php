@@ -1,14 +1,14 @@
 @extends('layouts.public')
 
 @section('meta_title', 'Cómo donar')
-@section('meta_description', 'Apoya a la Fundación Hogar del Anciano Nazareth. Aquí están todos los datos para hacer tu aporte directo por transferencia bancaria, Nequi o Daviplata.')
+@section('meta_description', 'Apoya a la Fundación Centro de Bienestar del Anciano Nazareth. Aquí están todos los datos para hacer tu aporte directo por transferencia bancaria, Nequi o Daviplata.')
 
-@section('og_title', 'Apoya al Hogar Nazareth — Tu donación cuida a un adulto mayor')
+@section('og_title', 'Apoya al Fundación Centro de Bienestar del Anciano Nazareth — Tu donación cuida a un adulto mayor')
 @section('og_description', 'Cualquier aporte se convierte en comida, cuidado y compañía para nuestros adultos mayores. Así de directo puedes ayudar.')
 @section('og_image', asset('images/logo_fundacion.png'))
 @section('og_image_width', '1920')
 @section('og_image_height', '819')
-@section('og_image_alt', 'Fundación Hogar del Anciano Nazareth — Apoya nuestra misión')
+@section('og_image_alt', 'Fundación Centro de Bienestar del Anciano Nazareth — Apoya nuestra misión')
 
 @push('schema')
 <script type="application/ld+json">
@@ -17,13 +17,13 @@
   "@type": "WebPage",
   "@id": "{{ url()->current() }}#webpage",
   "url": "{{ url()->current() }}",
-  "name": "Cómo donar · Hogar Nazareth",
-  "description": "Datos de donación directa para apoyar a la Fundación Hogar del Anciano Nazareth por transferencia bancaria, Nequi o Daviplata.",
+  "name": "Cómo donar · Fundación Centro de Bienestar del Anciano Nazareth",
+  "description": "Datos de donación directa para apoyar a la Fundación Centro de Bienestar del Anciano Nazareth por transferencia bancaria, Nequi o Daviplata.",
   "isPartOf": { "@id": "{{ url('/') }}/#website" },
   "inLanguage": "es-CO",
   "potentialAction": {
     "@type": "DonateAction",
-    "name": "Donar a la Fundación Hogar del Anciano Nazareth",
+    "name": "Donar a la Fundación Centro de Bienestar del Anciano Nazareth",
     "target": "{{ route('website.donations') }}",
     "recipient": { "@id": "{{ url('/') }}/#organization" }
   }

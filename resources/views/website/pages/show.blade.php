@@ -10,7 +10,7 @@
   "@type": "WebPage",
   "@id": "{{ url()->current() }}#webpage",
   "url": "{{ url()->current() }}",
-  "name": "{{ $page->title }} · Hogar Nazareth",
+  "name": "{{ $page->title }} · Fundación Centro de Bienestar del Anciano Nazareth",
   "description": "{{ Str::limit(strip_tags($page->content), 160) }}",
   "datePublished": "{{ $page->published_at?->toIso8601String() ?? $page->created_at->toIso8601String() }}",
   "dateModified": "{{ $page->updated_at->toIso8601String() }}",

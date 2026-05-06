@@ -16,7 +16,7 @@ final class PageSeeder extends Seeder
             [
                 'title'          => 'Quiénes somos',
                 'slug'           => 'quienes-somos',
-                'content'        => '<p>La Fundación Hogar del Anciano Nazareth es una institución sin ánimo de lucro ubicada en La Virginia, Risaralda, Colombia. Fue fundada hace más de 26 años con la misión de brindar cuidado, acompañamiento y dignidad a personas adultas mayores que requieren atención especializada.</p><p>Contamos con un equipo interdisciplinario de profesionales en salud, trabajo social y animación sociocultural, comprometidos con el bienestar integral de cada residente.</p>',
+                'content'        => '<p>La Fundación Centro de Bienestar del Anciano Nazareth es una institución sin ánimo de lucro ubicada en La Virginia, Risaralda, Colombia. Fue fundada hace más de 26 años con la misión de brindar cuidado, acompañamiento y dignidad a personas adultas mayores que requieren atención especializada.</p><p>Contamos con un equipo interdisciplinario de profesionales en salud, trabajo social y animación sociocultural, comprometidos con el bienestar integral de cada residente.</p>',
                 'status'         => ContentStatus::Published,
                 'published_at'   => now(),
                 'show_in_header' => true,
@@ -46,7 +46,7 @@ final class PageSeeder extends Seeder
             [
                 'title'          => 'Cómo ingresar',
                 'slug'           => 'como-ingresar',
-                'content'        => '<p>El proceso de ingreso al Hogar Nazareth se realiza a través de trabajo social. El primer paso es contactarnos para agendar una visita de valoración.</p><h3>Requisitos generales</h3><ul><li>Copia del documento de identidad del adulto mayor.</li><li>Historia clínica reciente.</li><li>Documento de identidad del familiar responsable.</li><li>Carta de compromiso familiar.</li></ul><p>Una vez recibida la solicitud, nuestro equipo realiza una valoración integral para determinar el nivel de cuidado requerido y la disponibilidad de cupo.</p>',
+                'content'        => '<p>El proceso de ingreso al Fundación Centro de Bienestar del Anciano Nazareth se realiza a través de trabajo social. El primer paso es contactarnos para agendar una visita de valoración.</p><h3>Requisitos generales</h3><ul><li>Copia del documento de identidad del adulto mayor.</li><li>Historia clínica reciente.</li><li>Documento de identidad del familiar responsable.</li><li>Carta de compromiso familiar.</li></ul><p>Una vez recibida la solicitud, nuestro equipo realiza una valoración integral para determinar el nivel de cuidado requerido y la disponibilidad de cupo.</p>',
                 'status'         => ContentStatus::Published,
                 'published_at'   => now(),
                 'show_in_header' => true,

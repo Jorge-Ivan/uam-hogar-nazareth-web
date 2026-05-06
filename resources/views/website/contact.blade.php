@@ -10,7 +10,7 @@
   "@type": "ContactPage",
   "@id": "{{ url()->current() }}#webpage",
   "url": "{{ url()->current() }}",
-  "name": "Contacto · Hogar Nazareth",
+  "name": "Contacto · Fundación Centro de Bienestar del Anciano Nazareth",
   "description": "Consultas sobre donaciones, voluntariado, visitas o información sobre el ingreso de un familiar.",
   "isPartOf": { "@id": "{{ url('/') }}/#website" },
   "inLanguage": "es-CO"
@@ -174,7 +174,7 @@
                             allowfullscreen
                             loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"
-                            title="Ubicación de la Fundación Hogar del Anciano Nazareth"
+                            title="Ubicación de la Fundación Centro de Bienestar del Anciano Nazareth"
                         ></iframe>
                     @else
                         <div class="map-placeholder absolute inset-0 flex flex-col items-center justify-center gap-2 text-nazareth-blue">

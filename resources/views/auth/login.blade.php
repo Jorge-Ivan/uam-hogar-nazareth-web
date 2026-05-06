@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Iniciar sesión — Hogar Nazareth</title>
+    <title>Iniciar sesión — Fundación Centro de Bienestar del Anciano Nazareth</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @if(config('services.recaptcha.site_key'))
     <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}" defer></script>
@@ -21,7 +21,7 @@
                 {{-- Header --}}
                 <div class="bg-nazareth-blue px-8 py-8 text-center">
                     <img src="/images/logo_fundacion.png"
-                         alt="Fundación Hogar del Anciano Nazareth"
+                         alt="Fundación Centro de Bienestar del Anciano Nazareth"
                          class="mx-auto mb-4 h-20 w-auto rounded">
                     <h1 class="text-xl font-medium text-white">Iniciar sesión</h1>
                     <p class="mt-1 text-sm text-white/70">Panel de administración</p>
@@ -130,7 +130,7 @@
             </div>
 
             <p class="mt-6 text-center text-xs text-gray-500">
-                Fundación Hogar del Anciano Nazareth &copy; {{ date('Y') }}
+                Fundación Centro de Bienestar del Anciano Nazareth &copy; {{ date('Y') }}
             </p>
         </div>
     </div>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Nueva contraseña — Hogar Nazareth</title>
+    <title>Nueva contraseña — Fundación Centro de Bienestar del Anciano Nazareth</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-nazareth-gray font-sans antialiased">
@@ -100,7 +100,7 @@
             </div>
 
             <p class="mt-6 text-center text-xs text-gray-500">
-                Fundación Hogar del Anciano Nazareth &copy; {{ date('Y') }}
+                Fundación Centro de Bienestar del Anciano Nazareth &copy; {{ date('Y') }}
             </p>
         </div>
     </div>

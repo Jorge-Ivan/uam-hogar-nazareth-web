@@ -12,7 +12,7 @@ class SiteSettingSeeder extends Seeder
     public function run(): void
     {
         SiteSetting::updateOrCreate(['id' => 1], [
-            'org_name'                => 'Fundación Hogar del Anciano Nazareth',
+            'org_name'                => 'Fundación Centro de Bienestar del Anciano Nazareth',
             'org_tagline'             => 'Cuidando con amor a nuestros adultos mayores',
             'org_nit'                 => '891.401.123-4',
             'contact_address'         => 'Calle 8 # 12-45, La Virginia, Risaralda, Colombia',
@@ -25,12 +25,12 @@ class SiteSettingSeeder extends Seeder
             'social_instagram'        => 'https://www.instagram.com/hogarnazareth',
             'social_youtube'          => null,
             'mail_contact_to'         => 'admin@hogarnazareth.com',
-            'mail_from_name'          => 'Hogar Nazareth',
+            'mail_from_name'          => 'Fundación Centro de Bienestar del Anciano Nazareth',
             'mail_from_address'       => 'contacto@hogarnazareth.org',
             'donation_bank_name'      => 'Bancolombia',
             'donation_account_type'   => 'Cuenta de Ahorros',
             'donation_account'        => '123-456789-12',
-            'donation_account_holder' => 'Fundación Hogar del Anciano Nazareth',
+            'donation_account_holder' => 'Fundación Centro de Bienestar del Anciano Nazareth',
             'donation_nit_bank'       => '891.401.123-4',
             'donation_nequi'          => '3156789012',
             'donation_daviplata'      => '3156789012',

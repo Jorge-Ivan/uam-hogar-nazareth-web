@@ -20,8 +20,8 @@ final class DocumentSeeder extends Seeder
         $catCert       = DocumentCategory::where('slug', 'certificados')->first();
 
         $documents = [
-            ['title' => 'RUT — Registro Único Tributario',     'description' => 'Registro Único Tributario de la Fundación Hogar del Anciano Nazareth ante la DIAN.',                          'document_category_id' => $catRut?->id,        'year' => '2025'],
-            ['title' => 'Estatutos de la fundación',           'description' => 'Estatutos vigentes de la Fundación Hogar del Anciano Nazareth, aprobados en asamblea.',                       'document_category_id' => $catEstatutos?->id,  'year' => '2024'],
+            ['title' => 'RUT — Registro Único Tributario',     'description' => 'Registro Único Tributario de la Fundación Centro de Bienestar del Anciano Nazareth ante la DIAN.',                          'document_category_id' => $catRut?->id,        'year' => '2025'],
+            ['title' => 'Estatutos de la fundación',           'description' => 'Estatutos vigentes de la Fundación Centro de Bienestar del Anciano Nazareth, aprobados en asamblea.',                       'document_category_id' => $catEstatutos?->id,  'year' => '2024'],
             ['title' => 'Personería jurídica',                 'description' => 'Certificado de existencia y representación legal expedido por la Gobernación de Risaralda.',                  'document_category_id' => $catPersoneria?->id, 'year' => '2024'],
             ['title' => 'Informe de gestión 2024',             'description' => 'Informe anual de actividades, proyectos, logros y retos de la fundación durante el año 2024.',               'document_category_id' => $catInformes?->id,   'year' => '2024'],
             ['title' => 'Informe de gestión 2023',             'description' => 'Informe anual de actividades, proyectos, logros y retos de la fundación durante el año 2023.',               'document_category_id' => $catInformes?->id,   'year' => '2023'],

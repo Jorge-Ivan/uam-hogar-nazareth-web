@@ -280,7 +280,7 @@
                         id="mailFromName"
                         type="text"
                         wire:model="mailFromName"
-                        placeholder="Hogar Nazareth"
+                        placeholder="Fundación Centro de Bienestar del Anciano Nazareth"
                         class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 shadow-sm
                                focus:border-nazareth-blue focus:outline-none focus:ring-2 focus:ring-nazareth-blue/20"
                     >
@@ -369,7 +369,7 @@
                         id="donationAccountHolder"
                         type="text"
                         wire:model="donationAccountHolder"
-                        placeholder="Fundación Hogar del Anciano Nazareth"
+                        placeholder="Fundación Centro de Bienestar del Anciano Nazareth"
                         class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 shadow-sm
                                focus:border-nazareth-blue focus:outline-none focus:ring-2 focus:ring-nazareth-blue/20"
                     >

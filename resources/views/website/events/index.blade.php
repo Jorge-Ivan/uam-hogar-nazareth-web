@@ -10,7 +10,7 @@
   "@type": "CollectionPage",
   "@id": "{{ url()->current() }}#webpage",
   "url": "{{ url()->current() }}",
-  "name": "Eventos · Hogar Nazareth",
+  "name": "Eventos · Fundación Centro de Bienestar del Anciano Nazareth",
   "description": "Celebraciones, jornadas de recaudación y actividades abiertas a la comunidad.",
   "isPartOf": { "@id": "{{ url('/') }}/#website" },
   "inLanguage": "es-CO"

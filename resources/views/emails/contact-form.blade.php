@@ -9,4 +9,4 @@ Mensaje:
 {{ $data['message'] }}
 
 ---
-Enviado desde el sitio web de Hogar Nazareth
+Enviado desde el sitio web de Fundación Centro de Bienestar del Anciano Nazareth

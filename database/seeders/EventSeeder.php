@@ -27,7 +27,7 @@ final class EventSeeder extends Seeder
                 'description' => 'Abre las puertas del hogar para que la comunidad conozca nuestras instalaciones, interactúe con los residentes y done elementos de primera necesidad: ropa, calzado, productos de aseo personal y alimentos no perecederos.',
                 'start_date'  => now()->addWeeks(3)->startOfDay(),
                 'end_date'    => null,
-                'location'    => 'Hogar Nazareth · Calle 8 # 12-45, La Virginia',
+                'location'    => 'Fundación Centro de Bienestar del Anciano Nazareth · Calle 8 # 12-45, La Virginia',
             ],
             [
                 'title'       => 'Caminata del abrazo',
@@ -44,7 +44,7 @@ final class EventSeeder extends Seeder
                 'description' => 'Sancocho, música en vivo y regalos hechos a mano para cada una de nuestras residentes. Una tarde llena de flores, abrazos y lágrimas de alegría.',
                 'start_date'  => now()->subMonths(2)->startOfDay(),
                 'end_date'    => null,
-                'location'    => 'Hogar Nazareth',
+                'location'    => 'Fundación Centro de Bienestar del Anciano Nazareth',
             ],
             [
                 'title'       => 'Novena de aguinaldos 2024',

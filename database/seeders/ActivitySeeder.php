@@ -17,7 +17,7 @@ final class ActivitySeeder extends Seeder
                 'title'        => 'Terapia física grupal',
                 'slug'         => 'terapia-fisica-grupal',
                 'excerpt'      => 'Rutinas suaves de movilidad articular y equilibrio, guiadas por nuestra fisioterapeuta tres veces por semana.',
-                'content'      => '<p>Las sesiones de terapia física son uno de los pilares del bienestar en el Hogar Nazareth. Cada rutina dura 45 minutos y está diseñada por nuestra fisioterapeuta Mónica Salazar para adaptarse a las condiciones de cada residente.</p><p>Trabajamos movilidad de hombros, caderas y tobillos, ejercicios de fuerza con bandas elásticas y cerramos con estiramiento y relajación guiada. Las personas con movilidad reducida cuentan con variantes adaptadas desde la silla.</p>',
+                'content'      => '<p>Las sesiones de terapia física son uno de los pilares del bienestar en el Fundación Centro de Bienestar del Anciano Nazareth. Cada rutina dura 45 minutos y está diseñada por nuestra fisioterapeuta Mónica Salazar para adaptarse a las condiciones de cada residente.</p><p>Trabajamos movilidad de hombros, caderas y tobillos, ejercicios de fuerza con bandas elásticas y cerramos con estiramiento y relajación guiada. Las personas con movilidad reducida cuentan con variantes adaptadas desde la silla.</p>',
                 'status'       => ContentStatus::Published,
                 'published_at' => now()->subDays(3),
             ],

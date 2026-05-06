@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('meta_title', $gallery->title)
-@section('meta_description', $gallery->description ?? 'Galería fotográfica de la Fundación Hogar del Anciano Nazareth.')
+@section('meta_description', $gallery->description ?? 'Galería fotográfica de la Fundación Centro de Bienestar del Anciano Nazareth.')
 
 @push('schema')
 <script type="application/ld+json">
@@ -10,7 +10,7 @@
   "@type": "ImageGallery",
   "@id": "{{ url()->current() }}#gallery",
   "name": "{{ $gallery->title }}",
-  "description": "{{ $gallery->description ?? 'Galería fotográfica de la Fundación Hogar del Anciano Nazareth.' }}",
+  "description": "{{ $gallery->description ?? 'Galería fotográfica de la Fundación Centro de Bienestar del Anciano Nazareth.' }}",
   "url": "{{ url()->current() }}",
   "dateModified": "{{ $gallery->updated_at->toIso8601String() }}",
   "isPartOf": { "@id": "{{ url('/') }}/#website" },

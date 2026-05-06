@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso no autorizado | Hogar Nazareth</title>
+    <title>Acceso no autorizado | Fundación Centro de Bienestar del Anciano Nazareth</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
     <div class="text-center max-w-md">
         <a href="{{ url('/') }}" class="inline-block mb-8">
             <img src="{{ asset('images/logo_fundacion.png') }}"
-                 alt="Fundación Hogar del Anciano Nazareth"
+                 alt="Fundación Centro de Bienestar del Anciano Nazareth"
                  class="h-16 w-auto mx-auto">
         </a>
 
