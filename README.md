@@ -17,7 +17,6 @@ Permite al personal de la fundación gestionar contenido institucional (activida
 | Base de datos | MySQL |
 | Frontend admin | Livewire 3 + Tailwind CSS |
 | Frontend público | Blade + Alpine.js |
-| Autenticación API | Laravel Sanctum |
 | Colas | Database queues + Laravel Scheduler |
 | Testing | Pest 2 |
 | Entorno local | Laravel Herd |
@@ -189,7 +188,6 @@ Los editores crean borradores, los revisan y los publican cuando están listos. 
 | Fase 2 | Backend: Services, Actions, Policies | ✅ Completa |
 | Fase 3 | Panel de administración (Livewire) | ✅ Completa |
 | Fase 4 | Sitio web público | ✅ Completa |
-| Fase 5 | API REST | 🔜 Pendiente |
 | Fase 6 | Pulido y producción | 🔜 Pendiente |
 
 Ver [docs/plan.md](docs/plan.md) para la hoja de ruta completa con detalle por fases.

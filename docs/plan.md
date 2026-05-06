@@ -17,7 +17,6 @@
 | Panel admin (Livewire) + Gestión de usuarios | ✅ Completa |
 | Sitio web público (Blade) | ✅ Completa |
 | Tests (Pest) — Fase 4 | ✅ Completa (121 tests) |
-| API REST | ❌ No existe |
 
 ---
 
@@ -32,9 +31,9 @@ Fase 2 (Backend: Services + Actions + Policies)
     ↓
 Fase 3 (Admin Panel Livewire) ← ★ HITO: DEMO FUNCIONAL
     ↓
-Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
-           ↓                      ↓
-         Fase 6 (Pulido + Producción)
+Fase 4 (Sitio Público)
+           ↓
+Fase 5 (Pulido + Producción)
 ```
 
 ---
@@ -333,36 +332,7 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 
 ---
 
-## Fase 5 — API REST
-
-**Objetivo:** Endpoints `/api/v1/` para integraciones futuras.
-
-### API Resources
-- [ ] `ActivityResource`, `ActivityCollection`
-- [ ] `GalleryResource`, `GalleryImageResource`
-- [ ] `EventResource`
-- [ ] `DocumentResource`
-- [ ] `PageResource`
-
-### Controladores API
-- [ ] `Api/V1/ActivityController`
-- [ ] `Api/V1/GalleryController`
-- [ ] `Api/V1/EventController`
-- [ ] `Api/V1/DocumentController`
-- [ ] `Api/V1/PageController`
-
-### Rutas `/api/v1/`
-- [ ] Endpoints públicos GET (activities, galleries, events, documents, pages)
-- [ ] Endpoints protegidos POST/PUT/DELETE (`auth:sanctum`)
-
-### Verificación Fase 5
-- [ ] Feature test: `GET /api/v1/activities` → JSON paginado correcto
-- [ ] Feature test: draft → 404 en API
-- [ ] Feature test: `POST` sin token → 401
-
----
-
-## Fase 6 — Pulido y Producción
+## Fase 5 — Pulido y Producción
 
 **Objetivo:** Calidad, rendimiento, seguridad, accesibilidad.
 
@@ -398,14 +368,13 @@ Fase 4 (Sitio Público)    Fase 5 (API REST)  ← paralelas
 - [ ] `Unit/Actions/UploadMediaTest.php`
 - [ ] `Feature/Admin/` — auth, pages, activities, galleries, documents
 - [ ] `Feature/Website/` — home, activities, galleries, documents
-- [ ] `Feature/Api/V1/` — activities, galleries
 
 ---
 
 ## Archivos de Referencia Críticos
 
 - [domain-model.md](domain-model.md) — Fuente de verdad para migraciones y relaciones
-- [laravel-architecture-guide.md](laravel-architecture-guide.md) — Patrones: Model, Livewire, Service, API Resource
+- [laravel-architecture-guide.md](laravel-architecture-guide.md) — Patrones: Model, Livewire, Service
 - [architecture.md](architecture.md) — URLs, roles, flujo de publicación
 - [../CLAUDE.md](../CLAUDE.md) — Convenciones: español en UI, MediaService obligatorio, estructura de dirs
 - [project-context.md](project-context.md) — Contexto para seeders y copy de UI

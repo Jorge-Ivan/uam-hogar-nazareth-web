@@ -11,7 +11,6 @@ It combines:
 - Eloquent patterns
 - Livewire patterns
 - Queue system design
-- API design
 - coding rules for Copilot
 
 The goal is to ensure **consistent, scalable, and maintainable Laravel code**.
@@ -27,7 +26,6 @@ PHP 8.2+
 MySQL  
 Database queues
 Laravel scheduler 
-Sanctum (API authentication)  
 Livewire (admin interactivity)
 
 Testing:
@@ -303,40 +301,7 @@ class OptimizeImage implements ShouldQueue
 
 ---
 
-# 11. API Design
-
-API endpoints must follow REST standards.
-
-Example routes:
-
-GET /api/v1/activities  
-GET /api/v1/activities/{activity}
-
-POST /api/v1/activities  
-PUT /api/v1/activities/{activity}  
-DELETE /api/v1/activities/{activity}
-
-Use API Resources.
-
-Example:
-
-class ActivityResource extends JsonResource
-{
-    public function toArray($request)
-    {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'content' => $this->content,
-            'published_at' => $this->published_at,
-        ];
-    }
-}
-
----
-
-# 12. Media Handling
+# 11. Media Handling
 
 Media files are central to the system.
 
@@ -360,7 +325,7 @@ attach to models
 
 ---
 
-# 13. Performance Rules
+# 12. Performance Rules
 
 Always eager load relationships.
 
@@ -378,7 +343,7 @@ Avoid loading large datasets.
 
 ---
 
-# 14. Security Rules
+# 13. Security Rules
 
 Never trust user input.
 
@@ -391,7 +356,7 @@ Always:
 
 ---
 
-# 15. Coding Standards
+# 14. Coding Standards
 
 Follow:
 
