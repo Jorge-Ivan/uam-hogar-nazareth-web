@@ -3,6 +3,21 @@
 @section('meta_title', 'Contacto')
 @section('meta_description', 'Contáctanos para consultas sobre donaciones, voluntariado, visitas o información sobre el ingreso de un familiar.')
 
+@push('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "@id": "{{ url()->current() }}#webpage",
+  "url": "{{ url()->current() }}",
+  "name": "Contacto · Hogar Nazareth",
+  "description": "Consultas sobre donaciones, voluntariado, visitas o información sobre el ingreso de un familiar.",
+  "isPartOf": { "@id": "{{ url('/') }}/#website" },
+  "inLanguage": "es-CO"
+}
+</script>
+@endpush
+
 @push('styles')
 <style>
 /* Map placeholder stripes */

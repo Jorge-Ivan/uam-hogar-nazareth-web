@@ -3,6 +3,21 @@
 @section('meta_title', 'Galerías de fotos')
 @section('meta_description', 'Momentos de celebraciones, salidas y días corrientes. Las mejores postales del hogar, retrato a retrato.')
 
+@push('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "{{ url()->current() }}#webpage",
+  "url": "{{ url()->current() }}",
+  "name": "Galerías de fotos · Hogar Nazareth",
+  "description": "Momentos de celebraciones, salidas y días corrientes del hogar.",
+  "isPartOf": { "@id": "{{ url('/') }}/#website" },
+  "inLanguage": "es-CO"
+}
+</script>
+@endpush
+
 @push('styles')
 <style>
 .album { transition: transform .25s; }

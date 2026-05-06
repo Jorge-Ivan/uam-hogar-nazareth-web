@@ -3,6 +3,21 @@
 @section('meta_title', 'Actividades')
 @section('meta_description', 'Nuestra agenda semanal combina terapias, celebraciones y momentos de fe. Todo pensado para que cada residente se sienta útil, conectado y querido.')
 
+@push('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "{{ url()->current() }}#webpage",
+  "url": "{{ url()->current() }}",
+  "name": "Actividades · Hogar Nazareth",
+  "description": "Nuestra agenda semanal combina terapias, celebraciones y momentos de fe.",
+  "isPartOf": { "@id": "{{ url('/') }}/#website" },
+  "inLanguage": "es-CO"
+}
+</script>
+@endpush
+
 @push('styles')
 <style>
 .act-item { transition: box-shadow .2s, transform .2s, border-color .2s; }

@@ -7,6 +7,36 @@
     @section('og_image', Storage::url($event->featuredImage->file_path))
 @endif
 
+@push('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "@id": "{{ url()->current() }}#event",
+  "name": "{{ $event->title }}",
+  "description": "{{ Str::limit(strip_tags($event->description ?? $event->title), 200) }}",
+  "url": "{{ url()->current() }}",
+  "startDate": "{{ $event->start_date->toIso8601String() }}"@if($event->end_date),
+  "endDate": "{{ $event->end_date->toIso8601String() }}"@endif@if($event->location),
+  "location": {
+    "@type": "Place",
+    "name": "{{ $event->location }}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "La Virginia",
+      "addressRegion": "Risaralda",
+      "addressCountry": "CO"
+    }
+  }@endif@if($event->featuredImage),
+  "image": "{{ Storage::url($event->featuredImage->file_path) }}"@endif,
+  "organizer": { "@id": "{{ url('/') }}/#organization" },
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "inLanguage": "es-CO"
+}
+</script>
+@endpush
+
 @section('content')
 
 {{-- ══════════════════════════════════════════

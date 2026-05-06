@@ -3,6 +3,22 @@
 @section('meta_title', 'Un hogar cálido para nuestros mayores')
 @section('meta_description', 'Acompañamos a adultos mayores de La Virginia y el occidente de Risaralda con cuidados integrales, actividades y el afecto de un verdadero hogar.')
 
+@push('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "{{ url()->current() }}#webpage",
+  "url": "{{ url()->current() }}",
+  "name": "Un hogar cálido para nuestros mayores · Hogar Nazareth",
+  "description": "Acompañamos a adultos mayores de La Virginia y el occidente de Risaralda con cuidados integrales, actividades y el afecto de un verdadero hogar.",
+  "isPartOf": { "@id": "{{ url('/') }}/#website" },
+  "about": { "@id": "{{ url('/') }}/#organization" },
+  "inLanguage": "es-CO"
+}
+</script>
+@endpush
+
 @push('styles')
 <style>
 /* Hero photo-led */
@@ -394,8 +410,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <article class="p-9 bg-white border border-[#E3EAEB] rounded-[20px] transition-all duration-200 hover:border-nazareth-light hover:shadow-[0_20px_50px_-20px_rgba(10,107,115,.25)] hover:-translate-y-1">
                 <div class="font-display text-[48px] font-semibold text-nazareth-200 leading-none mb-3">01</div>
-                <h3 class="text-[22px] font-semibold text-nazareth-blue mb-2.5">Donación única o mensual</h3>
-                <p class="text-[15px] text-[#4B5A5E] mb-5">Desde $20.000. Se destinan a mercado, medicamentos y servicios públicos del hogar. Recibes certificado para descuento tributario.</p>
+                <h3 class="text-[22px] font-semibold text-nazareth-blue mb-2.5">Donación directa</h3>
+                <p class="text-[15px] text-[#4B5A5E] mb-5">Cualquier aporte, por pequeño que sea, se convierte en comida, cuidado y compañía para quienes más lo necesitan.</p>
                 <a href="{{ route('website.donations') }}"
                    class="w-full inline-flex items-center justify-center px-[22px] py-3 rounded-[10px] text-[15px] font-semibold bg-nazareth-blue text-white hover:bg-nazareth-700 transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-blue">
                     Donar ahora
@@ -406,7 +422,7 @@
                 <div class="font-display text-[48px] font-semibold text-nazareth-gold leading-none mb-3">02</div>
                 <h3 class="text-[22px] font-semibold text-nazareth-blue mb-2.5">Apadrina un adulto mayor</h3>
                 <p class="text-[15px] text-[#4B5A5E] mb-5">Acompañamiento mensual a una persona específica. Reporte trimestral con su evolución, fotos y una carta escrita por él o ella.</p>
-                <a href="{{ route('website.donations') }}"
+                <a href="{{ route('website.contact') }}"
                    class="w-full inline-flex items-center justify-center px-[22px] py-3 rounded-[10px] text-[15px] font-semibold bg-nazareth-gold text-white hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold">
                     Apadrinar
                 </a>
@@ -480,7 +496,7 @@
             </a>
             <a href="{{ route('website.contact') }}"
                class="inline-flex items-center gap-2 px-[22px] py-3 rounded-[10px] text-[15px] font-semibold bg-transparent text-white border-2 border-white/70 hover:bg-white/10 hover:border-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-nazareth-ink">
-                Escribirnos
+                Escríbenos
             </a>
         </div>
     </div>

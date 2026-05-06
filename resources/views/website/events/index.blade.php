@@ -3,6 +3,21 @@
 @section('meta_title', 'Eventos')
 @section('meta_description', 'Celebraciones, jornadas de recaudación y actividades abiertas a la comunidad. Están todas cordialmente invitadas.')
 
+@push('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "{{ url()->current() }}#webpage",
+  "url": "{{ url()->current() }}",
+  "name": "Eventos · Hogar Nazareth",
+  "description": "Celebraciones, jornadas de recaudación y actividades abiertas a la comunidad.",
+  "isPartOf": { "@id": "{{ url('/') }}/#website" },
+  "inLanguage": "es-CO"
+}
+</script>
+@endpush
+
 @section('content')
 
 {{-- ══════════════════════════════════════════

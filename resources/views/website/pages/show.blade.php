@@ -3,6 +3,24 @@
 @section('meta_title', $page->title)
 @section('meta_description', Str::limit(strip_tags($page->content), 160))
 
+@push('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "{{ url()->current() }}#webpage",
+  "url": "{{ url()->current() }}",
+  "name": "{{ $page->title }} · Hogar Nazareth",
+  "description": "{{ Str::limit(strip_tags($page->content), 160) }}",
+  "datePublished": "{{ $page->published_at?->toIso8601String() ?? $page->created_at->toIso8601String() }}",
+  "dateModified": "{{ $page->updated_at->toIso8601String() }}",
+  "isPartOf": { "@id": "{{ url('/') }}/#website" },
+  "about": { "@id": "{{ url('/') }}/#organization" },
+  "inLanguage": "es-CO"
+}
+</script>
+@endpush
+
 @section('content')
 
 {{-- ══════════════════════════════════════════

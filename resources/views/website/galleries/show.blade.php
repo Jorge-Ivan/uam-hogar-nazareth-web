@@ -3,6 +3,23 @@
 @section('meta_title', $gallery->title)
 @section('meta_description', $gallery->description ?? 'Galería fotográfica de la Fundación Hogar del Anciano Nazareth.')
 
+@push('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  "@id": "{{ url()->current() }}#gallery",
+  "name": "{{ $gallery->title }}",
+  "description": "{{ $gallery->description ?? 'Galería fotográfica de la Fundación Hogar del Anciano Nazareth.' }}",
+  "url": "{{ url()->current() }}",
+  "dateModified": "{{ $gallery->updated_at->toIso8601String() }}",
+  "isPartOf": { "@id": "{{ url('/') }}/#website" },
+  "publisher": { "@id": "{{ url('/') }}/#organization" },
+  "inLanguage": "es-CO"
+}
+</script>
+@endpush
+
 @push('styles')
 <style>
 .masonry { columns: 3 240px; column-gap: 16px; }

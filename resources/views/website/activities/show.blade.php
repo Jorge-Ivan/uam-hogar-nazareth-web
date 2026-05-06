@@ -7,6 +7,31 @@
     @section('og_image', Storage::url($activity->featuredImage->file_path))
 @endif
 
+@push('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "{{ url()->current() }}#article",
+  "headline": "{{ $activity->title }}",
+  "description": "{{ $activity->excerpt ?? Str::limit(strip_tags($activity->content ?? ''), 160) }}",
+  "url": "{{ url()->current() }}",
+  "datePublished": "{{ $activity->published_at?->toIso8601String() ?? $activity->created_at->toIso8601String() }}",
+  "dateModified": "{{ $activity->updated_at->toIso8601String() }}"@if($activity->featuredImage),
+  "image": {
+    "@type": "ImageObject",
+    "url": "{{ Storage::url($activity->featuredImage->file_path) }}",
+    "description": "{{ $activity->featuredImage->alt_text }}"
+  }@endif,
+  "publisher": { "@id": "{{ url('/') }}/#organization" },
+  "author": { "@id": "{{ url('/') }}/#organization" },
+  "isPartOf": { "@id": "{{ url('/') }}/#website" },
+  "inLanguage": "es-CO",
+  "articleSection": "Actividades"
+}
+</script>
+@endpush
+
 @section('content')
 
 {{-- ══════════════════════════════════════════

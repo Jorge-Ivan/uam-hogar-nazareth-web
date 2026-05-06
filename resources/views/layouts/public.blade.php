@@ -16,18 +16,31 @@
     <meta name="description" content="@yield('meta_description', 'Fundación Hogar del Anciano Nazareth')">
 
     {{-- Open Graph --}}
-    <meta property="og:title" content="@yield('meta_title', $siteSettings->org_name ?? 'Hogar Nazareth')">
-    <meta property="og:description" content="@yield('meta_description', '')">
-    <meta property="og:image" content="@yield('og_image', asset('images/og-default.jpg'))">
+    @php
+        $ogTitle       = $__env->hasSection('og_title')       ? $__env->yieldContent('og_title')       : ($__env->yieldContent('meta_title') ?: ($siteSettings->org_name ?? 'Hogar Nazareth'));
+        $ogDescription = $__env->hasSection('og_description') ? $__env->yieldContent('og_description') : ($__env->yieldContent('meta_description') ?: '');
+        $ogImage       = $__env->hasSection('og_image')       ? $__env->yieldContent('og_image')       : asset('images/logo_fundacion.png');
+        $ogImageWidth  = $__env->hasSection('og_image_width') ? $__env->yieldContent('og_image_width') : '1920';
+        $ogImageHeight = $__env->hasSection('og_image_height')? $__env->yieldContent('og_image_height'): '819';
+        $ogImageAlt    = $__env->hasSection('og_image_alt')   ? $__env->yieldContent('og_image_alt')   : ($siteSettings->org_name ?? 'Hogar Nazareth');
+    @endphp
+    <meta property="og:site_name" content="{{ $siteSettings->org_name ?? 'Hogar Nazareth' }}">
+    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDescription }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+    <meta property="og:image:width" content="{{ $ogImageWidth }}">
+    <meta property="og:image:height" content="{{ $ogImageHeight }}">
+    <meta property="og:image:alt" content="{{ $ogImageAlt }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_CO">
 
     {{-- Twitter / X --}}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('meta_title', $siteSettings->org_name ?? 'Hogar Nazareth')">
-    <meta name="twitter:description" content="@yield('meta_description', '')">
-    <meta name="twitter:image" content="@yield('og_image', asset('images/og-default.jpg'))">
+    <meta name="twitter:title" content="{{ $ogTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
+    <meta name="twitter:image:alt" content="{{ $ogImageAlt }}">
 
     {{-- Facebook app_id omitted (not configured) --}}
 
@@ -42,6 +55,63 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('styles')
+
+    {{-- Schema.org — Organization + WebSite (todas las páginas) --}}
+    @php
+        $schemaOrg = [
+            '@type'           => 'NGO',
+            '@id'             => url('/') . '/#organization',
+            'name'            => $siteSettings->org_name ?? 'Fundación Hogar del Anciano Nazareth',
+            'alternateName'   => 'Hogar Nazareth',
+            'description'     => $siteSettings->org_tagline ?? 'Fundación sin ánimo de lucro dedicada al cuidado y acompañamiento de adultos mayores en La Virginia, Risaralda.',
+            'url'             => url('/'),
+            'foundingDate'    => '1985',
+            'nonprofitStatus' => 'Nonprofit501c3',
+            'logo'            => [
+                '@type'  => 'ImageObject',
+                'url'    => asset('images/logo_fundacion.png'),
+                'width'  => 1920,
+                'height' => 819,
+            ],
+        ];
+        if ($siteSettings->contact_address) {
+            $schemaOrg['address'] = [
+                '@type'           => 'PostalAddress',
+                'streetAddress'   => $siteSettings->contact_address,
+                'addressLocality' => 'La Virginia',
+                'addressRegion'   => 'Risaralda',
+                'addressCountry'  => 'CO',
+            ];
+        }
+        if ($siteSettings->contact_phone)  { $schemaOrg['telephone'] = $siteSettings->contact_phone; }
+        if ($siteSettings->contact_email)  { $schemaOrg['email']     = $siteSettings->contact_email; }
+        $sameAs = array_values(array_filter([
+            $siteSettings->social_facebook  ?? null,
+            $siteSettings->social_instagram ?? null,
+            $siteSettings->social_youtube   ?? null,
+            $siteSettings->social_tiktok    ?? null,
+            $siteSettings->social_linkedin  ?? null,
+        ]));
+        if ($sameAs) { $schemaOrg['sameAs'] = $sameAs; }
+
+        $schemaGraph = [
+            '@context' => 'https://schema.org',
+            '@graph'   => [
+                $schemaOrg,
+                [
+                    '@type'     => 'WebSite',
+                    '@id'       => url('/') . '/#website',
+                    'url'       => url('/'),
+                    'name'      => $siteSettings->org_name ?? 'Hogar Nazareth',
+                    'publisher' => ['@id' => url('/') . '/#organization'],
+                    'inLanguage'=> 'es-CO',
+                ],
+            ],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($schemaGraph, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
+
+    @stack('schema')
 </head>
 <body class="bg-white font-sans antialiased text-gray-900">
 
@@ -169,7 +239,10 @@
                 <div class="flex items-center gap-3">
                     {{-- Apoyar CTA (always visible) --}}
                     <a href="{{ route('website.donations') }}"
-                       class="bg-nazareth-gold text-white text-sm font-medium rounded-lg px-4 py-2 transition-colors hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue shrink-0">
+                       class="inline-flex items-center gap-1.5 bg-nazareth-gold text-white text-sm font-medium rounded-full px-5 py-2 transition-colors hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                            <path d="M9.653 16.915l-.005-.003-.019-.01a20.759 20.759 0 01-1.162-.682 22.045 22.045 0 01-2.582-2.01C4.045 12.512 2 10.05 2 7a4 4 0 018-1.536A4 4 0 0118 7c0 3.05-2.045 5.512-3.885 7.21a22.045 22.045 0 01-2.582 2.01 20.758 20.758 0 01-1.162.682l-.019.01-.005.003h-.002a.739.739 0 01-.69 0l-.002-.001z" />
+                        </svg>
                         Apoyar
                     </a>
 
