@@ -7,13 +7,14 @@ namespace App\Services;
 use App\Enums\ContentStatus;
 use App\Models\Activity;
 use App\Models\Media;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 final class ActivityService
 {
     public function create(array $data): Activity
     {
-        $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
+        $data['slug']   = $data['slug'] ?? Str::slug($data['title']);
         $data['status'] = $data['status'] ?? ContentStatus::Draft;
 
         return Activity::create($data);
@@ -27,15 +28,19 @@ final class ActivityService
 
         $activity->update($data);
 
+        Cache::forget('website.home.activities');
+
         return $activity->fresh();
     }
 
     public function publish(Activity $activity): Activity
     {
         $activity->update([
-            'status' => ContentStatus::Published,
+            'status'       => ContentStatus::Published,
             'published_at' => now(),
         ]);
+
+        Cache::forget('website.home.activities');
 
         return $activity->fresh();
     }
@@ -43,6 +48,8 @@ final class ActivityService
     public function archive(Activity $activity): Activity
     {
         $activity->update(['status' => ContentStatus::Archived]);
+
+        Cache::forget('website.home.activities');
 
         return $activity->fresh();
     }
@@ -57,5 +64,7 @@ final class ActivityService
     public function delete(Activity $activity): void
     {
         $activity->delete();
+
+        Cache::forget('website.home.activities');
     }
 }
