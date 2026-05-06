@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    {{-- Favicon --}}
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
     {{-- SEO --}}
     <title>@yield('meta_title', 'Inicio') | Hogar Nazareth</title>
     <meta name="description" content="@yield('meta_description', 'Fundación Hogar del Anciano Nazareth')">
@@ -52,12 +58,21 @@
 
                 {{-- Logo --}}
                 <a href="{{ route('website.home') }}"
-                   class="flex items-center shrink-0 focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue rounded">
-                    <img src="{{ asset('images/logo.png') }}"
-                         srcset="{{ asset('images/logo.png') }} 1x, {{ asset('images/logo-2x.png') }} 2x"
-                         alt="Fundación Hogar del Anciano Nazareth"
-                         class="h-10 w-auto"
-                         loading="eager">
+                   class="flex items-center shrink-0 focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue rounded-lg">
+                    {{-- Mobile: isotipo --}}
+                    <div class="bg-white rounded-lg overflow-hidden lg:hidden">
+                        <img src="{{ asset('images/logo_fundacion_isotipo-2.png') }}"
+                             alt="Fundación Hogar del Anciano Nazareth"
+                             class="h-14 w-auto block"
+                             loading="eager">
+                    </div>
+                    {{-- Desktop: logo principal --}}
+                    <div class="bg-white rounded-lg overflow-hidden hidden lg:block">
+                        <img src="{{ asset('images/logo_fundacion.png') }}"
+                             alt="Fundación Hogar del Anciano Nazareth"
+                             class="h-14 w-auto block"
+                             loading="eager">
+                    </div>
                 </a>
 
                 {{-- Desktop nav links --}}
@@ -254,11 +269,10 @@
                 {{-- Col 1: Organization + Social --}}
                 <div>
                     {{-- Logo mark --}}
-                    <div class="mb-3">
-                        <img src="{{ asset('images/logo.png') }}"
-                             srcset="{{ asset('images/logo.png') }} 1x, {{ asset('images/logo-2x.png') }} 2x"
+                    <div class="mb-3 text-center">
+                        <img src="{{ asset('images/logo_fundacion.png') }}"
                              alt="{{ $siteSettings->org_name }}"
-                             class="w-auto" style="height:95px"
+                             class="w-auto rounded" style="max-height:125px"
                              loading="lazy">
                     </div>
 

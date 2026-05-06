@@ -32,9 +32,9 @@
         >
             {{-- Logo --}}
             <div class="flex h-16 items-center gap-3 border-b border-gray-700 px-4">
-                <img src="/images/logo.png"
+                <img src="/images/logo_fundacion_isotipo-2.png"
                      alt="Hogar Nazareth"
-                     class="h-10 w-auto shrink-0">
+                     class="h-10 w-auto shrink-0 rounded">
                 <p class="text-xs text-gray-400 leading-tight">Panel de<br>administración</p>
             </div>
 

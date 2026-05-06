@@ -45,9 +45,9 @@ colors: {
 ```
 
 ### Logo assets
-- `public/images/logo.png` — principal, transparent background
-- `public/images/logo-2x.png` — retina (@2x)
-- `public/images/logo-mark.svg` — isotipo without text for favicons and avatars
+- `public/images/logo_fundacion.png` — principal, white background
+- `public/images/logo_fundacion_isotipo-1.png` — isotipo without text for favicons and avatars, white background
+- `public/images/logo_fundacion_isotipo-2.png` — isotipo without text for favicons and avatars, transparent background
 - Use on: white, teal-50 (`#EAF4F5`), teal-100 (`#C9E3E6`) — never on dark backgrounds without testing contrast
 
 ---

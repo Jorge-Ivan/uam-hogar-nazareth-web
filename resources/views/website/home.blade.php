@@ -67,42 +67,71 @@
 <section class="home-hero">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="relative z-10 max-w-[1200px] mx-auto px-6">
-        <span class="inline-block text-xs font-semibold tracking-[.14em] uppercase text-white/85 mb-3.5">
-            Fundación Hogar del Anciano Nazareth · desde 1998
-        </span>
-        <h1 class="font-display text-[clamp(40px,5.6vw,64px)] leading-[1.05] text-white mb-5 max-w-[18ch] tracking-tight">
-            Un hogar donde los años se viven con <em class="not-italic text-nazareth-gold font-medium">cariño</em>.
-        </h1>
-        <p class="text-[19px] text-white/90 max-w-[52ch] mb-8 leading-relaxed">
-            Acompañamos a adultos mayores de La Virginia y el occidente de Risaralda con cuidados integrales, actividades que mantienen el ánimo en alto y el afecto de un verdadero hogar.
-        </p>
-        <div class="flex gap-3.5 flex-wrap">
-            <a href="{{ route('website.donations') }}"
-               class="inline-flex items-center gap-2 px-[22px] py-3 rounded-[10px] text-[15px] font-semibold bg-nazareth-gold text-white hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue">
-                <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                </svg>
-                Quiero apoyar
-            </a>
-            <a href="{{ route('website.activities.index') }}"
-               class="inline-flex items-center gap-2 px-[22px] py-3 rounded-[10px] text-[15px] font-semibold bg-transparent text-white border-2 border-white/70 hover:bg-white/10 hover:border-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-nazareth-blue">
-                Conoce la fundación
-            </a>
-        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-10 lg:gap-16 items-center">
 
-        <div class="hero-stats grid grid-cols-3 gap-8 mt-12 pt-10 border-t border-white/20 max-w-[640px]">
+            {{-- Contenido textual --}}
             <div>
-                <strong class="hero-stat-num block font-display text-[40px] font-semibold text-white leading-none">27</strong>
-                <span class="text-[13px] text-white/[.78]">años cuidando</span>
+                {{-- Logo principal visible solo en mobile --}}
+                <div class="flex justify-center mb-8 lg:hidden">
+                    <div class="bg-white rounded-[16px] overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,.22)]">
+                        <img src="/images/logo_fundacion.png"
+                             alt="Fundación Centro de Bienestar del Anciano Nazareth"
+                             class="h-[90px] w-auto object-contain"
+                             height="90"
+                             loading="eager">
+                    </div>
+                </div>
+
+                <span class="inline-block text-xs font-semibold tracking-[.14em] uppercase text-white/85 mb-3.5">
+                    Fundación Centro de Bienestar del Anciano Nazareth · desde 1985
+                </span>
+                <h1 class="font-display text-[clamp(40px,5.6vw,64px)] leading-[1.05] text-white mb-5 max-w-[18ch] tracking-tight">
+                    Un hogar donde los años se viven con <em class="not-italic text-nazareth-gold font-medium">cariño</em>.
+                </h1>
+                <p class="text-[19px] text-white/90 max-w-[52ch] mb-8 leading-relaxed">
+                    Acompañamos a adultos mayores de La Virginia y el occidente de Risaralda con cuidados integrales, actividades que mantienen el ánimo en alto y el afecto de un verdadero hogar.
+                </p>
+                <div class="flex gap-3.5 flex-wrap">
+                    <a href="{{ route('website.donations') }}"
+                       class="inline-flex items-center gap-2 px-[22px] py-3 rounded-[10px] text-[15px] font-semibold bg-nazareth-gold text-white hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 focus:ring-offset-nazareth-blue">
+                        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        Quiero apoyar
+                    </a>
+                    <a href="{{ route('website.activities.index') }}"
+                       class="inline-flex items-center gap-2 px-[22px] py-3 rounded-[10px] text-[15px] font-semibold bg-transparent text-white border-2 border-white/70 hover:bg-white/10 hover:border-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-nazareth-blue">
+                        Conoce la fundación
+                    </a>
+                </div>
+
+                <div class="hero-stats grid grid-cols-3 gap-8 mt-12 pt-10 border-t border-white/20 max-w-[640px]">
+                    <div>
+                        <strong class="hero-stat-num block font-display text-[40px] font-semibold text-white leading-none">{{ now()->year - 1985 }}</strong>
+                        <span class="text-[13px] text-white/[.78]">años cuidando</span>
+                    </div>
+                    <div>
+                        <strong class="hero-stat-num block font-display text-[40px] font-semibold text-white leading-none">50</strong>
+                        <span class="text-[13px] text-white/[.78]">adultos mayores atendidos</span>
+                    </div>
+                    <div>
+                        <strong class="hero-stat-num block font-display text-[40px] font-semibold text-white leading-none">100%</strong>
+                        <span class="text-[13px] text-white/[.78]">sin fines de lucro</span>
+                    </div>
+                </div>
             </div>
-            <div>
-                <strong class="hero-stat-num block font-display text-[40px] font-semibold text-white leading-none">42</strong>
-                <span class="text-[13px] text-white/[.78]">adultos mayores hoy</span>
+
+            {{-- Isotipo desktop --}}
+            <div class="hidden lg:flex items-center justify-center">
+                <div class="bg-white rounded-[24px] p-10 shadow-[0_32px_80px_rgba(0,0,0,.28)]">
+                    <img src="{{ asset('images/logo_fundacion_isotipo-2.png') }}"
+                         alt="Fundación Centro de Bienestar del Anciano Nazareth"
+                         class="w-[200px] h-[200px] object-contain"
+                         width="200" height="200"
+                         loading="eager">
+                </div>
             </div>
-            <div>
-                <strong class="hero-stat-num block font-display text-[40px] font-semibold text-white leading-none">100%</strong>
-                <span class="text-[13px] text-white/[.78]">sin fines de lucro</span>
-            </div>
+
         </div>
     </div>
 </section>
@@ -115,8 +144,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
             <div class="relative rounded-[20px] overflow-hidden aspect-[5/4]">
-                <img src="https://images.unsplash.com/photo-1516307365426-bea591f05011?w=1400&q=80"
-                     alt="Cuidadora conversando con una adulta mayor en el patio del hogar"
+                <img src="{{ asset('images/home/foto-grupo.jpeg') }}"
+                     alt="Foto Grupal de adultos mayores compartiendo en el hogar"
                      class="w-full h-full object-cover"
                      loading="lazy">
             </div>
@@ -127,24 +156,24 @@
                     Creemos que la vejez merece ser vivida con calma, compañía y propósito.
                 </h2>
                 <p class="text-[18px] text-[#4B5A5E] leading-[1.6] mb-6 max-w-[62ch]">
-                    Desde 1998 recibimos a adultos mayores en situación de vulnerabilidad. Aquí no son residentes, son familia. Cada día lo construimos alrededor de tres principios sencillos.
+                    Desde 1985 recibimos a adultos mayores en situación de vulnerabilidad de La Virginia. Aquí no son residentes, son familia. Cuatro valores guían cada decisión y cada acción.
                 </p>
                 <div class="grid grid-cols-2 gap-x-8 gap-y-5 mt-8 pt-7 border-t border-[#E3EAEB]">
                     <div>
-                        <strong class="block text-nazareth-blue font-semibold text-[15px] mb-1">Dignidad</strong>
-                        <span class="text-[14px] text-[#4B5A5E]">Cada persona tiene una historia que escuchar y un ritmo que respetar.</span>
+                        <strong class="block text-nazareth-blue font-semibold text-[15px] mb-1">Calidad humana</strong>
+                        <span class="text-[14px] text-[#4B5A5E]">Tratar a cada persona con respeto a su dignidad, atención a sus necesidades y apoyo a su desarrollo personal.</span>
                     </div>
                     <div>
-                        <strong class="block text-nazareth-blue font-semibold text-[15px] mb-1">Acompañamiento</strong>
-                        <span class="text-[14px] text-[#4B5A5E]">Cuidado médico, espiritual y afectivo, 24 horas al día.</span>
+                        <strong class="block text-nazareth-blue font-semibold text-[15px] mb-1">Responsabilidad social</strong>
+                        <span class="text-[14px] text-[#4B5A5E]">Cada acción busca tener un impacto positivo en la comunidad, afirmando los principios que guían nuestra labor.</span>
                     </div>
                     <div>
-                        <strong class="block text-nazareth-blue font-semibold text-[15px] mb-1">Comunidad</strong>
-                        <span class="text-[14px] text-[#4B5A5E]">Voluntarios, familias y vecinos hacen parte del hogar.</span>
+                        <strong class="block text-nazareth-blue font-semibold text-[15px] mb-1">Solidaridad</strong>
+                        <span class="text-[14px] text-[#4B5A5E]">Apoyar a quien lo necesita de manera desinteresada, por empatía y reconocimiento del otro, sin esperar nada a cambio.</span>
                     </div>
                     <div>
-                        <strong class="block text-nazareth-blue font-semibold text-[15px] mb-1">Transparencia</strong>
-                        <span class="text-[14px] text-[#4B5A5E]">Cuentas claras y reportes públicos de cada donación recibida.</span>
+                        <strong class="block text-nazareth-blue font-semibold text-[15px] mb-1">Honestidad</strong>
+                        <span class="text-[14px] text-[#4B5A5E]">Pensar, decir y actuar de manera coherente, con respeto al prójimo como fundamento de nuestra convivencia.</span>
                     </div>
                 </div>
             </div>

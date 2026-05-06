@@ -30,7 +30,7 @@
             Estamos aquí para conversar
         </h1>
         <p class="text-[18px] text-[#4B5A5E] max-w-[58ch] leading-relaxed">
-            Para consultas sobre donaciones, voluntariado, visitas o información sobre cómo ingresar a un familiar. Te respondemos en menos de 24 horas hábiles.
+            Para consultas sobre donaciones, voluntariado, visitas o información sobre cómo ingresar a un familiar.  Te respondemos lo más pronto posible.
         </p>
     </div>
 </section>

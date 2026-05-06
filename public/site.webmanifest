@@ -1,0 +1,22 @@
+{
+    "start_url":"/",
+    "name":"Fundación Centro de Bienestar del Anciano Nazareth",
+    "short_name":"Hogar Nazareth",
+    "description":"La Fundación Centro de Bienestar del Anciano Nazareth es una institución sin ánimo de lucro creada por iniciativa de un grupo de ciudadanos generosos e impulsados en su mayor parte por los esposos Antonio Correa y María Gaid Ramírez de Correa, Pbro. Gustavo Valencia Franco y el Señor Hugo Vélez Acevedo, quien está actualmente vinculado como director y apoyo vital de la institución.",
+    "icons":[
+        {
+            "src":"/android-chrome-192x192.png",
+            "sizes":"192x192",
+            "type":"image/png"
+        },
+        {
+            "src":"/android-chrome-512x512.png",
+            "sizes":"512x512",
+            "type":"image/png"
+        }
+    ],
+    "theme_color":"#19B0B8",
+    "background_color":"#FBFBF9",
+    "display":"standalone",
+    "orientation":"portrait-primary"
+}

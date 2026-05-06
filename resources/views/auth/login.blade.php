@@ -20,9 +20,9 @@
 
                 {{-- Header --}}
                 <div class="bg-nazareth-blue px-8 py-8 text-center">
-                    <img src="/images/logo.png"
+                    <img src="/images/logo_fundacion.png"
                          alt="Fundación Hogar del Anciano Nazareth"
-                         class="mx-auto mb-4 h-20 w-auto">
+                         class="mx-auto mb-4 h-20 w-auto rounded">
                     <h1 class="text-xl font-medium text-white">Iniciar sesión</h1>
                     <p class="mt-1 text-sm text-white/70">Panel de administración</p>
                 </div>
