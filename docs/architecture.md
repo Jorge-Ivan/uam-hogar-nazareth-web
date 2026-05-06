@@ -356,7 +356,6 @@ Potential future features:
 - donation processing
 - newsletters
 - event registration
-- API integrations
 
 ---
 
@@ -384,6 +383,5 @@ Further documents will define:
 
 database schema  
 Laravel module structure  
-API design  
 admin UI structure  
 deployment setup

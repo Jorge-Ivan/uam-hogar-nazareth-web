@@ -337,12 +337,7 @@ Fase 5 (Pulido + Producción)
 **Objetivo:** Calidad, rendimiento, seguridad, accesibilidad.
 
 ### Seeders (contenido en español)
-- [ ] `UserSeeder` (1 admin, 1 editor)
-- [ ] `PageSeeder` (Quiénes Somos, Misión, Servicios)
-- [ ] `ActivitySeeder` (10 actividades de ejemplo)
-- [ ] `GallerySeeder` (3 galerías con imágenes)
-- [ ] `EventSeeder` (pasado, presente, futuro)
-- [ ] `DocumentSeeder` (documentos de transparencia)
+- [ ] `UserSeeder` (2 admin)
 
 ### Rendimiento
 - [ ] `Cache::remember()` en controllers públicos (TTL 5 min)

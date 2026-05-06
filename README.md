@@ -188,7 +188,7 @@ Los editores crean borradores, los revisan y los publican cuando están listos. 
 | Fase 2 | Backend: Services, Actions, Policies | ✅ Completa |
 | Fase 3 | Panel de administración (Livewire) | ✅ Completa |
 | Fase 4 | Sitio web público | ✅ Completa |
-| Fase 6 | Pulido y producción | 🔜 Pendiente |
+| Fase 5 | Pulido y producción | 🔜 Pendiente |
 
 Ver [docs/plan.md](docs/plan.md) para la hoja de ruta completa con detalle por fases.
 
