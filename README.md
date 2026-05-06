@@ -112,9 +112,13 @@ app/
 │   │   ├── Admin/      # Panel de administración
 │   │   └── Website/    # Sitio público
 │   ├── Requests/   # Validación de formularios
-│   └── Resources/  # API Resources (JSON)
+│   ├── Resources/  # API Resources (JSON)
+│   └── View/
+│       └── Composers/  # NavigationComposer, SettingsComposer
 ├── Jobs/           # Tareas en segundo plano (OptimizeImage, SendContactEmail)
-├── Livewire/       # Componentes interactivos del admin
+├── Livewire/
+│   ├── Admin/      # Componentes interactivos del panel
+│   └── Website/    # Componentes interactivos del sitio público
 ├── Mail/           # Mailables (ContactFormMail)
 ├── Models/         # Modelos Eloquent
 ├── Policies/       # Autorización por modelo
@@ -142,6 +146,7 @@ docs/               # Documentación del proyecto
 | **Documentos** | Transparencia institucional agrupada por año y categoría |
 | **Media** | Gestión centralizada de imágenes y archivos PDF |
 | **Configuración** | Datos del sitio: contacto, redes sociales, correo y donaciones (panel de admin) |
+| **Usuarios** | Gestión de cuentas con roles Admin y Editor (solo administradores) |
 
 ---
 
@@ -183,7 +188,7 @@ Los editores crean borradores, los revisan y los publican cuando están listos. 
 | Fase 1 | Infraestructura de media | ✅ Completa |
 | Fase 2 | Backend: Services, Actions, Policies | ✅ Completa |
 | Fase 3 | Panel de administración (Livewire) | ✅ Completa |
-| Fase 4 | Sitio web público | 🔜 Pendiente |
+| Fase 4 | Sitio web público | ✅ Completa |
 | Fase 5 | API REST | 🔜 Pendiente |
 | Fase 6 | Pulido y producción | 🔜 Pendiente |
 
