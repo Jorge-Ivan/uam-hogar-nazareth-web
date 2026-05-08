@@ -18,7 +18,7 @@ Permite al personal de la fundación gestionar contenido institucional (activida
 | Frontend admin | Livewire 3 + Tailwind CSS |
 | Frontend público | Blade + Alpine.js |
 | Colas | Database queues + Laravel Scheduler |
-| Testing | Pest 2 |
+| Testing | Pest 3 (124 tests) |
 | Entorno local | Laravel Herd |
 
 ---
@@ -188,9 +188,40 @@ Los editores crean borradores, los revisan y los publican cuando están listos. 
 | Fase 2 | Backend: Services, Actions, Policies | ✅ Completa |
 | Fase 3 | Panel de administración (Livewire) | ✅ Completa |
 | Fase 4 | Sitio web público | ✅ Completa |
-| Fase 5 | Pulido y producción | 🔜 Pendiente |
+| Fase 5 | Pulido y producción | ✅ Completa |
 
 Ver [docs/plan.md](docs/plan.md) para la hoja de ruta completa con detalle por fases.
+
+---
+
+## Testing y Calidad
+
+**124 tests automatizados** cubren:
+- Autenticación y autorización
+- Validación de formularios
+- Operaciones CRUD en todos los módulos
+- Caché y rendimiento
+- Envío de correos
+- Integración con reCAPTCHA
+
+```bash
+# Ejecutar suite de tests
+php artisan test
+
+# Ejecutar un test específico
+php artisan test tests/Feature/Admin/ActivityFormTest.php
+
+# Ver cobertura de código
+php artisan test --coverage
+```
+
+**Optimizaciones implementadas:**
+- Cache en controllers públicos (TTL 5 min) — Home y Activity index
+- Cache en SiteSetting::instance() (TTL 1 hora)
+- Eager loading en todas las queries — sin N+1
+- Páginas de error en español (404, 403, 500)
+- Scheduler para limpieza de jobs fallidos
+- Mensajes de validación y autenticación en español
 
 ---
 
