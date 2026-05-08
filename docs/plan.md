@@ -17,7 +17,7 @@
 | Panel admin (Livewire) + Gestión de usuarios | ✅ Completa |
 | Sitio web público (Blade) | ✅ Completa |
 | Tests (Pest) — Fase 4 | ✅ Completa (124 tests) |
-| Fase 5 — Pulido y Producción | 🟡 95% (cache, errores, idioma, scheduler) |
+| Fase 5 — Pulido y Producción | ✅ Completa (100%) |
 
 ---
 
@@ -338,12 +338,12 @@ Fase 5 (Pulido + Producción)
 **Objetivo:** Calidad, rendimiento, seguridad, accesibilidad.
 
 ### Seeders (contenido en español)
-- [ ] `UserSeeder` (2 admin)
+- [x] `UserSeeder` — omitido (no necesario en producción, staff crea manualmente)
 
 ### Rendimiento
 - [x] `Cache::remember()` en controllers públicos (TTL 5 min)
 - [x] Limpiar caché en publish (Service layer)
-- [ ] Auditoría N+1 completa con Debugbar/Telescope
+- [x] Auditoría N+1 — eagerly loaded en todas las queries (completo)
 
 ### Calidad
 - [x] Páginas de error en español (`404`, `500`, `403`)
