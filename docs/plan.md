@@ -340,23 +340,23 @@ Fase 5 (Pulido + Producción)
 - [ ] `UserSeeder` (2 admin)
 
 ### Rendimiento
-- [ ] `Cache::remember()` en controllers públicos (TTL 5 min)
-- [ ] Limpiar caché en publish (Service layer)
+- [x] `Cache::remember()` en controllers públicos (TTL 5 min)
+- [x] Limpiar caché en publish (Service layer)
 - [ ] Auditoría N+1 completa con Debugbar/Telescope
 
 ### Calidad
-- [ ] Páginas de error en español (`404`, `500`, `403`)
-- [ ] `lang/es/validation.php`, `lang/es/auth.php`
-- [ ] `app/Console/Kernel.php` — Scheduler configurado
+- [x] Páginas de error en español (`404`, `500`, `403`)
+- [x] `lang/es/validation.php`, `lang/es/auth.php`
+- [x] `app/Console/Kernel.php` — Scheduler configurado
 
 ### Seguridad
-- [ ] Middleware `auth` en todas las rutas admin
-- [ ] Validación MIME server-side en uploads
-- [ ] CSRF en todos los formularios confirmado
+- [x] Middleware `auth` en todas las rutas admin
+- [x] Validación MIME server-side en uploads
+- [x] CSRF en todos los formularios confirmado
 
 ### Accesibilidad
-- [ ] `alt` text desde `Media::alt_text` en todas las imágenes
-- [ ] HTML semántico (`<nav>`, `<main>`, `<article>`, `<section>`)
+- [x] `alt` text desde `Media::alt_text` en todas las imágenes
+- [x] HTML semántico (`<nav>`, `<main>`, `<article>`, `<section>`)
 
 ### Suite de tests final (objetivo 80%+ cobertura)
 - [ ] `Unit/Services/` — todos los services
