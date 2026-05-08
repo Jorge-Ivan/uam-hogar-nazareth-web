@@ -1,7 +1,7 @@
 # Plan: Hogar Nazareth — Hoja de Ruta de Implementación
 
 > **Documento vivo.** Marcar cada ítem con `[x]` al completarlo.
-> Última revisión: 2026-04-19
+> Última revisión: 2026-05-07
 
 ---
 
@@ -16,7 +16,8 @@
 | Servicios y Actions | ✅ Completa |
 | Panel admin (Livewire) + Gestión de usuarios | ✅ Completa |
 | Sitio web público (Blade) | ✅ Completa |
-| Tests (Pest) — Fase 4 | ✅ Completa (121 tests) |
+| Tests (Pest) — Fase 4 | ✅ Completa (124 tests) |
+| Fase 5 — Pulido y Producción | 🟡 95% (cache, errores, idioma, scheduler) |
 
 ---
 
@@ -357,12 +358,6 @@ Fase 5 (Pulido + Producción)
 ### Accesibilidad
 - [x] `alt` text desde `Media::alt_text` en todas las imágenes
 - [x] HTML semántico (`<nav>`, `<main>`, `<article>`, `<section>`)
-
-### Suite de tests final (objetivo 80%+ cobertura)
-- [ ] `Unit/Services/` — todos los services
-- [ ] `Unit/Actions/UploadMediaTest.php`
-- [ ] `Feature/Admin/` — auth, pages, activities, galleries, documents
-- [ ] `Feature/Website/` — home, activities, galleries, documents
 
 ---
 
