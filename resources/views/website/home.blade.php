@@ -266,8 +266,9 @@
 </section>
 
 {{-- ══════════════════════════════════════════
-     TESTIMONIOS
+     TESTIMONIOS — oculto hasta tener testimonios reales
      ══════════════════════════════════════════ --}}
+@if (false)
 <section class="testi-bg relative py-20 bg-nazareth-blue overflow-hidden">
     <div class="relative z-10 max-w-[1200px] mx-auto px-6">
         <div class="text-center max-w-[56ch] mx-auto mb-12">
@@ -319,6 +320,7 @@
         </div>
     </div>
 </section>
+@endif
 
 {{-- ══════════════════════════════════════════
      PRÓXIMOS EVENTOS
@@ -461,15 +463,7 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <div class="bg-white border border-nazareth-100 rounded-[14px] p-5">
-                    <strong class="block font-display text-[28px] font-semibold text-nazareth-blue leading-[1.1] mb-1">$ 284 M</strong>
-                    <span class="text-[13px] text-[#4B5A5E]">Recibido en donaciones 2024</span>
-                </div>
-                <div class="bg-white border border-nazareth-100 rounded-[14px] p-5">
-                    <strong class="block font-display text-[28px] font-semibold text-nazareth-blue leading-[1.1] mb-1">82 %</strong>
-                    <span class="text-[13px] text-[#4B5A5E]">Destinado a cuidado directo</span>
-                </div>
-                <div class="bg-white border border-nazareth-100 rounded-[14px] p-5">
-                    <strong class="block font-display text-[28px] font-semibold text-nazareth-blue leading-[1.1] mb-1">14</strong>
+                    <strong class="block font-display text-[28px] font-semibold text-nazareth-blue leading-[1.1] mb-1">{{ $documentCount }}</strong>
                     <span class="text-[13px] text-[#4B5A5E]">Reportes anuales públicos</span>
                 </div>
                 <div class="bg-white border border-nazareth-100 rounded-[14px] p-5">
