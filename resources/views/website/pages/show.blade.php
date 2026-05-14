@@ -83,7 +83,7 @@
                             prose-a:text-nazareth-blue prose-a:no-underline hover:prose-a:underline
                             prose-img:rounded-xl prose-img:max-w-full
                             prose-table:block prose-table:overflow-x-auto">
-                {!! html_entity_decode($page->content, ENT_HTML5, 'UTF-8') !!}
+                {!! str_replace(['&amp;nbsp;', '&nbsp;', "\u{00A0}"], ' ', $page->content) !!}
             </article>
         </div>
 

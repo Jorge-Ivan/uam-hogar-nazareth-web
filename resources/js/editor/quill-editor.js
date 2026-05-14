@@ -63,9 +63,12 @@ export function initPageEditor() {
     // Sync to Livewire on every user change
     quill.on('text-change', (delta, oldDelta, source) => {
         if (source === 'silent') return
-        // Quill double-encodes & from pasted plain text (& → &amp;); decode one level for entities
         const html = quill.getSemanticHTML()
+            // Fix double-encoded entities from pasted plain text (& → &amp;)
             .replace(/&amp;([a-zA-Z]+;|#[0-9]+;|#x[0-9a-fA-F]+;)/g, '&$1')
+            // Replace non-breaking spaces (pasted from Word/web) with regular spaces
+            .replace(/&nbsp;/g, ' ')
+            .replace(/ /g, ' ')
         getWire()?.set('content', html)
     })
 
