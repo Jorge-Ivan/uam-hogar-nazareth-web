@@ -7,7 +7,7 @@
     <title>Iniciar sesión — Fundación Centro de Bienestar del Anciano Nazareth</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @if(config('services.recaptcha.site_key'))
-    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}" defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
     @endif
 </head>
 <body class="min-h-screen bg-nazareth-gray font-sans antialiased">
@@ -38,24 +38,12 @@
                     @endif
 
                     <form
+                        id="login-form"
                         method="POST"
                         action="{{ route('login') }}"
-                        x-data
-                        x-on:submit.prevent="
-                            if (!document.querySelector('[name=recaptcha_token]').value) {
-                                grecaptcha.ready(function() {
-                                    grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'login'}).then(function(token) {
-                                        document.querySelector('[name=recaptcha_token]').value = token;
-                                        $el.submit();
-                                    });
-                                });
-                            } else {
-                                $el.submit();
-                            }
-                        "
                         novalidate>
                         @csrf
-                        <input type="hidden" name="recaptcha_token" value="">
+                        <input type="hidden" name="recaptcha_token" id="recaptcha_token" value="">
 
                         {{-- Email --}}
                         <div class="mb-5">
@@ -135,5 +123,32 @@
         </div>
     </div>
 
+    @if(config('services.recaptcha.site_key'))
+    <script>
+        (function () {
+            var form      = document.getElementById('login-form');
+            var tokenInput = document.getElementById('recaptcha_token');
+            var pending   = false;
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                if (pending) return;
+                pending = true;
+
+                grecaptcha.ready(function () {
+                    grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'login' })
+                        .then(function (token) {
+                            tokenInput.value = token;
+                            form.submit();
+                        })
+                        .catch(function () {
+                            pending = false;
+                        });
+                });
+            });
+        })();
+    </script>
+    @endif
 </body>
 </html>

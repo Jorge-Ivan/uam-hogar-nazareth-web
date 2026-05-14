@@ -14,15 +14,7 @@
     </div>
     @else
     <form
-        x-data
-        x-on:submit.prevent="
-            grecaptcha.ready(function() {
-                grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'contact'}).then(function(token) {
-                    $wire.set('recaptchaToken', token);
-                    $wire.submit();
-                });
-            });
-        "
+        x-data="{ pending: false }"
         novalidate>
 
         {{-- Error general --}}
@@ -144,11 +136,27 @@
         </label>
 
         {{-- Enviar --}}
-        <button type="submit"
+        <button type="button"
+                :disabled="pending"
                 wire:loading.attr="disabled"
+                @click="
+                    if (pending) return;
+                    pending = true;
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'contact' })
+                            .then(function(token) {
+                                $wire.set('recaptchaToken', token);
+                                $wire.submit();
+                                pending = false;
+                            })
+                            .catch(function() {
+                                pending = false;
+                            });
+                    });
+                "
                 class="w-full py-3.5 px-[22px] bg-nazareth-gold text-white text-[15px] font-semibold rounded-[10px] hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2 disabled:opacity-60">
-            <span wire:loading.remove>Enviar mensaje</span>
-            <span wire:loading class="flex items-center justify-center gap-2">
+            <span wire:loading.remove x-show="!pending">Enviar mensaje</span>
+            <span x-show="pending" wire:loading class="flex items-center justify-center gap-2">
                 <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 22 6.477 22 12h-4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
@@ -161,5 +169,5 @@
 </div>
 
 @once
-<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}" defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 @endonce
