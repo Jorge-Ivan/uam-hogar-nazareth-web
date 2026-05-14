@@ -83,7 +83,7 @@
                             prose-a:text-nazareth-blue prose-a:no-underline hover:prose-a:underline
                             prose-img:rounded-xl prose-img:max-w-full
                             prose-table:block prose-table:overflow-x-auto">
-                {!! $page->content !!}
+                {!! html_entity_decode($page->content, ENT_HTML5, 'UTF-8') !!}
             </article>
         </div>
 

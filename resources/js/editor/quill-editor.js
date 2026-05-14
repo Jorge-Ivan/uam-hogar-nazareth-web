@@ -63,7 +63,10 @@ export function initPageEditor() {
     // Sync to Livewire on every user change
     quill.on('text-change', (delta, oldDelta, source) => {
         if (source === 'silent') return
-        getWire()?.set('content', quill.getSemanticHTML())
+        // Quill double-encodes & from pasted plain text (& → &amp;); decode one level for entities
+        const html = quill.getSemanticHTML()
+            .replace(/&amp;([a-zA-Z]+;|#[0-9]+;|#x[0-9a-fA-F]+;)/g, '&$1')
+        getWire()?.set('content', html)
     })
 
     // Expose globally for Livewire-rendered media browser thumbnails

@@ -94,7 +94,7 @@
                     <div class="prose prose-sm max-w-none text-[#4B5A5E]
                                 prose-headings:text-nazareth-blue prose-headings:font-semibold
                                 prose-a:text-nazareth-blue prose-img:rounded-xl mb-6">
-                        {!! $activity->content !!}
+                        {!! html_entity_decode($activity->content, ENT_HTML5, 'UTF-8') !!}
                     </div>
                 @endif
 
