@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 final class ReCaptchaService
 {
@@ -19,14 +20,34 @@ final class ReCaptchaService
             return true;
         }
 
-        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret'   => $this->secretKey,
-            'response' => $token,
-        ]);
+        if (empty($token)) {
+            Log::warning('reCAPTCHA: token vacío recibido');
+            return false;
+        }
 
-        $data = $response->json();
+        try {
+            $response = Http::timeout(5)->asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret'   => $this->secretKey,
+                'response' => $token,
+            ]);
 
-        return ($data['success'] ?? false)
-            && ($data['score'] ?? 0.0) >= $this->minScore;
+            $data = $response->json();
+
+            Log::debug('reCAPTCHA response', [
+                'success'      => $data['success'] ?? null,
+                'score'        => $data['score'] ?? null,
+                'action'       => $data['action'] ?? null,
+                'error_codes'  => $data['error-codes'] ?? [],
+            ]);
+
+            return ($data['success'] ?? false)
+                && ($data['score'] ?? 0.0) >= $this->minScore;
+        } catch (\Throwable $e) {
+            Log::error('reCAPTCHA: error al contactar Google', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return false;
+        }
     }
 }
