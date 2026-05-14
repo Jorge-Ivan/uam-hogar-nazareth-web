@@ -77,12 +77,15 @@
 <section class="bg-white py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <article class="prose prose-lg max-w-none
-                        prose-headings:font-medium prose-headings:text-nazareth-blue
-                        prose-a:text-nazareth-blue prose-a:no-underline hover:prose-a:underline
-                        prose-img:rounded-xl">
-            {!! $page->content !!}
-        </article>
+        <div class="min-w-0 overflow-x-hidden">
+            <article class="prose prose-lg max-w-none break-words
+                            prose-headings:font-medium prose-headings:text-nazareth-blue
+                            prose-a:text-nazareth-blue prose-a:no-underline hover:prose-a:underline
+                            prose-img:rounded-xl prose-img:max-w-full
+                            prose-table:block prose-table:overflow-x-auto">
+                {!! $page->content !!}
+            </article>
+        </div>
 
         {{-- Enlace de regreso (solo si tiene padre) --}}
         @if($page->parent)

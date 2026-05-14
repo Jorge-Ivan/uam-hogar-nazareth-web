@@ -33,13 +33,6 @@ final class ReCaptchaService
 
             $data = $response->json();
 
-            Log::debug('reCAPTCHA response', [
-                'success'      => $data['success'] ?? null,
-                'score'        => $data['score'] ?? null,
-                'action'       => $data['action'] ?? null,
-                'error_codes'  => $data['error-codes'] ?? [],
-            ]);
-
             return ($data['success'] ?? false)
                 && ($data['score'] ?? 0.0) >= $this->minScore;
         } catch (\Throwable $e) {

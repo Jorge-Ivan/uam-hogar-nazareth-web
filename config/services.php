@@ -37,4 +37,8 @@ return [
         'min_score'  => env('RECAPTCHA_MIN_SCORE', 0.4),
     ],
 
+    'gtm' => [
+        'id' => env('GTM_ID', ''),
+    ],
+
 ];
