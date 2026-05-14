@@ -12,13 +12,6 @@
         </a>
     </div>
 
-    {{-- Flash message --}}
-    @if (session('success'))
-        <div class="mb-4 rounded-lg bg-nazareth-green/10 px-4 py-3 text-sm font-medium text-nazareth-green">
-            {{ session('success') }}
-        </div>
-    @endif
-
     {{-- Filters --}}
     <div class="mb-4 flex flex-col gap-3 sm:flex-row">
         <div class="flex-1">

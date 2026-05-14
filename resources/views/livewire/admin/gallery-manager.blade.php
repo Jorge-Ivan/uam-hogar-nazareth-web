@@ -16,13 +16,6 @@
         </a>
     </div>
 
-    {{-- Flash message --}}
-    @if (session('success'))
-        <div class="mb-4 rounded-lg bg-nazareth-green/10 px-4 py-3 text-sm font-medium text-nazareth-green">
-            {{ session('success') }}
-        </div>
-    @endif
-
     {{-- Gallery details form --}}
     <div class="mb-8 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
         <h3 class="mb-4 text-base font-medium text-gray-900">Detalles de la galería</h3>
