@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cómo donar · Hogar Nazareth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; }
+
+  /* ===== HERO ===== */
+  .don-hero {
+    background: linear-gradient(135deg, var(--nz-blue) 0%, #0d7d86 100%);
+    color: #fff;
+    padding: 80px 0 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .don-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 88% 25%, rgba(232,160,32,.18), transparent 45%),
+      radial-gradient(circle at 10% 90%, rgba(158,215,220,.14), transparent 50%);
+    pointer-events: none;
+  }
+  .don-hero .container { position: relative; z-index: 1; }
+  .don-hero .eyebrow { color: var(--nz-gold); }
+  .don-hero h1 {
+    color: #fff;
+    font-size: clamp(38px, 5vw, 56px);
+    line-height: 1.05;
+    max-width: 22ch;
+    margin-bottom: 18px;
+  }
+  .don-hero p.lede {
+    color: rgba(255,255,255,.92);
+    font-size: 19px;
+    max-width: 60ch;
+    margin-bottom: 0;
+  }
+
+  /* ===== JUMP NAV ===== */
+  .jump-nav {
+    background: #fff;
+    border-bottom: 1px solid var(--nz-line);
+    position: sticky;
+    top: 72px;
+    z-index: 20;
+    box-shadow: 0 1px 0 rgba(0,0,0,.02);
+  }
+  .jump-nav .container {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 24px;
+  }
+  .jump-nav .container::-webkit-scrollbar { display: none; }
+  .jump-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 4px;
+    margin-right: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--nz-text-soft);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color .15s, border-color .15s;
+  }
+  .jump-nav a:hover { color: var(--nz-blue); }
+  .jump-nav a.is-active {
+    color: var(--nz-blue);
+    border-bottom-color: var(--nz-gold);
+  }
+  .jump-nav a svg { width: 16px; height: 16px; }
+
+  /* ===== METHODS GRID ===== */
+  .methods {
+    padding: 72px 0 24px;
+    background: var(--nz-paper);
+  }
+  .methods-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 1000px) { .methods-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 680px) { .methods-grid { grid-template-columns: 1fr; } }
+
+  .method {
+    background: #fff;
+    border: 1px solid var(--nz-line);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: box-shadow .2s, border-color .2s;
+    scroll-margin-top: 140px;
+  }
+  .method:hover {
+    border-color: var(--nz-200);
+    box-shadow: var(--shadow-md);
+  }
+
+  .method-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--nz-line);
+  }
+  .method-logo {
+    width: 76px; height: 56px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    padding: 8px 12px;
+  }
+  .method-logo.bancolombia {
+    background: #0a6b73;
+    color: #fff;
+  }
+  .method-logo.bancolombia svg { width: 32px; height: 32px; }
+  .method-logo.nequi {
+    background: #fff;
+    border: 1px solid var(--nz-line);
+  }
+  .method-logo.daviplata {
+    background: #fff;
+    border: 1px solid var(--nz-line);
+  }
+  .method-logo.brebe {
+    background: #fff;
+    border: 1px solid var(--nz-line);
+  }
+
+  /* Bre-B key chip */
+  .brebe-keytype {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px 3px 6px;
+    background: rgba(232,160,32,.12);
+    border: 1px solid rgba(232,160,32,.35);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #8a5a08;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 6px;
+  }
+  .brebe-keytype svg { width: 11px; height: 11px; }
+  .method-logo img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+
+  .method-title h3 {
+    margin: 0;
+    font-family: 'Figtree', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--nz-ink);
+    letter-spacing: -.01em;
+  }
+  .method-title span {
+    font-size: 13px;
+    color: var(--nz-muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .method-body {
+    padding: 8px 28px 24px;
+  }
+
+  /* Copy fields */
+  .field {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--nz-line);
+  }
+  .field:last-child { border-bottom: 0; }
+  .field-label {
+    font-size: 12px;
+    color: var(--nz-muted);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .field-value {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--nz-ink);
+    font-feature-settings: "tnum";
+    letter-spacing: -.01em;
+    word-break: break-all;
+  }
+  .field-value.mono {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    letter-spacing: .02em;
+  }
+
+  .copy-btn {
+    background: var(--nz-50);
+    border: 1px solid var(--nz-100);
+    color: var(--nz-700);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    transition: all .15s;
+    flex-shrink: 0;
+  }
+  .copy-btn:hover {
+    background: var(--nz-100);
+    border-color: var(--nz-200);
+  }
+  .copy-btn.copied {
+    background: rgba(61,122,69,.12);
+    border-color: rgba(61,122,69,.35);
+    color: var(--nz-green);
+  }
+  .copy-btn svg { width: 14px; height: 14px; }
+  .copy-btn .label-default,
+  .copy-btn .label-copied { display: inline-flex; align-items: center; gap: 6px; }
+  .copy-btn .label-copied { display: none; }
+  .copy-btn.copied .label-default { display: none; }
+  .copy-btn.copied .label-copied { display: inline-flex; }
+
+  /* ===== QR BAND ===== */
+  .qr-section {
+    padding: 64px 0 80px;
+    background: var(--nz-paper);
+  }
+  .qr-card {
+    background: #fff;
+    border: 1px solid var(--nz-line);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(280px, 360px) 1fr;
+    box-shadow: var(--shadow-md);
+    scroll-margin-top: 140px;
+  }
+  @media (max-width: 760px) {
+    .qr-card { grid-template-columns: 1fr; }
+  }
+
+  .qr-visual {
+    background: linear-gradient(135deg, var(--nz-50) 0%, var(--nz-100) 100%);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-right: 1px solid var(--nz-line);
+  }
+  @media (max-width: 760px) {
+    .qr-visual { border-right: 0; border-bottom: 1px solid var(--nz-line); padding: 32px; }
+  }
+  .qr-frame {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 8px 24px -8px rgba(10,107,115,.18);
+    position: relative;
+  }
+  .qr-frame::before, .qr-frame::after {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    border: 3px solid var(--nz-gold);
+  }
+  .qr-frame::before {
+    top: -6px; left: -6px;
+    border-right: 0; border-bottom: 0;
+    border-top-left-radius: 6px;
+  }
+  .qr-frame::after {
+    bottom: -6px; right: -6px;
+    border-left: 0; border-top: 0;
+    border-bottom-right-radius: 6px;
+  }
+  .qr-img {
+    width: 220px; height: 220px;
+    display: block;
+    background: #fff;
+  }
+  .qr-img.placeholder {
+    display: grid;
+    place-items: center;
+    color: var(--nz-muted);
+    background:
+      linear-gradient(45deg, var(--nz-50) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--nz-50) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--nz-50) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--nz-50) 75%);
+    background-size: 14px 14px;
+    background-position: 0 0, 0 7px, 7px -7px, -7px 0;
+    border: 2px dashed var(--nz-200);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12px;
+    padding: 16px;
+  }
+
+  .qr-content {
+    padding: 40px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  @media (max-width: 760px) {
+    .qr-content { padding: 32px 28px; }
+  }
+  .qr-content .eyebrow { color: var(--nz-gold); }
+  .qr-content h2 {
+    font-size: clamp(26px, 3vw, 34px);
+    margin-bottom: 14px;
+    color: var(--nz-blue);
+  }
+  .qr-content p {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+  .qr-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .qr-steps li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    align-items: start;
+    font-size: 14px;
+    color: var(--nz-text-soft);
+  }
+  .qr-steps .num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--nz-gold);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Figtree', sans-serif;
+    margin-top: 1px;
+  }
+
+  /* ===== WHY GIVE ===== */
+  .why {
+    background: #fff;
+    padding: 80px 0;
+    border-top: 1px solid var(--nz-line);
+    border-bottom: 1px solid var(--nz-line);
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 900px) { .why-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  .why-quote {
+    position: relative;
+    padding: 8px 0 8px 32px;
+    border-left: 3px solid var(--nz-gold);
+  }
+  .why-quote .mark {
+    font-family: 'Fraunces', serif;
+    color: var(--nz-gold);
+    font-size: 64px;
+    line-height: .6;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .why-quote blockquote {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 2.6vw, 28px);
+    line-height: 1.35;
+    color: var(--nz-ink);
+    font-weight: 500;
+    margin: 0 0 20px;
+    text-wrap: pretty;
+  }
+  .why-quote cite {
+    font-style: normal;
+    font-size: 14px;
+    color: var(--nz-muted);
+    display: block;
+  }
+  .why-quote cite strong { color: var(--nz-ink); font-weight: 600; display: block; margin-bottom: 2px; }
+
+  .why-reasons {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .why-reason {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .why-reason .ic {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--nz-50);
+    color: var(--nz-blue);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .why-reason .ic svg { width: 22px; height: 22px; }
+  .why-reason h3 {
+    font-family: 'Figtree', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 4px 0 4px;
+    color: var(--nz-ink);
+  }
+  .why-reason p {
+    font-size: 14px;
+    color: var(--nz-text-soft);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* ===== OTHER WAYS ===== */
+  .other-ways {
+    padding: 80px 0;
+    background: var(--nz-paper);
+  }
+  .other-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) { .other-grid { grid-template-columns: 1fr; } }
+
+  .other-card {
+    background: #fff;
+    border: 1px solid var(--nz-line);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .other-card:hover {
+    border-color: var(--nz-200);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .other-card .icon-box {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--nz-50);
+    color: var(--nz-blue);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+  .other-card .icon-box svg { width: 24px; height: 24px; }
+  .other-card h3 {
+    font-family: 'Figtree', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--nz-ink);
+  }
+  .other-card p {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .other-card a.link {
+    color: var(--nz-700);
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .other-card a.link:hover { color: var(--nz-blue); }
+
+  /* ===== TRUST FOOTER ===== */
+  .trust {
+    padding: 56px 0;
+    background: var(--nz-blue);
+    color: rgba(255,255,255,.9);
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 800px) { .trust-grid { grid-template-columns: 1fr; gap: 24px; } }
+  .trust h3 {
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .trust p { color: rgba(255,255,255,.8); font-size: 15px; margin-bottom: 0; }
+  .trust-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--nz-ink);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    transition: transform .3s ease;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast svg { width: 18px; height: 18px; color: var(--nz-gold); }
+</style>
+</head>
+<body data-screen-label="Donaciones">
+
+<main>
+
+  <!-- HERO -->
+  <section class="don-hero">
+    <div class="container">
+      <span class="eyebrow gold">Apoyar al hogar</span>
+      <h1>Cualquier monto se vuelve mercado, medicina o un abrazo más.</h1>
+      <p class="lede">Elige el medio que más te acomode. Aquí están todos los datos para hacer tu aporte directo a la fundación. No usamos pasarelas de pago — tu dinero llega completo.</p>
+    </div>
+  </section>
+
+  <!-- JUMP NAV -->
+  <nav class="jump-nav" aria-label="Saltar a método">
+    <div class="container">
+      <a href="#bancolombia" class="js-jump is-active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h2M12 15h5"/></svg>
+        Transferencia bancaria
+      </a>
+      <a href="#nequi" class="js-jump">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        Nequi
+      </a>
+      <a href="#daviplata" class="js-jump">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        Daviplata
+      </a>
+      <a href="#brebe" class="js-jump">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L22 7l-3-3"/></svg>
+        Llave Bre-B
+      </a>
+      <a href="#qr" class="js-jump">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M21 14v.01M14 21h.01M21 21v-3M17 17v.01"/></svg>
+        Código QR
+      </a>
+      <a href="#otras" class="js-jump">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Otras formas
+      </a>
+    </div>
+  </nav>
+
+  <!-- METHODS -->
+  <section class="methods">
+    <div class="container">
+
+      <!-- Bancolombia -->
+      <article class="method" id="bancolombia" style="margin-bottom:24px;">
+        <div class="method-header">
+          <div class="method-logo bancolombia" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v4"/><path d="M12 14v4"/><path d="M16 14v4"/></svg>
+          </div>
+          <div class="method-title">
+            <h3>Transferencia bancaria</h3>
+            <span>Bancolombia · Cuenta de Ahorros</span>
+          </div>
+        </div>
+        <div class="method-body">
+          <div class="field">
+            <div>
+              <div class="field-label">Banco</div>
+              <div class="field-value">Bancolombia</div>
+            </div>
+            <button class="copy-btn js-copy" data-copy="Bancolombia" aria-label="Copiar nombre del banco">
+              <span class="label-default">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                Copiar
+              </span>
+              <span class="label-copied">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                Copiado
+              </span>
+            </button>
+          </div>
+
+          <div class="field">
+            <div>
+              <div class="field-label">Tipo de cuenta</div>
+              <div class="field-value">Cuenta de Ahorros</div>
+            </div>
+            <button class="copy-btn js-copy" data-copy="Cuenta de Ahorros" aria-label="Copiar tipo de cuenta">
+              <span class="label-default">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                Copiar
+              </span>
+              <span class="label-copied">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                Copiado
+              </span>
+            </button>
+          </div>
+
+          <div class="field">
+            <div>
+              <div class="field-label">Número de cuenta</div>
+              <div class="field-value mono">123-456789-12</div>
+            </div>
+            <button class="copy-btn js-copy" data-copy="12345678912" aria-label="Copiar número de cuenta">
+              <span class="label-default">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                Copiar
+              </span>
+              <span class="label-copied">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                Copiado
+              </span>
+            </button>
+          </div>
+
+          <div class="field">
+            <div>
+              <div class="field-label">Titular</div>
+              <div class="field-value" style="font-size:15px;">Fundación Hogar del Anciano Nazareth</div>
+            </div>
+            <button class="copy-btn js-copy" data-copy="Fundación Hogar del Anciano Nazareth" aria-label="Copiar nombre del titular">
+              <span class="label-default">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                Copiar
+              </span>
+              <span class="label-copied">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                Copiado
+              </span>
+            </button>
+          </div>
+
+          <div class="field">
+            <div>
+              <div class="field-label">NIT</div>
+              <div class="field-value mono">891.401.123-4</div>
+            </div>
+            <button class="copy-btn js-copy" data-copy="8914011234" aria-label="Copiar NIT">
+              <span class="label-default">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                Copiar
+              </span>
+              <span class="label-copied">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                Copiado
+              </span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Wallets grid -->
+      <div class="methods-grid">
+
+        <!-- Nequi -->
+        <article class="method" id="nequi">
+          <div class="method-header">
+            <div class="method-logo nequi">
+              <img src="../assets/logo-nequi.png" alt="Nequi" />
+            </div>
+            <div class="method-title">
+              <h3>Nequi</h3>
+              <span>Billetera digital</span>
+            </div>
+          </div>
+          <div class="method-body">
+            <div class="field">
+              <div>
+                <div class="field-label">Número de Nequi</div>
+                <div class="field-value mono">315 678 9012</div>
+              </div>
+              <button class="copy-btn js-copy" data-copy="3156789012" aria-label="Copiar número de Nequi">
+                <span class="label-default">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  Copiar
+                </span>
+                <span class="label-copied">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  Copiado
+                </span>
+              </button>
+            </div>
+            <div class="field">
+              <div style="font-size:13px;color:var(--nz-muted);line-height:1.55;">
+                Abre tu app Nequi → <strong style="color:var(--nz-ink);">Enviar</strong> → A un celular → Pega el número.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Daviplata -->
+        <article class="method" id="daviplata">
+          <div class="method-header">
+            <div class="method-logo daviplata">
+              <img src="../assets/logo-daviplata.png" alt="DaviPlata" />
+            </div>
+            <div class="method-title">
+              <h3>Daviplata</h3>
+              <span>Billetera digital</span>
+            </div>
+          </div>
+          <div class="method-body">
+            <div class="field">
+              <div>
+                <div class="field-label">Número de Daviplata</div>
+                <div class="field-value mono">315 678 9012</div>
+              </div>
+              <button class="copy-btn js-copy" data-copy="3156789012" aria-label="Copiar número de Daviplata">
+                <span class="label-default">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  Copiar
+                </span>
+                <span class="label-copied">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  Copiado
+                </span>
+              </button>
+            </div>
+            <div class="field">
+              <div style="font-size:13px;color:var(--nz-muted);line-height:1.55;">
+                Abre tu app Daviplata → <strong style="color:var(--nz-ink);">Pasa la plata</strong> → Otro Daviplata → Pega el número.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Bre-B -->
+        <article class="method" id="brebe">
+          <div class="method-header">
+            <div class="method-logo brebe">
+              <img src="../assets/logo-brebe.png" alt="Bre-B" />
+            </div>
+            <div class="method-title">
+              <h3>Llave Bre-B</h3>
+              <span>Cualquier banco · sin números largos</span>
+            </div>
+          </div>
+          <div class="method-body">
+            <div class="field">
+              <div>
+                <div class="brebe-keytype">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L22 7l-3-3"/></svg>
+                  Llave alfanumérica
+                </div>
+                <div class="field-value mono">@8914118629</div>
+              </div>
+              <button class="copy-btn js-copy" data-copy="@8914118629" aria-label="Copiar llave Bre-B">
+                <span class="label-default">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  Copiar
+                </span>
+                <span class="label-copied">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  Copiado
+                </span>
+              </button>
+            </div>
+            <div class="field">
+              <div style="font-size:13px;color:var(--nz-muted);line-height:1.55;">
+                Desde tu app bancaria → <strong style="color:var(--nz-ink);">Transferir con llave</strong> → Pega <strong style="color:var(--nz-ink);">@8914118629</strong>. Funciona entre cualquier banco o billetera de Colombia.
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- QR -->
+  <section class="qr-section" id="qr">
+    <div class="container">
+      <div class="qr-card">
+        <div class="qr-visual">
+          <div class="qr-frame">
+            <div class="qr-img placeholder">
+              QR de la cuenta<br/>
+              <small style="opacity:.7;">(reemplazar con imagen real)</small>
+            </div>
+          </div>
+        </div>
+        <div class="qr-content">
+          <span class="eyebrow gold">Donar escaneando</span>
+          <h2>Apunta tu cámara y listo</h2>
+          <p>Si prefieres no copiar números, escanea este código desde tu app bancaria o billetera digital y abrirá la transferencia directamente con nuestros datos cargados.</p>
+          <ol class="qr-steps">
+            <li><span class="num">1</span><span>Abre la app de tu banco o billetera</span></li>
+            <li><span class="num">2</span><span>Toca la opción <strong>Pagar con QR</strong></span></li>
+            <li><span class="num">3</span><span>Apunta al código y confirma el monto</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY GIVE -->
+  <section class="why">
+    <div class="container">
+      <div class="why-grid">
+        <div class="why-quote">
+          <span class="mark" aria-hidden="true">“</span>
+          <blockquote>Honra a tu padre y a tu madre. Donde hay un anciano, hay memoria, hay raíz, hay futuro. Cuidarlos no es caridad: es devolver lo que un día nos dieron.</blockquote>
+          <cite><strong>Hermanas del Hogar Nazareth</strong>Misión que nos sostiene desde 1987</cite>
+        </div>
+
+        <div class="why-reasons">
+          <div class="why-reason">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div>
+              <h3>Nadie envejece solo aquí</h3>
+              <p>Tu donación se traduce en compañía diaria, comida caliente y un techo seguro para abuelos que la vida dejó sin familia cerca.</p>
+            </div>
+          </div>
+
+          <div class="why-reason">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.5a5.5 5.5 0 0 1 11-1 5.5 5.5 0 0 1 11 1c0 7-8 11.5-8 11.5" transform="translate(-3 0)"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+                <h3>Cada peso llega completo</h3>
+              <p>No usamos pasarelas ni intermediarios. El 100% de tu aporte entra directo a la cuenta de la fundación y se usa en alimentación, medicinas y servicios.</p>
+            </div>
+          </div>
+
+          <div class="why-reason">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <div>
+              <h3>Lo que das, lo ves</h3>
+              <p>Publicamos cada año el destino de los recursos. Si donas, te invitamos a visitar el hogar y conocer a quienes hicieron posible tu aporte.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OTRAS FORMAS -->
+  <section class="other-ways" id="otras">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Sin dinero también se ayuda</span>
+        <h2>Otras formas de estar presentes</h2>
+        <p>Si no puedes donar dinero hoy, hay otros caminos para que el hogar te tenga en cuenta.</p>
+      </div>
+      <div class="other-grid">
+        <article class="other-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+          </div>
+          <h3>Voluntariado</h3>
+          <p>Regala una tarde. Jugar parqués, peinar, leer el periódico, enseñar una canción. Nos organizamos según tu disponibilidad.</p>
+          <a href="contacto.html" class="link">Quiero ser voluntario →</a>
+        </article>
+
+        <article class="other-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>
+          </div>
+          <h3>Donaciones en especie</h3>
+          <p>Pañales, toallas higiénicas, productos de aseo, cobijas, mercado seco. Avísanos qué tienes y coordinamos recogida.</p>
+          <a href="contacto.html" class="link">Coordinar entrega →</a>
+        </article>
+
+        <article class="other-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          </div>
+          <h3>Empresas aliadas</h3>
+          <p>Convenios anuales, donaciones recurrentes, jornadas de voluntariado corporativo. Hablamos de lo que tu empresa puede aportar.</p>
+          <a href="contacto.html" class="link">Hablar con nosotros →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST FOOTER -->
+  <section class="trust">
+    <div class="container">
+      <div class="trust-grid">
+        <div>
+          <h3>Cuentas claras, siempre</h3>
+          <p>Somos entidad sin ánimo de lucro registrada ante la DIAN como Régimen Tributario Especial. Publicamos cada año los estados financieros y el destino de cada peso donado. Si necesitas certificado para descuento tributario, escríbenos.</p>
+        </div>
+        <div class="trust-cta">
+          <a href="transparencia.html" class="btn btn-primary">Ver reportes públicos</a>
+          <a href="contacto.html" class="btn btn-outline-white">Solicitar certificado</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+  <span id="toastMsg">Copiado al portapapeles</span>
+</div>
+
+<script src="shared.js"></script>
+<script>
+  NZ.mountNav('donaciones');
+  NZ.mountFooter();
+
+  // ===== Copy buttons =====
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMsg');
+  let toastTimer;
+  function showToast(msg) {
+    toastMsg.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  document.querySelectorAll('.js-copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const value = btn.dataset.copy;
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch(err) {
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = value; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); ta.remove();
+      }
+      btn.classList.add('copied');
+      showToast('Copiado: ' + value);
+      setTimeout(() => btn.classList.remove('copied'), 1800);
+    });
+  });
+
+  // ===== Jump nav active state =====
+  const links = document.querySelectorAll('.js-jump');
+  const targets = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+  function updateActive() {
+    const navHeight = 140;
+    const scrollY = window.scrollY + navHeight + 40;
+    let activeIdx = 0;
+    targets.forEach((t, i) => {
+      if (t && t.offsetTop <= scrollY) activeIdx = i;
+    });
+    links.forEach((a, i) => a.classList.toggle('is-active', i === activeIdx));
+  }
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+
+  // smooth scroll
+  links.forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) {
+        const top = t.getBoundingClientRect().top + window.scrollY - 130;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>

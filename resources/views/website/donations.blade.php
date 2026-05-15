@@ -38,8 +38,10 @@
   $hasBankInfo     = $siteSettings->donation_bank_name || $siteSettings->donation_account;
   $hasNequi        = (bool) $siteSettings->donation_nequi;
   $hasDaviplata    = (bool) $siteSettings->donation_daviplata;
+  $hasBreb         = (bool) $siteSettings->donation_breb;
   $hasQr           = $siteSettings->donationQr !== null;
-  $hasAnyDonation  = $hasBankInfo || $hasNequi || $hasDaviplata;
+  $hasAnyDonation  = $hasBankInfo || $hasNequi || $hasDaviplata || $hasBreb;
+  $digitalCount    = (int) $hasNequi + (int) $hasDaviplata + (int) $hasBreb;
 @endphp
 
 {{-- HERO --}}
@@ -84,6 +86,14 @@
         <rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>
       </svg>
       Daviplata
+    </a>
+    @endif
+    @if($hasBreb)
+    <a href="#brebe" class="js-don-jump">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L22 7l-3-3"/>
+      </svg>
+      Llave Bre-B
     </a>
     @endif
     @if($hasQr)
@@ -227,9 +237,9 @@
     </article>
     @endif
 
-    {{-- Nequi + Daviplata grid --}}
-    @if($hasNequi || $hasDaviplata)
-    <div class="methods-grid">
+    {{-- Nequi + Daviplata + Bre-B grid --}}
+    @if($hasNequi || $hasDaviplata || $hasBreb)
+    <div class="methods-grid" style="--digital-cols: {{ $digitalCount }}">
 
       @if($hasNequi)
       <article class="method" id="nequi">
@@ -299,6 +309,46 @@
           <div class="field" style="border-bottom:0;">
             <div style="font-size:13px;color:#5A6A6E;line-height:1.55;">
               Abre tu app Daviplata → <strong style="color:#1F2A2E;">Pasa la plata</strong> → Otro Daviplata → Pega el número.
+            </div>
+          </div>
+        </div>
+      </article>
+      @endif
+
+      @if($hasBreb)
+      <article class="method" id="brebe">
+        <div class="method-header">
+          <div class="method-logo brebe">
+            <img src="{{ asset('images/logo-brebe.png') }}" alt="Bre-B" loading="lazy">
+          </div>
+          <div class="method-title">
+            <h3>Llave Bre-B</h3>
+            <span>Cualquier banco · sin números largos</span>
+          </div>
+        </div>
+        <div class="method-body">
+          <div class="field">
+            <div>
+              <div class="brebe-keytype">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L22 7l-3-3"/></svg>
+                Llave alfanumérica
+              </div>
+              <div class="field-value mono">{{ $siteSettings->donation_breb }}</div>
+            </div>
+            <button class="copy-btn js-don-copy" data-copy="{{ $siteSettings->donation_breb }}" aria-label="Copiar llave Bre-B">
+              <span class="label-default">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                Copiar
+              </span>
+              <span class="label-copied" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                Copiado
+              </span>
+            </button>
+          </div>
+          <div class="field" style="border-bottom:0;">
+            <div style="font-size:13px;color:#5A6A6E;line-height:1.55;">
+              Desde tu app bancaria → <strong style="color:#1F2A2E;">Transferir con llave</strong> → Pega <strong style="color:#1F2A2E;">{{ $siteSettings->donation_breb }}</strong>. Funciona entre cualquier banco o billetera de Colombia.
             </div>
           </div>
         </div>

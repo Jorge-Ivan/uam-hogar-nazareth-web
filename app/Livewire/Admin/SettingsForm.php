@@ -58,6 +58,7 @@ final class SettingsForm extends Component
     // Donaciones — pagos digitales
     public string $donationNequi     = '';
     public string $donationDaviplata = '';
+    public string $donationBreb      = '';
 
     // Donaciones — QR
     public ?int  $donationQrMediaId = null;
@@ -104,6 +105,7 @@ final class SettingsForm extends Component
         $this->donationNitBank       = $s->donation_nit_bank       ?? '';
         $this->donationNequi         = $s->donation_nequi          ?? '';
         $this->donationDaviplata     = $s->donation_daviplata       ?? '';
+        $this->donationBreb          = $s->donation_breb            ?? '';
         $this->donationQrMediaId     = $s->donation_qr_media_id;
     }
 
@@ -139,6 +141,7 @@ final class SettingsForm extends Component
             'donationNitBank'       => ['nullable', 'string', 'max:50'],
             'donationNequi'         => ['nullable', 'regex:/^[0-9]{10}$/', 'max:10'],
             'donationDaviplata'     => ['nullable', 'regex:/^[0-9]{10}$/', 'max:10'],
+            'donationBreb'          => ['nullable', 'string', 'max:100'],
             'donationQrUpload'      => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
@@ -222,6 +225,7 @@ final class SettingsForm extends Component
             'donation_nit_bank'       => $this->donationNitBank ?: null,
             'donation_nequi'          => $this->donationNequi ?: null,
             'donation_daviplata'      => $this->donationDaviplata ?: null,
+            'donation_breb'           => $this->donationBreb ?: null,
             'donation_qr_media_id'    => $this->donationQrMediaId,
         ]);
 

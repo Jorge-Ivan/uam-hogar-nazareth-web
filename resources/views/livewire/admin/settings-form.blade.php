@@ -414,6 +414,24 @@
                 </div>
             </div>
 
+            <div class="mt-4">
+                <label for="donationBreb" class="block text-sm font-medium text-gray-700">Llave Bre-B</label>
+                <p class="mt-0.5 text-xs text-gray-400">Puede ser un número de celular, correo electrónico, número de cuenta o NIT registrado en Bre-B.</p>
+                <input
+                    id="donationBreb"
+                    type="text"
+                    wire:model="donationBreb"
+                    placeholder="Ej: 3001234567 o correo@ejemplo.com"
+                    maxlength="100"
+                    class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 shadow-sm
+                           focus:border-nazareth-blue focus:outline-none focus:ring-2 focus:ring-nazareth-blue/20
+                           @error('donationBreb') border-red-400 @enderror"
+                >
+                @error('donationBreb')
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
             {{-- Código QR --}}
             <p class="mb-3 mt-6 text-xs font-semibold uppercase tracking-wide text-gray-400">Código QR de donación</p>
             <p class="mb-3 text-xs text-gray-400">
