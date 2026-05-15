@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Document;
 use App\Models\Event;
+use App\Models\Gallery;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
@@ -38,8 +39,15 @@ final class HomeController extends Controller
                 ->get();
         });
 
+        $galleries = Cache::remember('website.home.galleries', 300, function () {
+            return Gallery::with(['images' => fn ($q) => $q->orderBy('position'), 'images.media'])
+                ->latest()
+                ->limit(3)
+                ->get();
+        });
+
         $documentCount = Cache::remember('website.home.document_count', 300, fn () => Document::count());
 
-        return view('website.home', compact('activities', 'events', 'documentCount'));
+        return view('website.home', compact('activities', 'events', 'galleries', 'documentCount'));
     }
 }

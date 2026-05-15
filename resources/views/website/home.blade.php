@@ -200,6 +200,7 @@
 {{-- ══════════════════════════════════════════
      ACTIVIDADES
      ══════════════════════════════════════════ --}}
+@if($activities->isNotEmpty())
 <section class="py-20 bg-white">
     <div class="max-w-[1200px] mx-auto px-6">
         <div class="text-center max-w-[56ch] mx-auto mb-12">
@@ -208,12 +209,7 @@
             <p class="text-[17px] text-[#4B5A5E]">Terapias, celebraciones, salidas y momentos de fe que mantienen el cuerpo y el alma en movimiento.</p>
         </div>
 
-        @if($activities->isEmpty())
-            <div class="text-center py-16 bg-nazareth-50 rounded-[14px] border border-[#E3EAEB]">
-                <p class="text-[#5A6A6E] text-[17px]">Próximamente compartiremos nuestras actividades.</p>
-            </div>
-        @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($activities as $activity)
                 <article class="group bg-white border border-[#E3EAEB] rounded-[14px] overflow-hidden transition-all duration-200 hover:border-nazareth-200 hover:shadow-md hover:-translate-y-0.5">
 
@@ -254,7 +250,6 @@
                 </article>
                 @endforeach
             </div>
-        @endif
 
         <div class="mt-10 text-center">
             <a href="{{ route('website.activities.index') }}"
@@ -264,6 +259,74 @@
         </div>
     </div>
 </section>
+@endif
+
+{{-- ══════════════════════════════════════════
+     GALERÍAS
+     ══════════════════════════════════════════ --}}
+@if($galleries->isNotEmpty())
+<section class="py-20 bg-nazareth-50">
+    <div class="max-w-[1200px] mx-auto px-6">
+        <div class="text-center max-w-[56ch] mx-auto mb-12">
+            <span class="inline-block text-xs font-semibold tracking-[.14em] uppercase text-nazareth-700 mb-3.5">Galerías</span>
+            <h2 class="font-display text-[clamp(28px,3.2vw,40px)] text-nazareth-ink mb-3 tracking-tight">El hogar en imágenes</h2>
+            <p class="text-[17px] text-[#4B5A5E]">Momentos del día a día, celebraciones y actividades que forman parte de la vida en el hogar.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($galleries as $gallery)
+                @php $cover = $gallery->images->first(); @endphp
+                <article class="group bg-white border border-[#E3EAEB] rounded-[14px] overflow-hidden transition-all duration-200 hover:border-nazareth-200 hover:shadow-md hover:-translate-y-0.5">
+
+                    {{-- Imagen de portada --}}
+                    <a href="{{ route('website.galleries.show', $gallery->slug) }}" class="block overflow-hidden aspect-video relative" tabindex="-1" aria-hidden="true">
+                        @if($cover && $cover->media)
+                            <img src="{{ Storage::url($cover->media->file_path) }}"
+                                 alt="{{ $cover->media->alt_text }}"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                 loading="lazy">
+                        @else
+                            <div class="w-full h-full bg-nazareth-100 flex items-center justify-center">
+                                <svg class="w-12 h-12 text-nazareth-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                        @endif
+                        {{-- Contador de fotos --}}
+                        <span class="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-nazareth-ink/70 text-white backdrop-blur-sm">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            {{ $gallery->images->count() }} {{ $gallery->images->count() === 1 ? 'foto' : 'fotos' }}
+                        </span>
+                    </a>
+
+                    {{-- Cuerpo --}}
+                    <div class="p-7">
+                        <h3 class="text-[19px] font-semibold text-nazareth-ink mb-2 leading-snug">
+                            {{ $gallery->title }}
+                        </h3>
+                        @if($gallery->description)
+                            <p class="text-[14px] text-[#4B5A5E] mb-0 line-clamp-2">{{ $gallery->description }}</p>
+                        @endif
+                        <a href="{{ route('website.galleries.show', $gallery->slug) }}"
+                           class="inline-flex items-center gap-1 mt-4 text-nazareth-700 text-[14px] font-semibold hover:text-nazareth-blue transition-colors focus:outline-none focus:underline">
+                            Ver galería →
+                        </a>
+                    </div>
+                </article>
+                @endforeach
+            </div>
+
+        <div class="mt-10 text-center">
+            <a href="{{ route('website.galleries.index') }}"
+               class="inline-flex items-center gap-2 text-nazareth-700 text-[15px] font-semibold hover:text-nazareth-blue transition-colors focus:outline-none focus:underline">
+                Ver todas las galerías →
+            </a>
+        </div>
+    </div>
+</section>
+@endif
 
 {{-- ══════════════════════════════════════════
      TESTIMONIOS — oculto hasta tener testimonios reales
@@ -325,6 +388,7 @@
 {{-- ══════════════════════════════════════════
      PRÓXIMOS EVENTOS
      ══════════════════════════════════════════ --}}
+@if($events->isNotEmpty())
 <section class="py-20 bg-nazareth-paper">
     <div class="max-w-[1200px] mx-auto px-6">
         <div class="flex justify-between items-end gap-6 flex-wrap mb-8">
@@ -338,11 +402,8 @@
             </a>
         </div>
 
-        @if($events->isEmpty())
-            <p class="text-[#5A6A6E] py-8 text-center">No hay eventos próximos por el momento.</p>
-        @else
-            <div class="space-y-4">
-                @foreach($events as $event)
+        <div class="space-y-4">
+            @foreach($events as $event)
                 @php
                     $isOngoing = $event->start_date->isPast()
                         && ($event->end_date === null || $event->end_date->isFuture());
@@ -392,11 +453,11 @@
                         Detalles
                     </a>
                 </article>
-                @endforeach
-            </div>
-        @endif
+            @endforeach
+        </div>
     </div>
 </section>
+@endif
 
 {{-- ══════════════════════════════════════════
      CÓMO APOYAR
