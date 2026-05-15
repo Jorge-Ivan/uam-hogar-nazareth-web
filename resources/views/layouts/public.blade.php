@@ -538,19 +538,33 @@
             </div>
 
             {{-- Attribution band --}}
-            <div class="border-t border-white/10 py-4 mt-2 text-center text-xs text-gray-400">
-                &copy; {{ date('Y') }} Fundación Centro de Bienestar del Anciano Nazareth &middot;
-                Sitio web desarrollado como práctica social por
-                <a href="https://www.linkedin.com/in/jorgecarrillog/"
-                   target="_blank" rel="noopener noreferrer"
-                   class="text-gray-400 hover:text-gray-200 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-nazareth-gold rounded">
-                    Jorge Carrillo
-                </a>
-                &middot;
-                <a href="https://www.autonoma.edu.co/"
-                   target="_blank" rel="noopener noreferrer"
-                   class="text-gray-400 hover:text-gray-200 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-nazareth-gold rounded">
-                    Universidad Autónoma de Manizales
+            <div class="border-t border-white/10 pt-4 mt-2 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-400"
+                 style="padding-bottom:16px;">
+                <span style="flex:1 1 auto;min-width:0;">
+                    &copy; {{ date('Y') }} Fundación Centro de Bienestar del Anciano Nazareth &middot;
+                    Sitio web desarrollado como práctica social por
+                    <a href="https://www.linkedin.com/in/jorgecarrillog/"
+                       target="_blank" rel="noopener noreferrer"
+                       class="text-gray-400 hover:text-gray-200 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-nazareth-gold rounded">
+                        Jorge Carrillo
+                    </a>
+                    &middot;
+                    <a href="https://www.autonoma.edu.co/"
+                       target="_blank" rel="noopener noreferrer"
+                       class="text-gray-400 hover:text-gray-200 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-nazareth-gold rounded">
+                        Universidad Autónoma de Manizales
+                    </a>
+                </span>
+                <a href="{{ route('login') }}"
+                   title="Acceso para personal del hogar"
+                   style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.5);text-decoration:none;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.08);white-space:nowrap;transition:color .15s,border-color .15s,background .15s;"
+                   onmouseover="this.style.color='rgba(255,255,255,.95)';this.style.borderColor='rgba(255,255,255,.18)';this.style.background='rgba(255,255,255,.04)';"
+                   onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.08)';this.style.background='';">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;opacity:.8;" aria-hidden="true">
+                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                        <path d="M7 11V7a5 5 0 0110 0v4"/>
+                    </svg>
+                    Acceso personal
                 </a>
             </div>
 
