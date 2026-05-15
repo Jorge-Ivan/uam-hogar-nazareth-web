@@ -40,7 +40,8 @@ final class HomeController extends Controller
         });
 
         $galleries = Cache::remember('website.home.galleries', 300, function () {
-            return Gallery::with(['images' => fn ($q) => $q->orderBy('position'), 'images.media'])
+            return Gallery::withCount('images')
+                ->with('coverImage.media')
                 ->latest()
                 ->limit(3)
                 ->get();

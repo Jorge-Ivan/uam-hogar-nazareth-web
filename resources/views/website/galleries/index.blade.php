@@ -65,7 +65,7 @@
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($galleries as $gallery)
-                @php $cover = $gallery->images->first(); @endphp
+                @php $cover = $gallery->coverImage; @endphp
                 <a href="{{ route('website.galleries.show', $gallery->slug) }}"
                    class="album relative block rounded-[16px] overflow-hidden bg-nazareth-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-nazareth-gold focus:ring-offset-2"
                    style="aspect-ratio:4/5"

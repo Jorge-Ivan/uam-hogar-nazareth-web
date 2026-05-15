@@ -148,7 +148,7 @@
                         class="absolute right-4 text-white/80 hover:text-white focus:outline-none focus:ring-2 focus:ring-white rounded p-2 mr-12"
                         aria-label="Foto siguiente">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7 7 7"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </button>
             </div>

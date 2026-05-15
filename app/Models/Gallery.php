@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Represents a photo gallery collection.
@@ -27,11 +28,13 @@ final class Gallery extends Model
         'description',
     ];
 
-    /**
-     * Get the images belonging to this gallery.
-     */
     public function images(): HasMany
     {
         return $this->hasMany(GalleryImage::class)->orderBy('position');
+    }
+
+    public function coverImage(): HasOne
+    {
+        return $this->hasOne(GalleryImage::class)->orderBy('position');
     }
 }

@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Gallery;
 use App\Models\GalleryImage;
 use App\Models\Media;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 final class GalleryService
@@ -14,8 +15,10 @@ final class GalleryService
     public function create(array $data): Gallery
     {
         $data['slug'] = $data['slug'] ?? Str::slug($data['title']);
+        $gallery = Gallery::create($data);
+        $this->flushGalleryCache();
 
-        return Gallery::create($data);
+        return $gallery;
     }
 
     public function update(Gallery $gallery, array $data): Gallery
@@ -25,6 +28,7 @@ final class GalleryService
         }
 
         $gallery->update($data);
+        $this->flushGalleryCache();
 
         return $gallery->fresh();
     }
@@ -33,22 +37,25 @@ final class GalleryService
     {
         $nextPosition = $gallery->images()->max('position') + 1;
 
-        return GalleryImage::create([
+        $image = GalleryImage::create([
             'gallery_id' => $gallery->id,
             'media_id'   => $media->id,
             'caption'    => $caption,
             'position'   => $nextPosition,
         ]);
+
+        $this->flushGalleryCache();
+
+        return $image;
     }
 
     public function removeImage(GalleryImage $galleryImage): void
     {
         $galleryImage->delete();
+        $this->flushGalleryCache();
     }
 
     /**
-     * Reorder gallery images by providing an ordered array of GalleryImage IDs.
-     *
      * @param  array<int>  $orderedIds
      */
     public function reorderImages(Gallery $gallery, array $orderedIds): void
@@ -58,14 +65,21 @@ final class GalleryService
                 ->where('id', $id)
                 ->update(['position' => $position + 1]);
         }
+
+        $this->flushGalleryCache();
     }
 
-    /**
-     * Delete a gallery and all its related images.
-     */
     public function delete(Gallery $gallery): void
     {
         $gallery->images()->delete();
         $gallery->delete();
+        $this->flushGalleryCache();
+    }
+
+    private function flushGalleryCache(): void
+    {
+        Cache::forget('website.home.galleries');
+        $version = (int) Cache::get('website.galleries.cache_v', 1);
+        Cache::put('website.galleries.cache_v', $version + 1, now()->addYear());
     }
 }
