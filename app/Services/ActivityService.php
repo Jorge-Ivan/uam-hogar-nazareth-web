@@ -41,6 +41,7 @@ final class ActivityService
         ]);
 
         Cache::forget('website.home.activities');
+        Cache::forget('sitemap.xml');
 
         return $activity->fresh();
     }
@@ -50,6 +51,7 @@ final class ActivityService
         $activity->update(['status' => ContentStatus::Archived]);
 
         Cache::forget('website.home.activities');
+        Cache::forget('sitemap.xml');
 
         return $activity->fresh();
     }
@@ -66,5 +68,6 @@ final class ActivityService
         $activity->delete();
 
         Cache::forget('website.home.activities');
+        Cache::forget('sitemap.xml');
     }
 }

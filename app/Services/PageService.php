@@ -68,5 +68,6 @@ final class PageService
     {
         Cache::forget('nav.header');
         Cache::forget('nav.footer');
+        Cache::forget('sitemap.xml');
     }
 }

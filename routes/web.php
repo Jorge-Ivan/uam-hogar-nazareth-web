@@ -14,11 +14,17 @@ use App\Http\Controllers\Website\EventController;
 use App\Http\Controllers\Website\GalleryController;
 use App\Http\Controllers\Website\HomeController;
 use App\Http\Controllers\Website\PageController;
+use App\Http\Controllers\Website\SitemapController;
 use App\Models\Activity;
 use App\Models\Event;
 use App\Models\Gallery;
 use App\Models\Page;
 use Illuminate\Support\Facades\Route;
+
+// ─────────────────────────────────────────────
+// SEO
+// ─────────────────────────────────────────────
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
 // ─────────────────────────────────────────────
 // Sitio web público

@@ -79,6 +79,7 @@ final class GalleryService
     private function flushGalleryCache(): void
     {
         Cache::forget('website.home.galleries');
+        Cache::forget('sitemap.xml');
         $version = (int) Cache::get('website.galleries.cache_v', 1);
         Cache::put('website.galleries.cache_v', $version + 1, now()->addYear());
     }
