@@ -9,31 +9,40 @@
 
 @push('schema')
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Event",
-  "@id": "{{ url()->current() }}#event",
-  "name": "{{ $event->title }}",
-  "description": "{{ Str::limit(strip_tags($event->description ?? $event->title), 200) }}",
-  "url": "{{ url()->current() }}",
-  "startDate": "{{ $event->start_date->toIso8601String() }}"@if($event->end_date),
-  "endDate": "{{ $event->end_date->toIso8601String() }}"@endif@if($event->location),
-  "location": {
-    "@type": "Place",
-    "name": "{{ $event->location }}",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "La Virginia",
-      "addressRegion": "Risaralda",
-      "addressCountry": "CO"
-    }
-  }@endif@if($event->featuredImage),
-  "image": "{{ Storage::url($event->featuredImage->file_path) }}"@endif,
-  "organizer": { "@id": "{{ url('/') }}/#organization" },
-  "eventStatus": "https://schema.org/EventScheduled",
-  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-  "inLanguage": "es-CO"
+@php
+$schema = [
+    '@context'            => 'https://schema.org',
+    '@type'               => 'Event',
+    '@id'                 => url()->current() . '#event',
+    'name'                => $event->title,
+    'description'         => Str::limit(strip_tags($event->description ?? $event->title), 200),
+    'url'                 => url()->current(),
+    'startDate'           => $event->start_date->toIso8601String(),
+    'organizer'           => ['@id' => url('/') . '/#organization'],
+    'eventStatus'         => 'https://schema.org/EventScheduled',
+    'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+    'inLanguage'          => 'es-CO',
+];
+if ($event->end_date) {
+    $schema['endDate'] = $event->end_date->toIso8601String();
 }
+if ($event->location) {
+    $schema['location'] = [
+        '@type'   => 'Place',
+        'name'    => $event->location,
+        'address' => [
+            '@type'           => 'PostalAddress',
+            'addressLocality' => 'La Virginia',
+            'addressRegion'   => 'Risaralda',
+            'addressCountry'  => 'CO',
+        ],
+    ];
+}
+if ($event->featuredImage) {
+    $schema['image'] = Storage::url($event->featuredImage->file_path);
+}
+echo json_encode($schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+@endphp
 </script>
 @endpush
 
@@ -71,10 +80,12 @@
                          alt="{{ $event->featuredImage->alt_text }}"
                          class="w-full h-full object-cover">
                 @else
-                    <div class="w-full h-full flex items-center justify-center bg-nazareth-100">
-                        <svg class="w-16 h-16 text-nazareth-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
+                    <div class="w-full h-full flex items-center justify-center bg-nazareth-50">
+                        <div class="flex flex-col items-center bg-white border border-nazareth-100 shadow-sm rounded-[16px] px-8 py-6 text-center select-none">
+                            <span class="text-[12px] font-bold text-nazareth-700 uppercase tracking-[.16em]">{{ $event->start_date->translatedFormat('M') }}</span>
+                            <span class="font-display text-[64px] font-semibold text-nazareth-blue leading-none my-2">{{ $event->start_date->format('d') }}</span>
+                            <span class="text-[12px] text-[#9CA3AF]">{{ $event->start_date->format('Y') }}</span>
+                        </div>
                     </div>
                 @endif
 

@@ -56,10 +56,12 @@
                          alt="{{ $featured->featuredImage->alt_text }}"
                          class="w-full h-full object-cover">
                 @else
-                    <div class="w-full h-full flex items-center justify-center bg-nazareth-100">
-                        <svg class="w-16 h-16 text-nazareth-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
+                    <div class="w-full h-full flex items-center justify-center bg-nazareth-50">
+                        <div class="flex flex-col items-center bg-white border border-nazareth-100 shadow-sm rounded-[16px] px-8 py-6 text-center select-none">
+                            <span class="text-[12px] font-bold text-nazareth-700 uppercase tracking-[.16em]">{{ $featured->start_date->translatedFormat('M') }}</span>
+                            <span class="font-display text-[64px] font-semibold text-nazareth-blue leading-none my-2">{{ $featured->start_date->format('d') }}</span>
+                            <span class="text-[12px] text-[#9CA3AF]">{{ $featured->start_date->format('Y') }}</span>
+                        </div>
                     </div>
                 @endif
                 <span class="absolute top-5 left-5 bg-nazareth-gold text-white text-[12px] font-semibold tracking-[.06em] uppercase px-3 py-1.5 rounded-full">
@@ -201,12 +203,18 @@
                              alt="{{ $event->featuredImage->alt_text }}"
                              class="w-full h-full object-cover"
                              loading="lazy">
+                        <span class="absolute bottom-3 left-3 bg-white/95 text-nazareth-blue text-[12px] font-semibold px-2.5 py-1 rounded-[6px]">
+                            {{ $event->start_date->translatedFormat('M Y') }}
+                        </span>
                     @else
-                        <div class="w-full h-full bg-nazareth-100"></div>
+                        <div class="w-full h-full flex items-center justify-center bg-nazareth-50">
+                            <div class="flex flex-col items-center text-center select-none">
+                                <span class="text-[11px] font-bold text-nazareth-700 uppercase tracking-[.14em]">{{ $event->start_date->translatedFormat('M') }}</span>
+                                <span class="font-display text-[44px] font-semibold text-nazareth-blue leading-none my-1">{{ $event->start_date->format('d') }}</span>
+                                <span class="text-[11px] text-[#9CA3AF]">{{ $event->start_date->format('Y') }}</span>
+                            </div>
+                        </div>
                     @endif
-                    <span class="absolute bottom-3 left-3 bg-white/95 text-nazareth-blue text-[12px] font-semibold px-2.5 py-1 rounded-[6px]">
-                        {{ $event->start_date->translatedFormat('M Y') }}
-                    </span>
                 </div>
 
                 {{-- Cuerpo --}}
